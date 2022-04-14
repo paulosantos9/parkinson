@@ -7,20 +7,23 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
     <title>Parkinson</title>
   </head>
+  <body>
     {% if typeOfContainer %}
     <div class="container sign-up-mode">
     {% else %}
-    <div class="container sign-up-mode">
+    <div class="container">
     {% endif %}
       <div class="forms-container">
         <div class="signin-signup">
           <form action="/login" class="sign-in-form" method="POST">
             <h2 class="title">Login</h2>
+
             {% if error %}
-              <div role="alert" style="text-align: center;">
+              <div role="alert" class="error-message">
                 {{ error }}
               </div>
             {% endif %}
+
             <div class="input-field">
               <i class="fas fa-user"></i>
               <input type="text" name="username" placeholder="Nome de Utilizador" />
@@ -50,7 +53,7 @@
             <h2 class="title">Registo</h2>
 
             {% if error %}
-              <div role="alert" style="text-align: center;">
+              <div role="alert"  class="error-message">
                 {{ error }}
               </div>
             {% endif %}

@@ -9,10 +9,3 @@ sign_up_btn.addEventListener("click", () => {
 sign_in_btn.addEventListener("click", () => {
   container.classList.remove("sign-up-mode");
 });
-
-function checkType(type){
-  if (type == "register")
-    container.classList.add("sign-up-mode");
-  else
-    container.classList.remove("sign-up-mode");
-}

@@ -9,4 +9,4 @@ def home():
 
 @views.route('/main')
 def main():
-    return '<h1>Created with success</h1>'
+    return render_template('main.html')

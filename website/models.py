@@ -12,7 +12,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(150), unique=True) # max length is 150
     password = db.Column(db.String(150))
-    username = db.Column(db.String(50))
+    username = db.Column(db.String(50), unique=True)
     alzheimer = db.Column(db.String(150))
     parkinson = db.Column(db.String(150))
     assessments = db.relationship('Assessment')
