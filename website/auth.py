@@ -2,47 +2,56 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from .models import User, Assessment
 from . import db # import from website folder
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from flask_login import login_user, login_required, logout_user, current_user
 auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'GET':
-        return render_template('index.html')
-    elif request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
+    if current_user.is_authenticated:
+        return redirect(url_for('views.main'))
+    else:
+        if request.method == 'GET':
+            error = request.args.get('error', '')
+            typeOfContainer = request.args.get('typeOfContainer', '0')
+            return render_template('index.html', error=error, typeOfContainer=int(typeOfContainer))
+        elif request.method == 'POST':
+            print('first')
+            username = request.form.get('username')
+            password = request.form.get('password')
 
-        print(username)
-        print(password)
+            error = None
+            typeOfContainer = 0
 
-        error = None
-        typeOfContainer = 0
+            user = User.query.filter_by(username=username).first()
 
-        user = User.query.filter_by(username=username).first()
-        if user:
-            if check_password_hash(user.password, password):
-                return redirect(url_for('views.main'))
+            if user:
+                if check_password_hash(user.password, password):
+                    login_user(user, remember=True)
+                    return redirect(url_for('views.main'))
+                else:
+                    error = 'Credenciais incorretas, tente novamente.'
             else:
                 error = 'Credenciais incorretas, tente novamente.'
-        else:
-            error = 'Credenciais incorretas, tente novamente.'
 
-        print(typeOfContainer)
-        return render_template('index.html', error=error, typeOfContainer=typeOfContainer)
-    else:
-        error = "Method invalid"
-        return render_template('index.html', error=error, typeOfContainer=typeOfContainer)
+            return redirect(url_for('auth.login', error=error, typeOfContainer=int(typeOfContainer)))
+        else:
+            error = "Method invalid"
+            return redirect(url_for('auth.login', error=error, typeOfContainer=int(typeOfContainer)))
 
 @auth.route('/logout')
+@login_required
 def logout():
-    return '<p>logout</p>'
+    logout_user()
+    return redirect(url_for('auth.login'))
 
 
 @auth.route('/signup', methods=['GET', 'POST'])
 def signup():
+    error = request.args.get('error', '')
+    typeOfContainer = request.args.get('typeOfContainer', '1')
+
     if request.method == 'GET':
-        return render_template('index.html')
+        return render_template('index.html', error=error, typeOfContainer=int(typeOfContainer))
     elif request.method == 'POST':
         username = request.form.get('username')
         email = request.form.get('email')
@@ -76,8 +85,9 @@ def signup():
             new_user = User(email=email, username=username, password=generate_password_hash(password, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
+            login_user(new_user, remember=True)
             return redirect(url_for('views.main'))
 
-        return render_template('index.html', error=error, typeOfContainer=typeOfContainer)
+        return redirect(url_for('auth.signup', error=error, typeOfContainer=int(typeOfContainer)))
     else:
-        return render_template('index.html', typeOfContainer=typeOfContainer)
+        return redirect(url_for('auth.signup', error=error, typeOfContainer=int(typeOfContainer)))
