@@ -6,6 +6,7 @@
     <script src="{{ url_for('static', filename='js/font-awesome.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
     <title>Parkinson</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/brain.ico') }}">
   </head>
   <body>
     {% if typeOfContainer %}
@@ -33,21 +34,6 @@
               <input type="password" name="password" placeholder="Palavra-passe" />
             </div>
             <input type="submit" value="Login" class="btn solid" />
-            <p class="social-text">Fazer login através das redes sociais</p>
-            <div class="social-media">
-              <a href="#" class="social-icon">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-google"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-            </div>
           </form>
           <form action="/signup" class="sign-up-form" method="POST">
             <h2 class="title">Registo</h2>
@@ -75,21 +61,6 @@
               <input type="password" name="password_confirm" placeholder="Confirmar palavra-passe" />
             </div>
             <input type="submit" class="btn" value="Sign up" />
-            <p class="social-text">Ou registe-se através das redes sociais</p>
-            <div class="social-media">
-              <a href="#" class="social-icon">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-google"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-            </div>
           </form>
         </div>
       </div>
@@ -105,7 +76,7 @@
               Registo
             </button>
           </div>
-          <img src="{{ url_for('static', filename='images/elder1.png') }}" class="image" alt="" />
+          <img src="{{ url_for('static', filename='images/elder1.svg') }}" class="image image1" alt="" />
         </div>
         <div class="panel right-panel">
           <div class="content">
@@ -117,7 +88,7 @@
               Login
             </button>
           </div>
-          <img src="{{ url_for('static', filename='images/elder2.png') }}" class="image" alt="" />
+          <img src="{{ url_for('static', filename='images/elder2.svg') }}" class="image image2" alt="" />
         </div>
       </div>
     </div>
