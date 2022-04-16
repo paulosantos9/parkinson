@@ -19,7 +19,7 @@ def create_app():
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
 
-    from .models import Assessment, User
+    from .models import Game, Assessment, Doctor, Patient
 
     create_database(app)
 
@@ -29,7 +29,7 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(id):
-        return User.query.get(int(id))
+        return Patient.query.get(int(id))
 
     return app
 

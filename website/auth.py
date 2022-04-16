@@ -1,5 +1,5 @@
 from flask import Blueprint, request, redirect, url_for, session
-from .models import User, Assessment
+from .models import Game, Assessment, Doctor, Patient
 from . import db # import from website folder
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
@@ -7,8 +7,6 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    session['error'] = ''
-    session['typeOfContainer'] = 0
     if current_user.is_authenticated:
         return redirect(url_for('views.home'))
     else:
@@ -28,7 +26,7 @@ def login():
             error = None
             typeOfContainer = 0
 
-            user = User.query.filter_by(username=username).first()
+            user = Patient.query.filter_by(username=username).first()
 
             if user:
                 if check_password_hash(user.password, password):
@@ -40,6 +38,8 @@ def login():
                         typeOfContainer = session.get('typeOfContainer')
                         if typeOfContainer:
                             typeOfContainer = int(typeOfContainer)
+                        session.pop('error', '')
+                        session.pop('typeOfContainer', 0)
                         return redirect(url_for('views.home'))
                 else:
                     error = 'Credenciais incorretas, tente novamente.'
@@ -59,8 +59,6 @@ def login():
 @login_required
 def logout():
     logout_user()
-    if typeOfContainer:
-        typeOfContainer = int(typeOfContainer)
     return redirect(url_for('views.home'))
 
 
@@ -86,8 +84,8 @@ def signup():
             password = request.form.get('password')
             password_confirm = request.form.get('password_confirm')
 
-            emailAlreadyUsed = True if User.query.filter_by(email=email).first() else False
-            usernameAlreadyUsed = True if User.query.filter_by(username=username).first() else False
+            emailAlreadyUsed = True if Patient.query.filter_by(email=email).first() else False
+            usernameAlreadyUsed = True if Patient.query.filter_by(username=username).first() else False
 
             error = None
             typeOfContainer = 1 # 1 - register, 0 - login
@@ -105,7 +103,7 @@ def signup():
                 error = 'Palavra-passe deve ter mais de 6 caracteres.'
             else:
                 # add user to database
-                new_user = User(email=email, username=username, password=generate_password_hash(password, method='sha256'))
+                new_user = Patient(email=email, username=username, password=generate_password_hash(password, method='sha256'))
                 db.session.add(new_user)
                 db.session.commit()
                 login_user(new_user, remember=True)

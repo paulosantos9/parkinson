@@ -1,18 +1,45 @@
 from . import db # import from website folder
 from flask_login import UserMixin
 
+class Game(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'))
+    currentTime = db.Column(db.DateTime)
+    score = db.Column(db.Integer)
+
+
 class Assessment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    disease = db.Column(db.String(150))
-    score = db.Column(db.Integer)
-    notes = db.Column(db.String(10000))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    testType = db.Column(db.String(150))
+    patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'))
+    currentTime = db.Column(db.DateTime)
+    doctorNotes = db.Column(db.String(10000))
+    answers = db.Column(db.String(1000))
 
-class User(db.Model, UserMixin):
+class Doctor(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(150), unique=True) # max length is 150
+    username = db.Column(db.String(50), unique=True) # max length is 150
+    email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
+    name = db.Column(db.String(150))
+    phoneNumber = db.Column(db.String(9))
+    bornDate = db.Column(db.Date)
+    gender = db.Column(db.String(1))
+    patientsList = db.relationship('Patient')
+
+class Patient(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True)
-    alzheimer = db.Column(db.String(150))
-    parkinson = db.Column(db.String(150))
+    email = db.Column(db.String(150), unique=True)
+    password = db.Column(db.String(150))
+    name = db.Column(db.String(150))
+    phoneNumber = db.Column(db.String(9), unique=True)
+    bornDate = db.Column(db.Date)
+    gender = db.Column(db.String(1))
+    patientNumber = db.Column(db.String(9))
+    alzheimer = db.Column(db.Boolean)
+    parkinson = db.Column(db.Boolean)
+    observations = db.Column(db.String(10000))
+    doctor_id = db.Column(db.Integer, db.ForeignKey('doctor.id'))
     assessments = db.relationship('Assessment')
+    games = db.relationship('Game')

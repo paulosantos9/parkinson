@@ -12,4 +12,6 @@ def home():
         typeOfContainer = session.get('typeOfContainer')
         if typeOfContainer:
             typeOfContainer = int(typeOfContainer)
+        session.pop('error', '')
+        session.pop('typeOfContainer', 0)
         return render_template('index.html', error=error, typeOfContainer=typeOfContainer)

@@ -31,9 +31,9 @@ input {
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-  transition: 2s ease-in-out;
   left: 75%;
   width: 50%;
+  transition: 1s 0.7s ease-in-out;
   display: grid;
   grid-template-columns: 1fr;
   z-index: 5;
@@ -45,6 +45,7 @@ form {
   justify-content: center;
   flex-direction: column;
   padding: 0rem 5rem;
+  transition: all 0.2s 0.7s;
   overflow: hidden;
   grid-column: 1 / 2;
   grid-row: 1 / 2;
@@ -170,8 +171,8 @@ form.sign-in-form {
 
 .panel .content {
   color: #fff;
-  transition: transform 0.3s ease-in-out;
-  transition-delay: 0.3s;
+  transition: transform 0.9s ease-in-out;
+  transition-delay: 0.6s;
 }
 
 .panel h3 {
@@ -241,7 +242,6 @@ form.sign-in-form {
 
 @media (max-width: 870px) {
   .container {
-    min-height: 800px;
     height: 100vh;
   }
   .signin-signup {
@@ -366,6 +366,12 @@ form.sign-in-form {
     bottom: 28%;
     left: 50%;
   }
+
+  
+.panel .content {
+  transition: transform 0.7s ease-in-out;
+  transition-delay: 0.5s;
+}
 }
 
 
