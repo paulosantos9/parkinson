@@ -1,3 +1,4 @@
+import datetime
 from flask import Blueprint, request, redirect, url_for, session
 from .models import Game, Assessment, Doctor, Patient
 from . import db # import from website folder
@@ -59,7 +60,33 @@ def login():
 @login_required
 def logout():
     logout_user()
+    session.pop('patient')
     return redirect(url_for('views.home'))
+
+@auth.route('/update', methods=['POST'])
+def update():
+    if current_user.is_authenticated:
+        if request.method == 'POST':
+            # need to perform check before updating to check if every field is well filled
+            current_user.username = request.form.get('username')
+            current_user.email = request.form.get('email')
+            current_user.name = request.form.get('name')
+            current_user.phoneNumber = request.form.get('phoneNumber')
+            bornDate = request.form.get('bornDate')
+            year = int(bornDate[0:4])
+            month = int(bornDate[5:7])
+            day = int(bornDate[8:20])
+            current_user.bornDate = datetime.datetime(year, month, day)
+            current_user.gender = request.form.get('genderOption')
+            current_user.patientNumber = request.form.get('patientNumber')
+            current_user.alzheimer = request.form.get('alzheimerOption') == '1'
+            current_user.parkinson = request.form.get('parkinsonOption') == '1'
+            
+            db.session.commit()
+
+            return redirect(url_for('views.home'))
+        else:
+            return redirect(url_for('views.home'))
 
 
 @auth.route('/signup', methods=['GET', 'POST'])
@@ -81,6 +108,7 @@ def signup():
         elif request.method == 'POST':
             username = request.form.get('username')
             email = request.form.get('email')
+            print(email)
             password = request.form.get('password')
             password_confirm = request.form.get('password_confirm')
 
@@ -103,7 +131,8 @@ def signup():
                 error = 'Palavra-passe deve ter mais de 6 caracteres.'
             else:
                 # add user to database
-                new_user = Patient(email=email, username=username, password=generate_password_hash(password, method='sha256'))
+                print(email)
+                new_user = Patient(email=email, username=username, password=generate_password_hash(password, method='sha256'), name='', phoneNumber='', bornDate=datetime.datetime(1900, 1, 1), gender='', patientNumber='', alzheimer=False, parkinson=False, observations='', doctor_id=-1)
                 db.session.add(new_user)
                 db.session.commit()
                 login_user(new_user, remember=True)

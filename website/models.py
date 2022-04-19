@@ -20,7 +20,7 @@ class Doctor(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True) # max length is 150
     email = db.Column(db.String(150), unique=True)
-    password = db.Column(db.String(150))
+    password = db.Column(db.String(270))
     name = db.Column(db.String(150))
     phoneNumber = db.Column(db.String(9))
     bornDate = db.Column(db.Date)
@@ -33,7 +33,7 @@ class Patient(db.Model, UserMixin):
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
     name = db.Column(db.String(150))
-    phoneNumber = db.Column(db.String(9), unique=True)
+    phoneNumber = db.Column(db.String(9))
     bornDate = db.Column(db.Date)
     gender = db.Column(db.String(1))
     patientNumber = db.Column(db.String(9))
