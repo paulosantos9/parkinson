@@ -44,6 +44,7 @@ function setForm() {
     if (user.bornDate === '1900-01-01') {
         document.getElementById('bornDate').value = currentYear + '-' + currentMonth + '-' + currentDay;
         document.getElementById('bornDate').style.color = '#808080';
+        document.getElementById('bornDate').max = (currentYear - 18) + '-' + currentMonth + '-' + currentDay;
         document.getElementById('bornDate').onchange = function(){
             document.getElementById('bornDate').style.color = '#000';
         };
