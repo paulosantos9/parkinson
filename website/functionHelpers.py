@@ -4,7 +4,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 
 def checkIfUserComplete():
     if (current_user.name == '' or current_user.phoneNumber == '' or current_user.bornDate == datetime.datetime(1900, 1, 1) or  current_user.gender == '' or current_user.patientNumber == ''):
-        session['page'] = 'completeUser'
+        session['page'] = 'fillUser'
     else:
         session['page'] = 'main'
 

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="{{ url_for('static', filename='js/font-awesome.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fillUser.css') }}"/>
+    <title>Parkinson</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/brain.ico') }}">
+  </head>
+  <body>
+    <div class="container">
+        <form action="/update" class="sign-up-form" method="POST">
+            <h2 class="title" id="title"></h2>
+            <p>Por favor preencha os restantes dados.</p>
+            <div class="input-field locked">
+              <i class="fas fa-user"></i>
+              <input type="text" id="username" name="username" readonly/>
+            </div>
+            <div class="input-field locked">
+              <i class="fas fa-envelope"></i>
+              <input type="email" id="email" name="email" readonly/>
+            </div>
+            <div class="input-field">
+              <i class="fas fa-user"></i>
+              <input type="text" id="name" name="name" placeholder="Nome"/>
+            </div>
+            <div class="input-field">
+              <i class="fas fa-phone"></i>
+              <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Número telemóvel" maxlength="9"/>
+            </div>
+            <div class="input-field">
+                <i class="fas fa-calendar"></i>
+                <input type="date" class="bornDate" id="bornDate" name="bornDate"/>
+            </div>
+            <div class="input-field">
+              <i class="fas fa-venus-mars"></i>
+              <div class="options" id="options">
+                <span class="option">
+                  <input type="radio" id="male" class="genderOption" name="genderOption" value="M">
+                  <label for="male">M</label>
+                </span>
+                <span class="option">
+                  <input type="radio" id="female" class="genderOption" name="genderOption" value="F">
+                  <label for="female">F</label>
+                </span>
+                <span class="option">
+                  <input type="radio" id="other" class="genderOption" name="genderOption" value="O">
+                  <label for="other">Outro</label>
+                </span>
+              </div>
+            </div>
+            <div class="input-field">
+              <i class="fas fa-address-card"></i>
+              <input type="tel" id="patientNumber" name="patientNumber" placeholder="Nº Utente" maxlength="9"/>
+            </div>
+            <div class="input-field">
+              <i class="fas fa-brain"></i>
+              <div class="options" id="options">
+                <span class="option">
+                  Alzheimer
+                </span>
+                <span class="option">
+                  <input type="radio" id="alzheimer-no" class="alzheimerOption" name="alzheimerOption" value="0">
+                  <label for="alzheimer-no">Não</label>
+                </span>
+                <span class="option">
+                  <input type="radio" id="alzheimer-yes" class="alzheimerOption" name="alzheimerOption" value="1">
+                  <label for="alzheimer-yes">Sim</label>
+                </span>
+              </div>
+            </div>
+            <div class="input-field">
+              <i class="fas fa-brain"></i>
+              <div class="options" id="options">
+                <span class="option">
+                  Parkinson
+                </span>
+                <span class="option">
+                  <input type="radio" id="parkinson-no" class="parkinsonOption" name="parkinsonOption" value="0">
+                  <label for="parkinson-no">Não</label>
+                </span>
+                <span class="option">
+                  <input type="radio" id="parkinson-yes" class="parkinsonOption" name="parkinsonOption" value="1">
+                  <label for="parkinson-yes">Sim</label>
+                </span>
+              </div>
+            </div>
+            <div>
+                <input type="submit" class="btn" value="Sign up" />
+            </div>
+            
+          </form>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='js/fillUser.js') }}"></script>
+    </body>
+</html>

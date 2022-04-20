@@ -120,6 +120,7 @@ form.sign-in-form {
 .btn:hover {
   background-color: #4d84e2;
 }
+
 .panels-container {
   position: absolute;
   height: 100%;
@@ -366,15 +367,14 @@ form.sign-in-form {
     bottom: 28%;
     left: 50%;
   }
-
   
-.panel .content {
-  transition: transform 0.7s ease-in-out;
-  transition-delay: 0.5s;
-}
+  .panel .content {
+    transition: transform 0.7s ease-in-out;
+    transition-delay: 0.5s;
+  }
 }
 
-
+/* Added */
 .error-message {
   text-align: center;
   color: red;

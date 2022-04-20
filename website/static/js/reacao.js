@@ -41,5 +41,6 @@ function startCounting() {
 var divJogo = document.getElementById('jogo_div');
 divJogo.onclick = function() {
     inGame = false;
+    setTimeout(function() { window.location.replace('/login'); }, 5000) // voltar ao menu principal
 }
 

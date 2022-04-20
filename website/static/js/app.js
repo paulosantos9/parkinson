@@ -60,7 +60,7 @@ function manageMinutes() {
   now = new Date();
   currentMinute = now.getMinutes();
   currentHour = now.getHours();
-  hoursForNotifications = [9, 1, 18, 22]; // ir buscar aos dados do paciente
+  hoursForNotifications = [9, 14, 18, 22]; // ir buscar aos dados do paciente
   // Questionar sobre as melhores horas para fazer os questionários
   // Atualmente verifica se são 9h00, 14h00, 18h00, 22h00
   //if (currentMinute === 0) { // every hour

@@ -58,7 +58,7 @@ def logout():
     session['page'] = 'login-signup'
     return redirect(url_for('views.home'))
 
-@auth.route('/update', methods=['POST'])
+@auth.route('/update', methods=['GET', 'POST'])
 def update():
     if current_user.is_authenticated:
         if request.method == 'POST':
@@ -85,6 +85,10 @@ def update():
         else:
             checkIfUserComplete()
             return redirect(url_for('views.home'))
+    else:
+        session['page'] = 'login-signup'
+        
+        return redirect(url_for('views.home'))
 
 
 @auth.route('/signup', methods=['GET', 'POST'])
@@ -120,8 +124,8 @@ def signup():
                 error = 'Este nome de utilizador já se encontra em utilização.'
             elif len(email) < 6:
                 error = 'Email deve ter mais de 6 caracteres.'
-            elif len(username) < 4:
-                error = 'Nome de utilizador deve ter mais de 3 caracteres.'
+            elif len(username) < 4 or len(username) > 22:
+                error = 'Username deve ter entre 6 e 22 caracteres.'
             elif password != password_confirm:
                 error = 'Palavras-passe têm de ser iguais.'
             elif len(password) < 7:
