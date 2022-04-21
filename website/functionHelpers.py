@@ -1,6 +1,9 @@
 import datetime
-from flask import Blueprint, request, redirect, url_for, session
-from flask_login import login_user, login_required, logout_user, current_user
+from flask import session
+from flask_login import current_user
+from random import randint
+
+
 
 def checkIfUserComplete():
     if (current_user.name == '' or current_user.phoneNumber == '' or current_user.bornDate == datetime.datetime(1900, 1, 1) or  current_user.gender == '' or current_user.patientNumber == ''):
@@ -16,3 +19,8 @@ def manageSession():
     session.pop('error', '')
     session.pop('typeOfContainer', 0)
     return error, typeOfContainer
+
+def chooseGame(numberOfGames):
+    num1= randint(1,numberOfGames)
+    game = '/games/game' + str(num1) + '.html'
+    return game

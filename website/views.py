@@ -1,6 +1,9 @@
+from datetime import datetime
 from flask import Blueprint, render_template, request, redirect, url_for, session, helpers
 from flask_login import login_required, current_user
-from .functionHelpers import checkIfUserComplete, manageSession
+from .functionHelpers import checkIfUserComplete, manageSession, chooseGame
+from .models import Game
+from . import db # import from website folder
 
 views = Blueprint('views', __name__)
 
@@ -45,7 +48,8 @@ def home():
             return render_template('index.html')
 
         elif (session.get('page') == 'game'):
-            return render_template('game.html')
+            numberOfGames = 2
+            return render_template(chooseGame(numberOfGames))
 
         elif (session.get('page') == 'account'):
             response = helpers.make_response(render_template('fillUser.html'))
@@ -73,9 +77,19 @@ def home():
         return render_template('index.html', error=error, typeOfContainer=typeOfContainer)
 
 
-@views.route('/game', methods=['GET'])
+@views.route('/game', methods=['GET', 'POST'])
 def play():
-    session['page'] = 'game'
+    if request.method == 'GET':
+        session['page'] = 'game'
+    else:
+        score = request.json['score'] # because its type application/json
+        gameTypeIndex = request.json['gameType']
+        new_game = Game(patient_id=current_user.id, gameTypeIndex=gameTypeIndex, currentTime=datetime.now(), score=score)
+        db.session.add(new_game)
+        db.session.commit()
+        gamesPlayed = Game.query.filter_by(patient_id=current_user.id).all()
+        print(gamesPlayed)
+        session['page'] = 'main'
     return redirect(url_for('views.home'))
 
 @views.route('/account', methods=['GET'])

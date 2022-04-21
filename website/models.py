@@ -4,8 +4,9 @@ from flask_login import UserMixin
 class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'))
+    gameTypeIndex = db.Column(db.Integer)
     currentTime = db.Column(db.DateTime)
-    score = db.Column(db.Integer)
+    score = db.Column(db.Integer) # miliseconds
 
 
 class Assessment(db.Model):

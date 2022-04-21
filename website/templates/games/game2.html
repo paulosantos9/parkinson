@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="{{ url_for('static', filename='js/font-awesome.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/games/game2.css') }}"/>
+    <title>Parkinson</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/brain.ico') }}">
+  </head>
+  <body>
+    <div class="header">
+        <h1>Reação</h1>
+        <p>Clique o mais rapidamente possível durante 10 segundos, após mudar de cor</p>
+    </div>
+    <div class="container">
+        <div class="jogo" id="jogo_div">
+            <div class="timer"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/games/game2.js') }}"></script>
+  </body>
+</html>
