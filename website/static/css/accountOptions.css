@@ -54,7 +54,7 @@ input {
   border: none;
   outline: none;
   height: 75px;
-  font-size: 2em;
+  font-size: 1.5em;
   border-radius: 49px;
   color: #fff;
   text-transform: uppercase;
@@ -186,8 +186,8 @@ input {
     bottom: 72%;
     left: 50%;
   }
-}
-
-.scoreDiv {
-  text-align: center;
+  
+  .btn {
+    font-size: 1em;
+  }
 }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="{{ url_for('static', filename='js/font-awesome.js') }}"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/accountOptions.css') }}"/>
     <title>Parkinson</title>
     <link rel="icon" href="{{ url_for('static', filename='images/brain.ico') }}">
   </head>
@@ -12,10 +12,10 @@
     <div class="container">
       <div class="forms-container">
         <div class="signin-signup">
-            <input type="button" id="games" value="Jogos" class="btn solid" />
-            <input type="button" id="assessment" value="Teste" class="btn solid" />
-            <input type="button" id="account" value="Conta" class="btn solid" />
-            <input type="button" id="logout" value="Terminar Sessão" class="btn solid" />
+            <input type="button" id="results" value="Resultados de jogos" class="btn solid" />
+            <input type="button" id="assessments" value="Testes realizados" class="btn solid" />
+            <input type="button" id="settings" value="Definições de conta" class="btn solid" />
+            <input type="button" id="back" value="< Voltar" class="btn solid"/>
         </div>
       </div>
 
@@ -25,6 +25,6 @@
         </div>
       </div>
     </div>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/accountOptions.js') }}"></script>
   </body>
 </html>

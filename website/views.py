@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask import Blueprint, render_template, request, redirect, url_for, session, helpers
 from flask_login import login_required, current_user
-from .functionHelpers import checkIfUserComplete, manageSession, chooseGame
+from .functionHelpers import checkIfUserComplete, manageSession, chooseGame, resetAllCookies
 from .models import Game
 from . import db # import from website folder
 
@@ -9,8 +9,10 @@ views = Blueprint('views', __name__)
 
 @views.route('/', methods=['GET', 'POST'])
 def home():
+    current_page = session.get('page')
     if current_user.is_authenticated:
-        if (session.get('page') == 'main'):
+        if (current_page == 'main'):
+            session['current_game'] = 0 # reset ao jogo escolhido
             response = helpers.make_response(render_template('main.html'))
             response.set_cookie('patient_id', str(current_user.id))
             response.set_cookie('patient_username', current_user.username if isinstance(current_user.username, str) == True else str(current_user.username))
@@ -27,7 +29,8 @@ def home():
             '''response.set_cookie('patient_assessments', str(current_user.assessments))
             response.set_cookie('patient_games', str(current_user.games))'''
             return response
-        elif (session.get('page') == 'fillUser'):
+
+        elif (current_page == 'fillUser'):
             response = helpers.make_response(render_template('fillUser.html'))
             response.set_cookie('patient_id', str(current_user.id))
             response.set_cookie('patient_username', current_user.username if isinstance(current_user.username, str) == True else str(current_user.username))
@@ -44,14 +47,35 @@ def home():
             '''response.set_cookie('patient_assessments', str(current_user.assessments))
             response.set_cookie('patient_games', str(current_user.games))'''
             return response
-        elif (session.get('page') == 'login-signup'):
+        
+        elif (current_page == 'login-signup'):
             return render_template('index.html')
 
-        elif (session.get('page') == 'game'):
-            numberOfGames = 2
-            return render_template(chooseGame(numberOfGames))
+        elif (current_page == 'game'):
+            if (session.get('current_game') == 0):
+                numberOfGames = 2
+                current_game = chooseGame(numberOfGames)
+                session['current_game'] = current_game
+            else:
+                current_game = session.get('current_game')
+            return render_template(current_game)
+        
+        elif (current_page == 'accountOptions'):
+            return render_template('accountOptions.html')
 
-        elif (session.get('page') == 'account'):
+        elif (current_page == 'listGames'):
+            #resetAllCookies()
+            response = helpers.make_response(render_template('listGames.html'))
+            resetAllCookies(response)
+            gamesList = Game.query.filter_by(patient_id=current_user.id).all()
+            for i in range(len(gamesList)):
+                response.set_cookie('game' + str(i), str(gamesList[i].score))
+            return response
+
+        elif (current_page == 'assessments'):
+            return render_template('assessments.html') # TO DO
+
+        elif (session.get('page') == 'settings'):
             response = helpers.make_response(render_template('fillUser.html'))
             response.set_cookie('patient_id', str(current_user.id))
             response.set_cookie('patient_username', current_user.username if isinstance(current_user.username, str) == True else str(current_user.username))
@@ -87,12 +111,31 @@ def play():
         new_game = Game(patient_id=current_user.id, gameTypeIndex=gameTypeIndex, currentTime=datetime.now(), score=score)
         db.session.add(new_game)
         db.session.commit()
-        gamesPlayed = Game.query.filter_by(patient_id=current_user.id).all()
-        print(gamesPlayed)
         session['page'] = 'main'
+
     return redirect(url_for('views.home'))
 
 @views.route('/account', methods=['GET'])
-def account():
-    session['page'] = 'account'
+def accountOptions():
+    session['page'] = 'accountOptions'
+    return redirect(url_for('views.home'))
+
+@views.route('/listGames', methods=['GET'])
+def listGames():
+    session['page'] = 'listGames'
+    return redirect(url_for('views.home'))
+
+@views.route('/assessments', methods=['GET'])
+def assessments():
+    session['page'] = 'assessments'
+    return redirect(url_for('views.home'))
+
+@views.route('/settings', methods=['GET'])
+def accountSettings():
+    session['page'] = 'settings'
+    return redirect(url_for('views.home'))
+
+@views.route('/backToMain', methods=['GET'])
+def backToMain():
+    session['page'] = 'main'
     return redirect(url_for('views.home'))

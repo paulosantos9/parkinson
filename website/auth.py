@@ -4,7 +4,7 @@ from .models import Game, Assessment, Doctor, Patient
 from . import db # import from website folder
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
-from .functionHelpers import checkIfUserComplete, manageSession
+from .functionHelpers import checkIfUserComplete, isUsernameValid, manageSession, isPasswordValid, isEmailValid
 
 auth = Blueprint('auth', __name__)
 
@@ -109,6 +109,7 @@ def signup():
         elif request.method == 'POST':
             username = request.form.get('username')
             email = request.form.get('email')
+
             password = request.form.get('password')
             password_confirm = request.form.get('password_confirm')
 
@@ -122,14 +123,12 @@ def signup():
                 error = 'Este email já se encontra em utilização.'
             elif usernameAlreadyUsed:
                 error = 'Este nome de utilizador já se encontra em utilização.'
-            elif len(email) < 6:
-                error = 'Email deve ter mais de 6 caracteres.'
-            elif len(username) < 4 or len(username) > 22:
-                error = 'Username deve ter entre 6 e 22 caracteres.'
-            elif password != password_confirm:
-                error = 'Palavras-passe têm de ser iguais.'
-            elif len(password) < 7:
-                error = 'Palavra-passe deve ter mais de 6 caracteres.'
+            elif isUsernameValid(username)[0] == False:
+                error = isUsernameValid(username)[1]
+            elif isEmailValid(email) == False:
+                error = 'Email inválido.'
+            elif isPasswordValid(password, password_confirm)[0] == False:
+                error = isPasswordValid(password, password_confirm)[1]
             else:
                 # add user to database
                 new_user = Patient(email=email, username=username, password=generate_password_hash(password, method='sha256'), name='', phoneNumber='', bornDate=datetime.datetime(1900, 1, 1), gender='', patientNumber='', alzheimer=False, parkinson=False, observations='', doctor_id=-1)
@@ -137,7 +136,7 @@ def signup():
                 db.session.commit()
                 login_user(new_user, remember=True)
 
-                checkIfUserComplete()
+                session['page'] = 'fillUser'
                 
             session['error'] = error
             session['typeOfContainer'] = typeOfContainer

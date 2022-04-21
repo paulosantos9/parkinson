@@ -9,3 +9,7 @@ document.getElementById('assessment').onclick = function() {
 document.getElementById('account').onclick = function() {
     window.location.replace('/account');
 };
+
+document.getElementById('logout').onclick = function() {
+    window.location.replace('/logout');
+};

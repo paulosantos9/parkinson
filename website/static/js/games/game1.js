@@ -23,16 +23,20 @@ function updateTimer(starterTimer) {
         let now = new Date();
         let currentTimer = now.getTime();
         difference = (currentTimer - starterTimer) / 1000;
-        if (difference > 10) {
+        if (difference >= 10) {
+            difference = 10;
+            let differenceDecimals = Math.floor(difference*10) / 10;
+            numberInString = differenceDecimals.toString();
             endGame();
+        } else {
+            let differenceDecimals = Math.floor(difference*10) / 10;
+            numberInString = differenceDecimals.toString();
+            let arrayNumbers = numberInString.split('.');
+            if (arrayNumbers.length === numberInString.length) {
+                numberInString += '.0'
+            }
+            document.querySelector('.timer').textContent = numberInString + ' s';
         }
-        let differenceDecimals = Math.floor(difference*10) / 10;
-        numberInString = differenceDecimals.toString();
-        let arrayNumbers = numberInString.split('.');
-        if (arrayNumbers.length === numberInString.length) {
-            numberInString += '.0'
-        }
-        document.querySelector('.timer').textContent = numberInString + ' s';
     }
 }
 
