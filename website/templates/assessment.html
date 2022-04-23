@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="{{ url_for('static', filename='js/font-awesome.js') }}"></script>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/assessment.css') }}"
+    />
+    <title>Parkinson</title>
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='images/brain.ico') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <form action="/assessment" class="sign-up-form" method="POST">
+        <h2 class="title" id="title"></h2>
+        <p>Responda às seguintes perguntas.</p>
+        <div class="question">
+          <p>
+            Durante a última semana teve dificuldades em lembrar-se de coisas,
+            seguir conversas, prestar atenção, pensar claramente ou encontrar os
+            caminhos em casa ou na cidade?
+          </p>
+          <div class="answer">
+            <input
+              type="radio"
+              id="first-answer-0"
+              name="first-answer"
+              value="0"
+            />
+            <label for="first-answer-0">0 - Normal</label>
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              id="first-answer-1"
+              name="first-answer"
+              value="1"
+            />
+            <label for="first-answer-1">1 - Pouca</label>
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              id="first-answer-2"
+              name="first-answer"
+              value="2"
+            />
+            <label for="first-answer-2">2 - Média</label>
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              id="first-answer-3"
+              name="first-answer"
+              value="3"
+            />
+            <label for="first-answer-3">3 - Alta</label>
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              id="first-answer-4"
+              name="first-answer"
+              value="4"
+            />
+            <label for="first-answer-4">4 - Severa</label>
+          </div>
+        </div>
+        <div class="question">
+          <p>
+            Durante a última semana teve dificuldades em lembrar-se de coisas,
+            seguir conversas, prestar atenção, pensar claramente ou encontrar os
+            caminhos em casa ou na cidade?
+          </p>
+          <div class="answer">
+            <input
+              type="radio"
+              id="second-answer-0"
+              name="second-answer"
+              value="0"
+            />
+            <label for="second-answer-0">0 - Normal</label>
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              id="second-answer-1"
+              name="second-answer"
+              value="1"
+            />
+            <label for="second-answer-1">1 - Pouca</label>
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              id="second-answer-2"
+              name="second-answer"
+              value="2"
+            />
+            <label for="second-answer-2">2 - Média</label>
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              id="second-answer-3"
+              name="second-answer"
+              value="3"
+            />
+            <label for="second-answer-3">3 - Alta</label>
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              id="second-answer-4"
+              name="second-answer"
+              value="4"
+            />
+            <label for="second-answer-4">4 - Severa</label>
+          </div>
+        </div>
+        <div class="question">
+          <p>
+            Durante a última semana teve dificuldades em lembrar-se de coisas,
+            seguir conversas, prestar atenção, pensar claramente ou encontrar os
+            caminhos em casa ou na cidade?
+          </p>
+          <div class="answer">
+            <input
+              type="radio"
+              id="third-answer-0"
+              name="third-answer"
+              value="0"
+            />
+            <label for="third-answer-0">0 - Normal</label>
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              id="third-answer-1"
+              name="third-answer"
+              value="1"
+            />
+            <label for="third-answer-1">1 - Pouca</label>
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              id="third-answer-2"
+              name="third-answer"
+              value="2"
+            />
+            <label for="third-answer-2">2 - Média</label>
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              id="third-answer-3"
+              name="third-answer"
+              value="3"
+            />
+            <label for="third-answer-3">3 - Alta</label>
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              id="third-answer-4"
+              name="third-answer"
+              value="4"
+            />
+            <label for="third-answer-4">4 - Severa</label>
+          </div>
+        </div>
+        <div class="question">
+          <p>
+            Durante a última semana teve dificuldades em lembrar-se de coisas,
+            seguir conversas, prestar atenção, pensar claramente ou encontrar os
+            caminhos em casa ou na cidade?
+          </p>
+          <div class="answer">
+            <input
+              type="radio"
+              id="forth-answer-0"
+              name="forth-answer"
+              value="0"
+            />
+            <label for="forth-answer-0">0 - Normal</label>
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              id="forth-answer-1"
+              name="forth-answer"
+              value="1"
+            />
+            <label for="forth-answer-1">1 - Pouca</label>
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              id="forth-answer-2"
+              name="forth-answer"
+              value="2"
+            />
+            <label for="forth-answer-2">2 - Média</label>
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              id="forth-answer-3"
+              name="forth-answer"
+              value="3"
+            />
+            <label for="forth-answer-3">3 - Alta</label>
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              id="forth-answer-4"
+              name="forth-answer"
+              value="4"
+            />
+            <label for="forth-answer-4">4 - Severa</label>
+          </div>
+        </div>
+        <div class="question">
+          <p>
+            Durante a última semana teve dificuldades em lembrar-se de coisas,
+            seguir conversas, prestar atenção, pensar claramente ou encontrar os
+            caminhos em casa ou na cidade?
+          </p>
+          <div class="answer">
+            <input
+              type="radio"
+              id="fifth-answer-0"
+              name="fifth-answer"
+              value="0"
+            />
+            <label for="fifth-answer-0">0 - Normal</label>
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              id="fifth-answer-1"
+              name="fifth-answer"
+              value="1"
+            />
+            <label for="fifth-answer-1">1 - Pouca</label>
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              id="fifth-answer-2"
+              name="fifth-answer"
+              value="2"
+            />
+            <label for="fifth-answer-2">2 - Média</label>
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              id="fifth-answer-3"
+              name="fifth-answer"
+              value="3"
+            />
+            <label for="fifth-answer-3">3 - Alta</label>
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              id="fifth-answer-4"
+              name="fifth-answer"
+              value="4"
+            />
+            <label for="fifth-answer-4">4 - Severa</label>
+          </div>
+        </div>
+        <div class="question">
+          <p>
+            Durante a última semana teve dificuldades em lembrar-se de coisas,
+            seguir conversas, prestar atenção, pensar claramente ou encontrar os
+            caminhos em casa ou na cidade?
+          </p>
+          <div class="answer">
+            <input
+              type="radio"
+              id="sixth-answer-0"
+              name="sixth-answer"
+              value="0"
+            />
+            <label for="sixth-answer-0">0 - Normal</label>
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              id="sixth-answer-1"
+              name="sixth-answer"
+              value="1"
+            />
+            <label for="sixth-answer-1">1 - Pouca</label>
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              id="sixth-answer-2"
+              name="sixth-answer"
+              value="2"
+            />
+            <label for="sixth-answer-2">2 - Média</label>
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              id="sixth-answer-3"
+              name="sixth-answer"
+              value="3"
+            />
+            <label for="sixth-answer-3">3 - Alta</label>
+          </div>
+          <div class="answer">
+            <input
+              type="radio"
+              id="sixth-answer-4"
+              name="sixth-answer"
+              value="4"
+            />
+            <label for="sixth-answer-4">4 - Severa</label>
+          </div>
+        </div>
+        <div>
+          <input type="submit" class="btn" value="Registar" />
+        </div>
+      </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/assessment.js') }}"></script>
+  </body>
+</html>

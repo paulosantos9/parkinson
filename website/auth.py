@@ -10,7 +10,7 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    session['page'] = 'login-signup'
+    session['page'] = 'login_signup'
     if current_user.is_authenticated:
         checkIfUserComplete()
         return redirect(url_for('views.home'))
@@ -55,7 +55,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    session['page'] = 'login-signup'
+    session['page'] = 'login_signup'
     return redirect(url_for('views.home'))
 
 @auth.route('/update', methods=['GET', 'POST'])
@@ -86,17 +86,17 @@ def update():
             checkIfUserComplete()
             return redirect(url_for('views.home'))
     else:
-        session['page'] = 'login-signup'
+        session['page'] = 'login_signup'
         
         return redirect(url_for('views.home'))
 
 
 @auth.route('/signup', methods=['GET', 'POST'])
 def signup():
-    session['page'] = 'login-signup'
+    session['page'] = 'login_signup'
     
     if current_user.is_authenticated:
-        session['page'] = 'main'
+        session['page'] = 'main_menu'
 
         return redirect(url_for('views.home'))
     else:
@@ -136,7 +136,7 @@ def signup():
                 db.session.commit()
                 login_user(new_user, remember=True)
 
-                session['page'] = 'fillUser'
+                session['page'] = 'settings'
                 
             session['error'] = error
             session['typeOfContainer'] = typeOfContainer

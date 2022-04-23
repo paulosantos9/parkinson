@@ -3,7 +3,7 @@ document.getElementById('games').onclick = function() {
 };
 
 document.getElementById('assessment').onclick = function() {
-    alert('ola2')
+    window.location.replace('/assessment');
 };
 
 document.getElementById('account').onclick = function() {

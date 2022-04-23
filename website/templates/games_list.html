@@ -4,27 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="{{ url_for('static', filename='js/font-awesome.js') }}"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/games_list.css') }}"/>
     <title>Parkinson</title>
     <link rel="icon" href="{{ url_for('static', filename='images/brain.ico') }}">
   </head>
   <body>
     <div class="container">
-      <div class="forms-container">
-        <div class="signin-signup">
-            <input type="button" id="games" value="Jogos" class="btn solid" />
-            <input type="button" id="assessment" value="Teste" class="btn solid" />
-            <input type="button" id="account" value="Conta" class="btn solid" />
-            <input type="button" id="logout" value="Terminar Sessão" class="btn solid" />
+      <div class="gamesContainer">
+        <div class="title">Jogos:</div>
+        <div class="gamesDiv">
+          {% for game in games %}
+            <div class="listDiv">
+              Score:  {{ game.score }} | Jogo: {{ game.gameTypeIndex }}
+            </div>
+          {% endfor %}
         </div>
+        <div class="listDiv" id="back">< Voltar</div>
       </div>
-
       <div class="panels-container">
         <div class="panel left-panel">
           <img src="{{ url_for('static', filename='images/elder2.svg') }}" class="image image1" alt="" />
         </div>
       </div>
     </div>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/games_list.js') }}"></script>
   </body>
 </html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="{{ url_for('static', filename='js/font-awesome.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/settings.css') }}"/>
+    <title>Parkinson</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/brain.ico') }}">
+  </head>
+  <body>
+    <div class="container">
+        <form action="/update" class="sign-up-form" method="POST">
+            <h2 class="title" id="title"></h2>
+            <p>Por favor preencha os restantes dados.</p>
+            <div class="input-field locked">
+              <i class="fas fa-user"></i>
+              <input type="text" id="username" name="username" value='{{patient_username}}' readonly/>
+            </div>
+            <div class="input-field locked">
+              <i class="fas fa-envelope"></i>
+              <input type="email" id="email" name="email" value='{{patient_email}}' readonly/>
+            </div>
+            <div class="input-field">
+              <i class="fas fa-user"></i>
+              <input type="text" id="name" name="name" placeholder="Nome" value='{{patient_name}}'/>
+            </div>
+            <div class="input-field">
+              <i class="fas fa-phone"></i>
+              <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Número telemóvel" value='{{patient_phoneNumber}}' maxlength="9"/>
+            </div>
+            <div class="input-field">
+                <i class="fas fa-calendar"></i>
+                <input type="date" class="bornDate" id="bornDate" value='{{patient_bornDate}}' name="bornDate"/>
+            </div>
+            <div class="input-field">
+              <i class="fas fa-venus-mars"></i>
+              <div class="options" id="options">
+                <span class="option">
+                  {% if patient_gender=='M' %}
+                    <input type="radio" id="male" class="genderOption" name="genderOption" value="M" checked>
+                  {% else %}
+                    <input type="radio" id="male" class="genderOption" name="genderOption" value="M">
+                  {% endif %}
+                    <label for="male">M</label>
+                </span>
+                <span class="option">
+                  {% if patient_gender=='F' %}
+                    <input type="radio" id="female" class="genderOption" name="genderOption" value="F" checked>
+                  {% else %}
+                    <input type="radio" id="female" class="genderOption" name="genderOption" value="F">
+                  {% endif %}
+                  <label for="female">F</label>
+                </span>
+                <span class="option">
+                  {% if patient_gender=='O' %}
+                    <input type="radio" id="other" class="genderOption" name="genderOption" value="O" checked>
+                  {% else %}
+                    <input type="radio" id="other" class="genderOption" name="genderOption" value="O">
+                  {% endif %}
+                  <label for="other">Outro</label>
+                </span>
+              </div>
+            </div>
+            <div class="input-field">
+              <i class="fas fa-address-card"></i>
+              <input type="tel" id="patientNumber" name="patientNumber" placeholder="Nº Utente" value='{{patient_patientNumber}}' maxlength="9"/>
+            </div>
+            <div class="input-field">
+              <i class="fas fa-brain"></i>
+              <div class="options" id="alzheimer-options">
+                <span class="option">
+                  Alzheimer
+                </span>
+                <span class="option">
+                  {% if patient_alzheimer %}
+                    <input type="radio" id="alzheimer-yes" class="alzheimerOption" name="alzheimerOption" value="0">
+                  {% else %}
+                    <input type="radio" id="alzheimer-yes" class="alzheimerOption" name="alzheimerOption" value="0" checked>
+                  {% endif %}
+                  <label for="alzheimer-no">Não</label>
+                </span>
+                <span class="option">
+                  {% if patient_alzheimer %}
+                    <input type="radio" id="alzheimer-yes" class="alzheimerOption" name="alzheimerOption" value="1" checked>
+                  {% else %}
+                    <input type="radio" id="alzheimer-yes" class="alzheimerOption" name="alzheimerOption" value="1">
+                  {% endif %}
+                  <label for="alzheimer-yes">Sim</label>
+                </span>
+              </div>
+            </div>
+            <div class="input-field">
+              <i class="fas fa-brain"></i>
+              <div class="options" id="parkinson-options">
+                <span class="option">
+                  Parkinson
+                </span>
+                <span class="option">
+                  {% if patient_parkinson %}
+                    <input type="radio" id="parkinson-yes" class="parkinsonOption" name="parkinsonOption" value="0" checked>
+                  {% else %}
+                    <input type="radio" id="parkinson-yes" class="parkinsonOption" name="parkinsonOption" value="0">
+                  {% endif %}
+                  <label for="parkinson-no">Não</label>
+                </span>
+                <span class="option">
+                  {% if patient_parkinson %}
+                    <input type="radio" id="parkinson-yes" class="parkinsonOption" name="parkinsonOption" value="1">
+                  {% else %}
+                    <input type="radio" id="parkinson-yes" class="parkinsonOption" name="parkinsonOption" value="1" checked>
+                  {% endif %}
+                  <label for="parkinson-yes">Sim</label>
+                </span>
+              </div>
+            </div>
+            <div>
+                <input type="submit" class="btn" value="Atualizar" />
+            </div>
+            
+          </form>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+    </body>
+</html>

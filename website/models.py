@@ -6,8 +6,14 @@ class Game(db.Model):
     patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'))
     gameTypeIndex = db.Column(db.Integer)
     currentTime = db.Column(db.DateTime)
-    score = db.Column(db.Integer) # miliseconds
+    score = db.Column(db.String(50)) # miliseconds
 
+class Question(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    indexInAssessment = db.Column(db.Integer)
+    question = db.Column(db.String(500))
+    answer = db.Column(db.String(500))
+    assessment_id = db.Column(db.Integer, db.ForeignKey('assessment.id'))
 
 class Assessment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -15,7 +21,7 @@ class Assessment(db.Model):
     patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'))
     currentTime = db.Column(db.DateTime)
     doctorNotes = db.Column(db.String(10000))
-    answers = db.Column(db.String(1000))
+    questions = db.relationship('Question')
 
 class Doctor(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)

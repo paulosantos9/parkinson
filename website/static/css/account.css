@@ -19,15 +19,7 @@ input {
   overflow: hidden;
 }
 
-.forms-container {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-}
-
-.signin-signup {
+.button-list {
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -50,22 +42,18 @@ input {
 
 .btn {
   width: 100%;
-  background-color: #5995fd;
-  border: none;
+  border: 2px #5995fd solid;
+  color: #5995fd;
+  background-color: #fff;
   outline: none;
   height: 75px;
-  font-size: 2em;
+  font-size: 1.5em;
   border-radius: 49px;
-  color: #fff;
   text-transform: uppercase;
   font-weight: 600;
   margin: 10px 0;
   cursor: pointer;
   transition: 0.5s;
-}
-
-.btn:hover {
-  background-color: #4d84e2;
 }
 
 .panels-container {
@@ -123,13 +111,13 @@ input {
     height: 100vh;
   }
   
-  .signin-signup {
+  .button-list {
     width: 100%;
     transform: translateX(-50%);
     transition: 2s ease-in-out;
   }
 
-  .signin-signup {
+  .button-list {
     left: 50%;
   }
 
@@ -186,8 +174,8 @@ input {
     bottom: 72%;
     left: 50%;
   }
-}
-
-.scoreDiv {
-  text-align: center;
+  
+  .btn {
+    font-size: 1em;
+  }
 }

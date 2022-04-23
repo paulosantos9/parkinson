@@ -25,6 +25,7 @@ body {
   width: 100%;
   background-color: #fff;
   overflow: hidden;
+  flex-grow: 1;
 }
 
 .header {
@@ -33,10 +34,6 @@ body {
   color: #444;
   margin: 10px;
   text-align: center;
-}
-
-.container {
-  flex-grow: 1;
 }
 
 .jogo {

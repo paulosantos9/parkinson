@@ -1,8 +1,8 @@
 from datetime import datetime
 from flask import Blueprint, render_template, request, redirect, url_for, session, helpers
 from flask_login import login_required, current_user
-from .functionHelpers import checkIfUserComplete, manageSession, chooseGame, resetAllCookies
-from .models import Game
+from .functionHelpers import checkIfUserComplete, manageSession, chooseGame
+from .models import Game, Question, Assessment
 from . import db # import from website folder
 
 views = Blueprint('views', __name__)
@@ -11,45 +11,18 @@ views = Blueprint('views', __name__)
 def home():
     current_page = session.get('page')
     if current_user.is_authenticated:
-        if (current_page == 'main'):
-            session['current_game'] = 0 # reset ao jogo escolhido
-            response = helpers.make_response(render_template('main.html'))
-            response.set_cookie('patient_id', str(current_user.id))
-            response.set_cookie('patient_username', current_user.username if isinstance(current_user.username, str) == True else str(current_user.username))
-            response.set_cookie('patient_email', current_user.email if isinstance(current_user.email, str) == True else str(current_user.email))
-            response.set_cookie('patient_name', current_user.name if isinstance(current_user.name, str) == True else str(current_user.name))
-            response.set_cookie('patient_phoneNumber', current_user.phoneNumber if isinstance(current_user.phoneNumber, str) == True else str(current_user.phoneNumber))
-            response.set_cookie('patient_bornDate', current_user.bornDate if isinstance(current_user.bornDate, str) == True else str(current_user.bornDate))
-            response.set_cookie('patient_gender', current_user.gender if isinstance(current_user.gender, str) == True else str(current_user.gender))
-            response.set_cookie('patient_patientNumber', current_user.patientNumber if isinstance(current_user.patientNumber, str) == True else str(current_user.patientNumber))
-            response.set_cookie('patient_alzheimer', current_user.alzheimer if isinstance(current_user.alzheimer, str) == True else str(current_user.alzheimer))
-            response.set_cookie('patient_parkinson', current_user.parkinson if isinstance(current_user.parkinson, str) == True else str(current_user.parkinson))
-            response.set_cookie('patient_observations', current_user.observations if isinstance(current_user.observations, str) == True else str(current_user.observations))
-            response.set_cookie('patient_doctor_id', current_user.doctor_id if isinstance(current_user.doctor_id, str) == True else str(current_user.doctor_id))
-            '''response.set_cookie('patient_assessments', str(current_user.assessments))
-            response.set_cookie('patient_games', str(current_user.games))'''
-            return response
+        if (current_page == 'main_menu'):
+            return render_template('main_menu.html')
 
-        elif (current_page == 'fillUser'):
-            response = helpers.make_response(render_template('fillUser.html'))
-            response.set_cookie('patient_id', str(current_user.id))
-            response.set_cookie('patient_username', current_user.username if isinstance(current_user.username, str) == True else str(current_user.username))
-            response.set_cookie('patient_email', current_user.email if isinstance(current_user.email, str) == True else str(current_user.email))
-            response.set_cookie('patient_name', current_user.name if isinstance(current_user.name, str) == True else str(current_user.name))
-            response.set_cookie('patient_phoneNumber', current_user.phoneNumber if isinstance(current_user.phoneNumber, str) == True else str(current_user.phoneNumber))
-            response.set_cookie('patient_bornDate', current_user.bornDate if isinstance(current_user.bornDate, str) == True else str(current_user.bornDate))
-            response.set_cookie('patient_gender', current_user.gender if isinstance(current_user.gender, str) == True else str(current_user.gender))
-            response.set_cookie('patient_patientNumber', current_user.patientNumber if isinstance(current_user.patientNumber, str) == True else str(current_user.patientNumber))
-            response.set_cookie('patient_alzheimer', current_user.alzheimer if isinstance(current_user.alzheimer, str) == True else str(current_user.alzheimer))
-            response.set_cookie('patient_parkinson', current_user.parkinson if isinstance(current_user.parkinson, str) == True else str(current_user.parkinson))
-            response.set_cookie('patient_observations', current_user.observations if isinstance(current_user.observations, str) == True else str(current_user.observations))
-            response.set_cookie('patient_doctor_id', current_user.doctor_id if isinstance(current_user.doctor_id, str) == True else str(current_user.doctor_id))
-            '''response.set_cookie('patient_assessments', str(current_user.assessments))
-            response.set_cookie('patient_games', str(current_user.games))'''
-            return response
+        elif (current_page == 'settings'):
+            return render_template('settings.html', patient_id=current_user.id, patient_username=current_user.username,
+            patient_email=current_user.email, patient_name=current_user.name, patient_phoneNumber=current_user.phoneNumber,
+            patient_bornDate=current_user.bornDate, patient_gender=current_user.gender, patient_patientNumber=current_user.patientNumber,
+            patient_alzheimer=current_user.alzheimer, patient_parkinson=current_user.parkinson, patient_observations=current_user.observations,
+            patient_doctor_id=current_user.doctor_id, patient_assessments=current_user.assessments, patient_games=current_user.games)
         
-        elif (current_page == 'login-signup'):
-            return render_template('index.html')
+        elif (current_page == 'login_signup'):
+            return render_template('login_signup.html')
 
         elif (current_page == 'game'):
             if (session.get('current_game') == 0):
@@ -60,45 +33,25 @@ def home():
                 current_game = session.get('current_game')
             return render_template(current_game)
         
-        elif (current_page == 'accountOptions'):
-            return render_template('accountOptions.html')
+        elif (current_page == 'account'):
+            return render_template('account.html')
 
-        elif (current_page == 'listGames'):
-            #resetAllCookies()
-            response = helpers.make_response(render_template('listGames.html'))
-            resetAllCookies(response)
+        elif (current_page == 'games_list'):
             gamesList = Game.query.filter_by(patient_id=current_user.id).all()
-            for i in range(len(gamesList)):
-                response.set_cookie('game' + str(i), str(gamesList[i].score))
-            return response
+            return render_template('games_list.html', games=gamesList)
 
-        elif (current_page == 'assessments'):
-            return render_template('assessments.html') # TO DO
+        elif (current_page == 'assessment'):
+            return render_template('assessment.html') # TO DO
 
-        elif (session.get('page') == 'settings'):
-            response = helpers.make_response(render_template('fillUser.html'))
-            response.set_cookie('patient_id', str(current_user.id))
-            response.set_cookie('patient_username', current_user.username if isinstance(current_user.username, str) == True else str(current_user.username))
-            response.set_cookie('patient_email', current_user.email if isinstance(current_user.email, str) == True else str(current_user.email))
-            response.set_cookie('patient_name', current_user.name if isinstance(current_user.name, str) == True else str(current_user.name))
-            response.set_cookie('patient_phoneNumber', current_user.phoneNumber if isinstance(current_user.phoneNumber, str) == True else str(current_user.phoneNumber))
-            response.set_cookie('patient_bornDate', current_user.bornDate if isinstance(current_user.bornDate, str) == True else str(current_user.bornDate))
-            response.set_cookie('patient_gender', current_user.gender if isinstance(current_user.gender, str) == True else str(current_user.gender))
-            response.set_cookie('patient_patientNumber', current_user.patientNumber if isinstance(current_user.patientNumber, str) == True else str(current_user.patientNumber))
-            response.set_cookie('patient_alzheimer', current_user.alzheimer if isinstance(current_user.alzheimer, str) == True else str(current_user.alzheimer))
-            response.set_cookie('patient_parkinson', current_user.parkinson if isinstance(current_user.parkinson, str) == True else str(current_user.parkinson))
-            response.set_cookie('patient_observations', current_user.observations if isinstance(current_user.observations, str) == True else str(current_user.observations))
-            response.set_cookie('patient_doctor_id', current_user.doctor_id if isinstance(current_user.doctor_id, str) == True else str(current_user.doctor_id))
-            '''response.set_cookie('patient_assessments', str(current_user.assessments))
-            response.set_cookie('patient_games', str(current_user.games))'''
-            return response
+        elif (current_page == 'assessmentList'):
+            return render_template('assessmentList.html') # TO DO
 
         else:
             error, typeOfContainer = manageSession()
-            return render_template('index.html', error=error, typeOfContainer=typeOfContainer)
+            return render_template('login_signup.html', error=error, typeOfContainer=typeOfContainer)
     else:
         error, typeOfContainer = manageSession()
-        return render_template('index.html', error=error, typeOfContainer=typeOfContainer)
+        return render_template('login_signup.html', error=error, typeOfContainer=typeOfContainer)
 
 
 @views.route('/game', methods=['GET', 'POST'])
@@ -111,31 +64,63 @@ def play():
         new_game = Game(patient_id=current_user.id, gameTypeIndex=gameTypeIndex, currentTime=datetime.now(), score=score)
         db.session.add(new_game)
         db.session.commit()
-        session['page'] = 'main'
+        session['page'] = 'main_menu'
 
     return redirect(url_for('views.home'))
 
 @views.route('/account', methods=['GET'])
-def accountOptions():
-    session['page'] = 'accountOptions'
+def account():
+    session['page'] = 'account'
     return redirect(url_for('views.home'))
 
 @views.route('/listGames', methods=['GET'])
 def listGames():
-    session['page'] = 'listGames'
+    session['page'] = 'games_list'
     return redirect(url_for('views.home'))
+
+@views.route('/assessment', methods=['GET', 'POST'])
+def assessment():
+    if request.method == 'GET':
+        session['page'] = 'assessment'
+        return redirect(url_for('views.home'))
+    else:
+        firstAnswer = request.form.get('first-answer')
+        secondAnswer = request.form.get('second-answer')
+        thirdAnswer = request.form.get('third-answer')
+        forthAnswer = request.form.get('forth-answer')
+        fifthAnswer = request.form.get('fifth-answer')
+        sixthAnswer = request.form.get('sixth-answer')
+        new_assessment = Assessment(testType='UPDRS', patient_id=current_user.id, currentTime=datetime.now())
+        db.session.add(new_assessment)
+        db.session.commit() # to be able to get the assessment id
+        first_answer = Question(indexInAssessment=0, question='', answer=firstAnswer, assessment_id=new_assessment.id)
+        db.session.add(first_answer)
+        second_answer = Question(indexInAssessment=1, question='', answer=secondAnswer, assessment_id=new_assessment.id)
+        db.session.add(second_answer)
+        third_answer = Question(indexInAssessment=2, question='', answer=thirdAnswer, assessment_id=new_assessment.id)
+        db.session.add(third_answer)
+        forth_answer = Question(indexInAssessment=0, question='', answer=forthAnswer, assessment_id=new_assessment.id)
+        db.session.add(forth_answer)
+        fifth_answer = Question(indexInAssessment=0, question='', answer=fifthAnswer, assessment_id=new_assessment.id)
+        db.session.add(fifth_answer)
+        sixth_answer = Question(indexInAssessment=0, question='', answer=sixthAnswer, assessment_id=new_assessment.id)
+        db.session.add(sixth_answer)
+        db.session.commit()
+        session['page'] = 'main_menu'
+        return redirect(url_for('views.home'))
 
 @views.route('/assessments', methods=['GET'])
 def assessments():
-    session['page'] = 'assessments'
+    session['page'] = 'assessmentList'
     return redirect(url_for('views.home'))
 
 @views.route('/settings', methods=['GET'])
-def accountSettings():
+def settings():
     session['page'] = 'settings'
     return redirect(url_for('views.home'))
 
 @views.route('/backToMain', methods=['GET'])
 def backToMain():
-    session['page'] = 'main'
+    session['page'] = 'main_menu'
+    session['current_game'] = 0 # reset ao jogo escolhido
     return redirect(url_for('views.home'))

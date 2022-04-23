@@ -3,7 +3,7 @@ document.getElementById('results').onclick = function() {
 };
 
 document.getElementById('assessments').onclick = function() {
-    alert('ola2')
+    alert('Em desenvolvimento')
 };
 
 document.getElementById('settings').onclick = function() {

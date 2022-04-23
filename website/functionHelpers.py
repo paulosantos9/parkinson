@@ -9,9 +9,9 @@ from flask import render_template, helpers
 
 def checkIfUserComplete():
     if (current_user.name == '' or current_user.phoneNumber == '' or current_user.bornDate == datetime.datetime(1900, 1, 1) or  current_user.gender == '' or current_user.patientNumber == ''):
-        session['page'] = 'fillUser'
+        session['page'] = 'settings'
     else:
-        session['page'] = 'main'
+        session['page'] = 'main_menu'
 
 def manageSession():
     error = session.get('error')
@@ -68,17 +68,3 @@ def isUsernameValid(username):
         return False, 'Nome de utilizador não pode ter espaços.'
     else:
         return True, ''
-
-def resetAllCookies(response):
-    response.delete_cookie(key='patient_id')
-    response.delete_cookie(key='patient_username')
-    response.delete_cookie(key='patient_email')
-    response.delete_cookie(key='patient_name')
-    response.delete_cookie(key='patient_phoneNumber')
-    response.delete_cookie(key='patient_bornDate')
-    response.delete_cookie(key='patient_gender')
-    response.delete_cookie(key='patient_patientNumber')
-    response.delete_cookie(key='patient_alzheimer')
-    response.delete_cookie(key='patient_parkinson')
-    response.delete_cookie(key='patient_observations')
-    response.delete_cookie(key='patient_doctor_id')
