@@ -9,11 +9,12 @@
     <link rel="icon" href="{{ url_for('static', filename='images/brain.ico') }}">
   </head>
   <body>
-    <div class="header">
+    <div class="pre-game" id="pre-game">
         <h1>Reação</h1>
-        <p>Clique o mais rapidamente possível durante 5 segundos, após mudar de cor</p>
+        <p>Clique o mais rapidamente possível durante 5 segundos, após mudar de cor.</p>
+        <button id="start-game">Começar</button>
     </div>
-    <div class="container">
+    <div class="container" id="container">
         <div class="jogo" id="jogo_div">
             <div class="timer"></div>
         </div>

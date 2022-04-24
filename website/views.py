@@ -25,19 +25,15 @@ def home():
             return render_template('login_signup.html')
 
         elif (current_page == 'game'):
-            if (session.get('current_game') == 0 or session.get('current_game') == None):
-                numberOfGames = 2
-                current_game = chooseGame(numberOfGames)
-                session['current_game'] = current_game
-            else:
-                current_game = session.get('current_game')
+            numberOfGames = 2
+            current_game = chooseGame(numberOfGames)
             return render_template(current_game)
         
         elif (current_page == 'account'):
             return render_template('account.html')
 
         elif (current_page == 'games_list'):
-            gamesList = Assessment.query.filter_by(patient_id=current_user.id).all()
+            gamesList = Game.query.filter_by(patient_id=current_user.id).all()
             return render_template('games_list.html', games=gamesList)
 
         elif (current_page == 'assessment'):
@@ -85,26 +81,32 @@ def assessment():
         session['page'] = 'assessment'
         return redirect(url_for('views.home'))
     else:
+        firstQuestion = 'Durante a última semana teve dificuldades em lembrar-se de coisas, seguir conversas, prestar atenção, pensar claramente ou encontrar os caminhos em casa ou na cidade?'
         firstAnswer = request.form.get('first-answer')
+        secondQuestion = 'Durante a última semana viu, cheirou, ouviu ou sentiu coisas que não estavam mesmo no local?'
         secondAnswer = request.form.get('second-answer')
+        thirdQuestion = 'Durante a última semana sentiu-se me baixo, triste, sem esperança ou incapaz de desfrutar das coisas? Se sim, este sentimento demorou mais de um dia seguido? Tornou dificil continuar com as atividades habituais ou estar com pessoas?'
         thirdAnswer = request.form.get('third-answer')
+        forthQuestion = 'Durante a última semana sentiu-se nervoso, preocupado ou tenso? Se sim, este sentimento demorou mais do que um dia seguido? Tornou dificil continuar com as atividades habituais ou estar com pessoas?'
         forthAnswer = request.form.get('forth-answer')
+        fifthQuestion = 'Durante a última semana sentiu-se indiferente ao fazer atividades ou estar com outras pessoas?'
         fifthAnswer = request.form.get('fifth-answer')
+        sixthQuestion = 'Durante a última semana sentiu impulsos difíceis de crontolar, como por exemplo apostar, usar o computador ou tomar mais comprimidos? Sente-se levado a fazer ou a pensar em algo, e a ser dificil de parar?'
         sixthAnswer = request.form.get('sixth-answer')
         new_assessment = Assessment(testType='UPDRS', patient_id=current_user.id, currentTime=datetime.now())
         db.session.add(new_assessment)
         db.session.commit() # to be able to get the assessment id
-        first_answer = Question(indexInAssessment=0, question='', answer=firstAnswer, assessment_id=new_assessment.id)
+        first_answer = Question(indexInAssessment=0, question=firstQuestion, answer=firstAnswer, assessment_id=new_assessment.id)
         db.session.add(first_answer)
-        second_answer = Question(indexInAssessment=1, question='', answer=secondAnswer, assessment_id=new_assessment.id)
+        second_answer = Question(indexInAssessment=1, question=secondQuestion, answer=secondAnswer, assessment_id=new_assessment.id)
         db.session.add(second_answer)
-        third_answer = Question(indexInAssessment=2, question='', answer=thirdAnswer, assessment_id=new_assessment.id)
+        third_answer = Question(indexInAssessment=2, question=thirdQuestion, answer=thirdAnswer, assessment_id=new_assessment.id)
         db.session.add(third_answer)
-        forth_answer = Question(indexInAssessment=0, question='', answer=forthAnswer, assessment_id=new_assessment.id)
+        forth_answer = Question(indexInAssessment=0, question=forthQuestion, answer=forthAnswer, assessment_id=new_assessment.id)
         db.session.add(forth_answer)
-        fifth_answer = Question(indexInAssessment=0, question='', answer=fifthAnswer, assessment_id=new_assessment.id)
+        fifth_answer = Question(indexInAssessment=0, question=fifthQuestion, answer=fifthAnswer, assessment_id=new_assessment.id)
         db.session.add(fifth_answer)
-        sixth_answer = Question(indexInAssessment=0, question='', answer=sixthAnswer, assessment_id=new_assessment.id)
+        sixth_answer = Question(indexInAssessment=0, question=sixthQuestion, answer=sixthAnswer, assessment_id=new_assessment.id)
         db.session.add(sixth_answer)
         db.session.commit()
         session['page'] = 'main_menu'
@@ -123,5 +125,4 @@ def settings():
 @views.route('/backToMain', methods=['GET'])
 def backToMain():
     session['page'] = 'main_menu'
-    session['current_game'] = 0 # reset ao jogo escolhido
     return redirect(url_for('views.home'))

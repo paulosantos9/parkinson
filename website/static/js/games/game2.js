@@ -1,3 +1,4 @@
+// Defining variables
 var delay = 5;
 var maxTime = 5;
 let difference = 0;
@@ -5,6 +6,20 @@ let numberInString = '';
 let isCountingDown = true;
 let counterClicks = 0;
 let sentPostWithScore = false;
+
+// Function needed
+
+function sendPostWithScore() {
+    sentPostWithScore = true;
+    let data = {'score': counterClicks, 'gameType': 2};
+    fetch("/game", {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'}, 
+        body: JSON.stringify(data)
+    }).then(res => {
+        window.location.replace('/');
+    });
+}
 
 function updateTimer(starterTimer) {
     if (sentPostWithScore == false) {
@@ -20,7 +35,6 @@ function updateTimer(starterTimer) {
         if (difference >= maxTime & isCountingDown == false) { // finish
             difference = maxTime;
             sentPostWithScore = true;
-            console
             setTimeout(sendPostWithScore, 3000);
         }
         let differenceDecimals = Math.floor(difference*10) / 10;
@@ -42,31 +56,20 @@ function updateTimer(starterTimer) {
     }
 }
 
-function sendPostWithScore() {
-    sentPostWithScore = true;
-    let data = {'score': counterClicks, 'gameType': 2};
-    fetch("/game", {
-        method: "POST",
-        headers: {'Content-Type': 'application/json'}, 
-        body: JSON.stringify(data)
-    }).then(res => {
-        window.location.replace('/');
-    });
-}
-
-function cyclic() {
+function startGame() {
     let now = new Date();
     let countdownTime = new Date(now.getTime() + delay*1000); // 10 segundos depois
     setInterval(function() { updateTimer(countdownTime); }, 10);
 }
 
-cyclic();
-
-function addCounter() {
-    if (isCountingDown == false && difference < maxTime) {
-        counterClicks++;
-    }
+document.getElementById('start-game').onclick = function() {
+    document.getElementById('start-game').style.display = 'none';
+    document.getElementById('container').style.display = 'block';
+    startGame();
 }
 
-var divJogo = document.getElementById('jogo_div');
-divJogo.onclick = addCounter;
+var divJogo = document.getElementById('jogo_div').onclick = function() {
+    if (isCountingDown == false && difference < maxTime) {
+        counterClicks++;
+    }   
+};

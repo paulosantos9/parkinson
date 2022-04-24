@@ -23,8 +23,8 @@ def manageSession():
     return error, typeOfContainer
 
 def chooseGame(numberOfGames):
-    num1= randint(1,numberOfGames)
-    game = '/games/game' + str(num1) + '.html'
+    number= randint(1,numberOfGames)
+    game = '/games/game' + str(number) + '.html'
     return game
 
 def isPasswordValid(password, password_confirm):

@@ -1,21 +1,17 @@
-let delay = 3;
+// Defining variables
+var delay = 3;
 var randomNumber = Math.random();
 var timerTapSeconds = Math.floor(randomNumber*3);
 var timerTapMiliseconds = Math.floor((randomNumber*3 - timerTapSeconds) * 1000);
-var totalTimer = (timerTapSeconds+delay)*1000 + timerTapMiliseconds; // in miliseconds
-
-function changeColor() {
-    document.querySelector('.jogo').style.background = '#BD780A';
-    startCounting();   
-}
-
-setTimeout(changeColor, totalTimer); // change color after random timer
-
-// =====================================================================
+var totalTimer = (timerTapSeconds+delay)*1000 + timerTapMiliseconds;
 let difference = 0;
 let numberInString = '';
 let starterTimer;
 var inGame = false;
+
+document.getElementById('jogo_div').onclick = endGame; // add function to the game div on click
+
+// Setting up functions
 
 function calculateDifference() {
     let now = new Date();
@@ -29,19 +25,6 @@ function convertToSecondsString() {
     let arrayNumbers = numberInString.split('.');
     if (arrayNumbers.length === numberInString.length) {
         numberInString += '.0'
-    }
-}
-
-function updateTimer() {
-    if (inGame) {
-        calculateDifference();
-        convertToSecondsString();
-        if (difference > 10000) {
-            endGame();
-        } else {
-            console.log()
-            document.querySelector('.timer').textContent = numberInString + ' s';
-        }
     }
 }
 
@@ -65,7 +48,6 @@ function endGame() {
             numberInString = '10';
         } else {
             convertToSecondsString();
-            console.log(numberInString)
             if (numberInString.split('.')[1] !== undefined) {
                 if (numberInString.split('.')[1].length !== 3) {
                     numberInString += '0'
@@ -84,8 +66,19 @@ function endGame() {
         }
         document.querySelector('.timer').style.fontSize = "1.2em";
         document.querySelector('.timer').textContent = 'Guardando resultado: ' + numberInString + ' s';
-        console.log(difference)
         setTimeout(sendPostWithScore, 2000); // voltar ao menu principal
+    }
+}
+
+function updateTimer() {
+    if (inGame) {
+        calculateDifference();
+        convertToSecondsString();
+        if (difference > 10000) {
+            endGame();
+        } else {
+            document.querySelector('.timer').textContent = numberInString + ' s';
+        }
     }
 }
 
@@ -96,5 +89,17 @@ function startCounting() {
     setInterval(function() { updateTimer(); }, 10);
 }
 
-document.getElementById('jogo_div').onclick = endGame; // add function to the game div on click
+function changeColor() {
+    document.querySelector('.jogo').style.background = '#BD780A';
+    startCounting();   
+}
 
+function startGame() {
+    setTimeout(changeColor, totalTimer); // change color and start game
+}
+
+document.getElementById('start-game').onclick = function() {
+    document.getElementById('start-game').style.display = 'none';
+    document.getElementById('container').style.display = 'block';
+    startGame();
+}

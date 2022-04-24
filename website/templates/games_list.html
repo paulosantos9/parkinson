@@ -19,9 +19,12 @@
       <div class="title">Jogos:</div>
       <div class="gamesDiv">
         {% for game in games %}
-        <div class="listDiv">
-          Score: {{ game.score }} | Jogo: {{ game.gameTypeIndex }}
-        </div>
+        <span class="listDiv">
+          <span class="align-center">
+            <p>Score: {{ game.score }}</p>
+            <p>Jogo: {{ game.gameTypeIndex }}</p>
+          </span>
+        </span>
         {% endfor %}
       </div>
       <div class="listDiv" id="back">< Voltar</div>

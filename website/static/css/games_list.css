@@ -28,7 +28,6 @@ input {
   border: 2px #5995fd solid;
   color: #5995fd;
   outline: none;
-  height: 75px;
   font-size: 1.5em;
   border-radius: 15px;
   margin: 10px 0;
@@ -47,8 +46,10 @@ input {
 @media (max-width: 870px) {
 
   .listDiv {
-    height: 49px;
     font-size: 1.2em;
   }
 }
 
+.align-center {
+  margin: 0 auto;
+}
