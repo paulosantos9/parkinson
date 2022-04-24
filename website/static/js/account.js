@@ -3,7 +3,7 @@ document.getElementById('results').onclick = function() {
 };
 
 document.getElementById('assessments').onclick = function() {
-    alert('Em desenvolvimento')
+    window.location.replace('/assessments');
 };
 
 document.getElementById('settings').onclick = function() {

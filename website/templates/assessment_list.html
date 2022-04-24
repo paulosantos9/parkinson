@@ -6,7 +6,7 @@
     <script src="{{ url_for('static', filename='js/font-awesome.js') }}"></script>
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='css/games_list.css') }}"
+      href="{{ url_for('static', filename='css/assessment_list.css') }}"
     />
     <title>Parkinson</title>
     <link
@@ -18,11 +18,17 @@
     <div class="gamesContainer">
       <div class="title">Jogos:</div>
       <div class="gamesDiv">
-        {% for game in games %}
-        <div class="listDiv">
-          Score: {{ game.score }} | Jogo: {{ game.gameTypeIndex }}
-        </div>
-        {% endfor %}
+        {% if assessmentList %}
+            {% for assessment in assessmentList %}
+            <div class="listDiv">
+                {% for i in range(assessment.questions|length) %}
+                    <p>Pergunta {{i}}: {{ assessment.questions[i].answer }}</p>
+                {% endfor %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Sem dados.</p>
+        {% endif %}
       </div>
       <div class="listDiv" id="back">< Voltar</div>
     </div>

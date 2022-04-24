@@ -25,7 +25,7 @@ def home():
             return render_template('login_signup.html')
 
         elif (current_page == 'game'):
-            if (session.get('current_game') == 0):
+            if (session.get('current_game') == 0 or session.get('current_game') == None):
                 numberOfGames = 2
                 current_game = chooseGame(numberOfGames)
                 session['current_game'] = current_game
@@ -37,14 +37,15 @@ def home():
             return render_template('account.html')
 
         elif (current_page == 'games_list'):
-            gamesList = Game.query.filter_by(patient_id=current_user.id).all()
+            gamesList = Assessment.query.filter_by(patient_id=current_user.id).all()
             return render_template('games_list.html', games=gamesList)
 
         elif (current_page == 'assessment'):
             return render_template('assessment.html') # TO DO
 
         elif (current_page == 'assessmentList'):
-            return render_template('assessmentList.html') # TO DO
+            assessmentList = Assessment.query.filter_by(patient_id=current_user.id).all()
+            return render_template('assessment_list.html', assessmentList=assessmentList)
 
         else:
             error, typeOfContainer = manageSession()

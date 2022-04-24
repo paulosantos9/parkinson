@@ -35,13 +35,11 @@ function convertToSecondsString() {
 function updateTimer() {
     if (inGame) {
         calculateDifference();
-        if( difference > 10000) {
-            difference = 10000;
-        }
         convertToSecondsString();
-        if (difference == 10000) {
+        if (difference > 10000) {
             endGame();
         } else {
+            console.log()
             document.querySelector('.timer').textContent = numberInString + ' s';
         }
     }
@@ -64,16 +62,29 @@ function endGame() {
         calculateDifference();
         if( difference > 10000) {
             difference = 10000;
-            difference = '10';
+            numberInString = '10';
         } else {
-            difference = difference / 1000;
-            difference = difference.toString();
-            if (difference.split('.')[1].length !== 3) {
-                difference += '0'
+            convertToSecondsString();
+            console.log(numberInString)
+            if (numberInString.split('.')[1] !== undefined) {
+                if (numberInString.split('.')[1].length !== 3) {
+                    numberInString += '0'
+                }
+            } else {
+                numberInString += '.0'
             }
         }
+        numberInString = (difference / 1000).toString();
+        if (numberInString.split('.')[1] !== undefined) {
+            while (numberInString.split('.')[1].length !== 3) {
+                numberInString += '0'
+            }
+        } else {
+            numberInString += '.000'
+        }
         document.querySelector('.timer').style.fontSize = "1.2em";
-        document.querySelector('.timer').textContent = 'Guardando resultado: ' + difference + ' s';
+        document.querySelector('.timer').textContent = 'Guardando resultado: ' + numberInString + ' s';
+        console.log(difference)
         setTimeout(sendPostWithScore, 2000); // voltar ao menu principal
     }
 }
