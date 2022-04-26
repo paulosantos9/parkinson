@@ -21,7 +21,7 @@ input {
 }
 
 .title {
-  font-size: 2.5rem;
+  font-size: 1.4rem;
   color: #444;
   margin: 10px auto;
   text-align: center;
@@ -29,7 +29,8 @@ input {
 }
 
 .btn {
-  width: 150px;
+  max-width: 380px;
+  width: 100%;
   background-color: #5995fd;
   border: none;
   outline: none;
@@ -72,7 +73,7 @@ input {
 @media (max-width: 800px) {
 
   .title {
-    font-size: 2rem;
+    font-size: 1.2rem;
   }
 }
   
@@ -82,7 +83,7 @@ input {
   }
 
   .title {
-    font-size: 1.3rem;
+    font-size: 1rem;
   }
   
 }

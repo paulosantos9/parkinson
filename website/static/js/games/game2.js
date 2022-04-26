@@ -46,7 +46,7 @@ function updateTimer(starterTimer) {
         if (isCountingDown) {
             document.querySelector('.timer').textContent = numberInString + ' s';
         } else {
-            document.querySelector('.timer').textContent = 'Clicks ' + counterClicks + ' - ' + numberInString + ' s';
+            document.querySelector('.timer').textContent = 'Cliques ' + counterClicks + ' - ' + numberInString + ' s';
             document.querySelector('.timer').style.fontSize = "1.5em";
             document.querySelector('.jogo').style.background = '#BD780A';
         }

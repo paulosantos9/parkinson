@@ -37,31 +37,31 @@ def home():
             elif (current_page == 'games_list'):
                 gamesList = Game.query.filter_by(patient_id=current_user.id, ).all()
                 availableGames = ['Reação', 'Rapidez', 'Memória']
+                typeOfActions = ['segundos', 'cliques', 'tentativas']
                 recordAvailableGames = []
                 for i in range(len(availableGames)):
                     tempGameList = Game.query.filter_by(patient_id=current_user.id, gameTypeIndex=i+1).all()
                     tempRecord = 0
-                    if (i == 1):
+                    if (i == 0):
                         # Tempo reação
                         tempRecord = 10000
                         for game in tempGameList:
                             if (int(game.score) < tempRecord):
                                 tempRecord = int(game.score)
-                    elif (i == 2):
-                        # Nº clicks
+                    elif (i == 1):
+                        # Nº cliques
                         tempRecord = 0
                         for game in tempGameList:
                             if (int(game.score) > tempRecord):
                                 tempRecord = int(game.score)
-                    elif (i == 3):
+                    elif (i == 2):
                         # Memória
                         tempRecord = 10000
                         for game in tempGameList:
                             if (int(game.score) < tempRecord):
                                 tempRecord = int(game.score)
-
                     recordAvailableGames.append(tempRecord)
-                return render_template('games_list.html', gamesList=gamesList, availableGames=availableGames, recordAvailableGames=recordAvailableGames)
+                return render_template('games_list.html', gamesList=gamesList, availableGames=availableGames, recordAvailableGames=recordAvailableGames, typeOfActions=typeOfActions)
 
             elif (current_page == 'assessment'):
                 return render_template('assessment.html') # TO DO
