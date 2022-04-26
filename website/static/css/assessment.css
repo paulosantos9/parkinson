@@ -9,7 +9,6 @@
 body,
 input {
   font-family: "Poppins", sans-serif;
-  overflow-x: hidden;
 }
 
 .container {
@@ -28,20 +27,31 @@ input {
   overflow:auto;
 }
 
+.button-div {
+  width: 60%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+
 .btn {
-  max-width: 380px;
-  width: 100%;
   background-color: #5995fd;
   border: none;
   outline: none;
+  height: 49px;
   border-radius: 49px;
   color: #fff;
   text-transform: uppercase;
   font-weight: 600;
-  margin: 10px auto;
+  margin-top: 10px;
   cursor: pointer;
   transition: 0.5s;
-  display: block;
+  display: inline;
+  width: 49%;
+}
+
+.btn:hover {
+  background-color: #4d84e2;
 }
 
 .btn:hover {
@@ -49,15 +59,15 @@ input {
 }
 
 .question {
-  max-width: 380px;
-  width: 100%;
+  width: 60%;
   background-color: #f0f0f0;
-  margin: 10px auto;
+  margin: 50px auto;
   min-height: 55px;
   border-radius: 15px;
   display: grid;
   padding: 0.5rem;
   position: relative;
+  display: none;
 }
   
 .question input {
@@ -75,6 +85,15 @@ input {
   .title {
     font-size: 1.2rem;
   }
+
+  .question {
+    width: 75%;
+  }
+
+  .button-div {
+    width: 75%;
+  }
+  
 }
   
 @media (max-width: 570px) {
@@ -85,12 +104,19 @@ input {
   .title {
     font-size: 1rem;
   }
+
+  .question {
+    width: 100%;
+  }
+
+  .button-div {
+    width: 100%;
+  }
   
 }
 
 p {
-  max-width: 380px;
-  margin: 10px auto;
+  margin: 10px;
 }
 
 .answer {

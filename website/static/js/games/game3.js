@@ -117,8 +117,13 @@ let cardTapped = [];
 let tapCounter = 0;
 let tries = 0;
 
+document.getElementById('exit-game').onclick = function() {
+    window.location.replace('/backToMain')
+}
+
 document.getElementById('start-game').onclick = function() {
     document.getElementById('start-game').style.display = 'none';
+    document.getElementById('exit-game').style.display = 'none';
     document.getElementById('content').style.display = 'block';
     document.getElementsByTagName('h2')[0].style.display = 'block';
 }

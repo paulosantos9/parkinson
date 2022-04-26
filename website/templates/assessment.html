@@ -16,11 +16,11 @@
   </head>
   <body>
     <div class="container">
-      <form action="/assessment" class="sign-up-form" method="POST">
+      <div action="/assessment" class="sign-up-form" method="POST">
         <h2 class="title" id="title">Responda às seguintes perguntas.</h2>
         <div class="question">
           <p>
-            Durante a última semana teve dificuldades em lembrar-se de coisas,
+            1. Durante a última semana teve dificuldades em lembrar-se de coisas,
             seguir conversas, prestar atenção, pensar claramente ou encontrar os
             caminhos em casa ou na cidade?
           </p>
@@ -30,6 +30,7 @@
               id="first-answer-0"
               name="first-answer"
               value="0-Normal"
+              checked
             />
             <label for="first-answer-0">0 - Normal</label>
           </div>
@@ -72,7 +73,7 @@
         </div>
         <div class="question">
           <p>
-            Durante a última semana viu, cheirou, ouviu ou sentiu coisas que não estavam mesmo no local?
+            2. Durante a última semana viu, cheirou, ouviu ou sentiu coisas que não estavam mesmo no local?
           </p>
           <div class="answer">
             <input
@@ -80,6 +81,7 @@
               id="second-answer-0"
               name="second-answer"
               value="0-Normal"
+              checked
             />
             <label for="second-answer-0">0 - Normal</label>
           </div>
@@ -122,7 +124,7 @@
         </div>
         <div class="question">
           <p>
-            Durante a última semana sentiu-se me baixo, triste, sem esperança ou incapaz de desfrutar das coisas?
+            3. Durante a última semana sentiu-se me baixo, triste, sem esperança ou incapaz de desfrutar das coisas?
             Se sim, este sentimento demorou mais de um dia seguido?
             Tornou dificil continuar com as atividades habituais ou estar com pessoas?
           </p>
@@ -132,6 +134,7 @@
               id="third-answer-0"
               name="third-answer"
               value="0-Normal"
+              checked
             />
             <label for="third-answer-0">0 - Normal</label>
           </div>
@@ -174,7 +177,7 @@
         </div>
         <div class="question">
           <p>
-            Durante a última semana sentiu-se nervoso, preocupado ou tenso?
+            4. Durante a última semana sentiu-se nervoso, preocupado ou tenso?
             Se sim, este sentimento demorou mais do que um dia seguido?
             Tornou dificil continuar com as atividades habituais ou estar com pessoas?
           </p>
@@ -184,6 +187,7 @@
               id="forth-answer-0"
               name="forth-answer"
               value="0-Normal"
+              checked
             />
             <label for="forth-answer-0">0 - Normal</label>
           </div>
@@ -226,7 +230,7 @@
         </div>
         <div class="question">
           <p>
-            Durante a última semana sentiu-se indiferente ao fazer atividades ou estar com outras pessoas?
+            5. Durante a última semana sentiu-se indiferente ao fazer atividades ou estar com outras pessoas?
           </p>
           <div class="answer">
             <input
@@ -234,6 +238,7 @@
               id="fifth-answer-0"
               name="fifth-answer"
               value="0-Normal"
+              checked
             />
             <label for="fifth-answer-0">0 - Normal</label>
           </div>
@@ -276,7 +281,7 @@
         </div>
         <div class="question">
           <p>
-            Durante a última semana sentiu impulsos difíceis de crontolar, como por exemplo apostar, usar o computador ou tomar mais comprimidos?
+            6. Durante a última semana sentiu impulsos difíceis de controlar, como por exemplo apostar, usar o computador ou tomar mais comprimidos?
             Sente-se levado a fazer ou a pensar em algo, e a ser dificil de parar?
           </p>
           <div class="answer">
@@ -285,6 +290,7 @@
               id="sixth-answer-0"
               name="sixth-answer"
               value="0-Normal"
+              checked
             />
             <label for="sixth-answer-0">0 - Normal</label>
           </div>
@@ -325,10 +331,11 @@
             <label for="sixth-answer-4">4 - Severa</label>
           </div>
         </div>
-        <div>
-          <input type="submit" class="btn" value="Registar" />
+        <div class="button-div">
+          <input type="button" class="btn" id="anterior" value="< Anterior" />
+          <input type="button" class="btn" id="seguinte" value="Seguinte >" />
         </div>
-      </form>
+      </div>
     </div>
 
     <script src="{{ url_for('static', filename='js/assessment.js') }}"></script>

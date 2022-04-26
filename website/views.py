@@ -116,17 +116,17 @@ def assessment():
         return redirect(url_for('views.home'))
     else:
         firstQuestion = 'Durante a última semana teve dificuldades em lembrar-se de coisas, seguir conversas, prestar atenção, pensar claramente ou encontrar os caminhos em casa ou na cidade?'
-        firstAnswer = request.form.get('first-answer')
+        firstAnswer = request.json['first-answer']
         secondQuestion = 'Durante a última semana viu, cheirou, ouviu ou sentiu coisas que não estavam mesmo no local?'
-        secondAnswer = request.form.get('second-answer')
+        secondAnswer = request.json['second-answer']
         thirdQuestion = 'Durante a última semana sentiu-se me baixo, triste, sem esperança ou incapaz de desfrutar das coisas? Se sim, este sentimento demorou mais de um dia seguido? Tornou dificil continuar com as atividades habituais ou estar com pessoas?'
-        thirdAnswer = request.form.get('third-answer')
+        thirdAnswer = request.json['third-answer']
         forthQuestion = 'Durante a última semana sentiu-se nervoso, preocupado ou tenso? Se sim, este sentimento demorou mais do que um dia seguido? Tornou dificil continuar com as atividades habituais ou estar com pessoas?'
-        forthAnswer = request.form.get('forth-answer')
+        forthAnswer = request.json['forth-answer']
         fifthQuestion = 'Durante a última semana sentiu-se indiferente ao fazer atividades ou estar com outras pessoas?'
-        fifthAnswer = request.form.get('fifth-answer')
-        sixthQuestion = 'Durante a última semana sentiu impulsos difíceis de crontolar, como por exemplo apostar, usar o computador ou tomar mais comprimidos? Sente-se levado a fazer ou a pensar em algo, e a ser dificil de parar?'
-        sixthAnswer = request.form.get('sixth-answer')
+        fifthAnswer = request.json['fifth-answer']
+        sixthQuestion = 'Durante a última semana sentiu impulsos difíceis de controlar, como por exemplo apostar, usar o computador ou tomar mais comprimidos? Sente-se levado a fazer ou a pensar em algo, e a ser dificil de parar?'
+        sixthAnswer = request.json['sixth-answer']
         new_assessment = Assessment(testType='UPDRS', patient_id=current_user.id, currentTime=datetime.now())
         db.session.add(new_assessment)
         db.session.commit() # to be able to get the assessment id

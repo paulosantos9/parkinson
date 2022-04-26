@@ -99,8 +99,13 @@ function startGame() {
     setTimeout(changeColor, totalTimer); // change color and start game
 }
 
+document.getElementById('exit-game').onclick = function() {
+    window.location.replace('/backToMain')
+}
+
 document.getElementById('start-game').onclick = function() {
     document.getElementById('start-game').style.display = 'none';
+    document.getElementById('exit-game').style.display = 'none';
     document.getElementById('container').style.display = 'block';
     startGame();
 }
