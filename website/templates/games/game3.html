@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="{{ url_for('static', filename='js/font-awesome.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/games/game3.css') }}"/>
+    <title>Parkinson</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/brain.ico') }}">
+  </head>
+  <body>
+    <div class="box">
+        <div class="row header pre-game" id="pre-game">
+            <h1>Memória</h1>
+            <p>Procure as cartas que contêm as mesmas letras.</p>
+            <h2>Tentativas: 0</h2>
+            <button id="start-game">Começar</button>
+        </div>
+        <div class="row content" id="content">
+            <div class="board">
+                <div class="first-row">
+                    <div class="cell"><div class="card" id="cell-1-1"><span class="cell-content"></span></div></div>
+                    <div class="cell"><div class="card" id="cell-1-2"><span class="cell-content"></span></div></div>
+                    <div class="cell"><div class="card" id="cell-1-3"><span class="cell-content"></span></div></div>
+                    <div class="cell"><div class="card" id="cell-1-4"><span class="cell-content"></span></div></div>
+                </div>
+                <div class="second-row">
+                    <div class="cell"><div class="card" id="cell-2-1"><span class="cell-content"></span></div></div>
+                    <div class="cell"><div class="card" id="cell-2-2"><span class="cell-content"></span></div></div>
+                    <div class="cell"><div class="card" id="cell-2-3"><span class="cell-content"></span></div></div>
+                    <div class="cell"><div class="card" id="cell-2-4"><span class="cell-content"></span></div></div>
+                </div>
+                <div class="third-row">
+                    <div class="cell"><div class="card" id="cell-3-1"><span class="cell-content"></span></div></div>
+                    <div class="cell"><div class="card" id="cell-3-2"><span class="cell-content"></span></div></div>
+                    <div class="cell"><div class="card" id="cell-3-3"><span class="cell-content"></span></div></div>
+                    <div class="cell"><div class="card" id="cell-3-4"><span class="cell-content"></span></div></div>
+                </div>
+                <div class="forth-row">
+                    <div class="cell"><div class="card" id="cell-4-1"><span class="cell-content"></span></div></div>
+                    <div class="cell"><div class="card" id="cell-4-2"><span class="cell-content"></span></div></div>
+                    <div class="cell"><div class="card" id="cell-4-3"><span class="cell-content"></span></div></div>
+                    <div class="cell"><div class="card" id="cell-4-4"><span class="cell-content"></span></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/games/game3.js') }}"></script>
+  </body>
+</html>

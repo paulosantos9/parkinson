@@ -23,10 +23,10 @@ input {
   align-content: center;
   flex-direction: column;
   text-align: center;
-
+  
+  color: black;
   width: 100%;
   border: 2px #5995fd solid;
-  color: #5995fd;
   outline: none;
   font-size: 1.5em;
   border-radius: 15px;
@@ -52,4 +52,12 @@ input {
 
 .align-center {
   margin: 0 auto;
+}
+
+.game-data-inner {
+  display: none;
+}
+
+.show-data {
+  display: block;
 }

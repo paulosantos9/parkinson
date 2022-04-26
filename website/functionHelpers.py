@@ -10,8 +10,10 @@ from flask import render_template, helpers
 def checkIfUserComplete():
     if (current_user.name == '' or current_user.phoneNumber == '' or current_user.bornDate == datetime.datetime(1900, 1, 1) or  current_user.gender == '' or current_user.patientNumber == ''):
         session['page'] = 'settings'
+        return False
     else:
         session['page'] = 'main_menu'
+        return True
 
 def manageSession():
     error = session.get('error')

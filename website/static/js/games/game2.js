@@ -51,7 +51,8 @@ function updateTimer(starterTimer) {
             document.querySelector('.jogo').style.background = '#BD780A';
         }
         if (sentPostWithScore == true) {
-            document.querySelector('.timer').textContent = 'Guardando resultado... ' + counterClicks + ' clicks';
+            document.querySelector('.timer').style.fontFamily = "Poppins, sans-serif";
+            document.querySelector('.timer').innerText = 'Guardando resultado:\n' + counterClicks + ' clicks';
         }
     }
 }

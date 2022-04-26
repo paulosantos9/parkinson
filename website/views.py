@@ -11,41 +11,75 @@ views = Blueprint('views', __name__)
 def home():
     current_page = session.get('page')
     if current_user.is_authenticated:
-        if (current_page == 'main_menu'):
-            return render_template('main_menu.html')
+        if checkIfUserComplete():
+            session['page'] = current_page
+            if (current_page == 'main_menu'):
+                return render_template('main_menu.html')
 
-        elif (current_page == 'settings'):
+            elif (current_page == 'settings'):
+                return render_template('settings.html', patient_id=current_user.id, patient_username=current_user.username,
+                patient_email=current_user.email, patient_name=current_user.name, patient_phoneNumber=current_user.phoneNumber,
+                patient_bornDate=current_user.bornDate, patient_gender=current_user.gender, patient_patientNumber=current_user.patientNumber,
+                patient_alzheimer=current_user.alzheimer, patient_parkinson=current_user.parkinson, patient_observations=current_user.observations,
+                patient_doctor_id=current_user.doctor_id, patient_assessments=current_user.assessments, patient_games=current_user.games)
+        
+            elif (current_page == 'login_signup'):
+                return render_template('login_signup.html')
+
+            elif (current_page == 'game'):
+                numberOfGames = 3
+                current_game = chooseGame(numberOfGames)
+                return render_template(current_game)
+        
+            elif (current_page == 'account'):
+                return render_template('account.html')
+
+            elif (current_page == 'games_list'):
+                gamesList = Game.query.filter_by(patient_id=current_user.id, ).all()
+                availableGames = ['Reação', 'Rapidez', 'Memória']
+                recordAvailableGames = []
+                for i in range(len(availableGames)):
+                    tempGameList = Game.query.filter_by(patient_id=current_user.id, gameTypeIndex=i+1).all()
+                    tempRecord = 0
+                    if (i == 1):
+                        # Tempo reação
+                        tempRecord = 10000
+                        for game in tempGameList:
+                            if (int(game.score) < tempRecord):
+                                tempRecord = int(game.score)
+                    elif (i == 2):
+                        # Nº clicks
+                        tempRecord = 0
+                        for game in tempGameList:
+                            if (int(game.score) > tempRecord):
+                                tempRecord = int(game.score)
+                    elif (i == 3):
+                        # Memória
+                        tempRecord = 10000
+                        for game in tempGameList:
+                            if (int(game.score) < tempRecord):
+                                tempRecord = int(game.score)
+
+                    recordAvailableGames.append(tempRecord)
+                return render_template('games_list.html', gamesList=gamesList, availableGames=availableGames, recordAvailableGames=recordAvailableGames)
+
+            elif (current_page == 'assessment'):
+                return render_template('assessment.html') # TO DO
+
+            elif (current_page == 'assessmentList'):
+                assessmentList = Assessment.query.filter_by(patient_id=current_user.id).all()
+                return render_template('assessment_list.html', assessmentList=assessmentList)
+
+            else:
+                error, typeOfContainer = manageSession()
+                return render_template('login_signup.html', error=error, typeOfContainer=typeOfContainer)
+        else:
             return render_template('settings.html', patient_id=current_user.id, patient_username=current_user.username,
             patient_email=current_user.email, patient_name=current_user.name, patient_phoneNumber=current_user.phoneNumber,
             patient_bornDate=current_user.bornDate, patient_gender=current_user.gender, patient_patientNumber=current_user.patientNumber,
             patient_alzheimer=current_user.alzheimer, patient_parkinson=current_user.parkinson, patient_observations=current_user.observations,
             patient_doctor_id=current_user.doctor_id, patient_assessments=current_user.assessments, patient_games=current_user.games)
         
-        elif (current_page == 'login_signup'):
-            return render_template('login_signup.html')
-
-        elif (current_page == 'game'):
-            numberOfGames = 2
-            current_game = chooseGame(numberOfGames)
-            return render_template(current_game)
-        
-        elif (current_page == 'account'):
-            return render_template('account.html')
-
-        elif (current_page == 'games_list'):
-            gamesList = Game.query.filter_by(patient_id=current_user.id).all()
-            return render_template('games_list.html', games=gamesList)
-
-        elif (current_page == 'assessment'):
-            return render_template('assessment.html') # TO DO
-
-        elif (current_page == 'assessmentList'):
-            assessmentList = Assessment.query.filter_by(patient_id=current_user.id).all()
-            return render_template('assessment_list.html', assessmentList=assessmentList)
-
-        else:
-            error, typeOfContainer = manageSession()
-            return render_template('login_signup.html', error=error, typeOfContainer=typeOfContainer)
     else:
         error, typeOfContainer = manageSession()
         return render_template('login_signup.html', error=error, typeOfContainer=typeOfContainer)

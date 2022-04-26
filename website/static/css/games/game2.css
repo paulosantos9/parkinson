@@ -60,17 +60,20 @@ p {
 }
 
 button {
+  height: 150px;
   width: 60vw;
   border: 2px #5995fd solid;
   color: #5995fd;
   background-color: #fff;
   outline: none;
-  height: 150px;
   font-size: 1.5em;
   border-radius: 49px;
   text-transform: uppercase;
   font-weight: 600;
-  margin: 20vw;
   cursor: pointer;
   transition: 0.5s;
+
+  position: absolute;
+  top: 50%;
+  left: 20%;
 }

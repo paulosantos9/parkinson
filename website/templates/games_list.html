@@ -16,16 +16,24 @@
   </head>
   <body>
     <div class="gamesContainer">
-      <div class="title">Jogos:</div>
       <div class="gamesDiv">
-        {% for game in games %}
-        <span class="listDiv">
-          <span class="align-center">
-            <p>Score: {{ game.score }}</p>
-            <p>Jogo: {{ game.gameTypeIndex }}</p>
+        {% if gamesList %}
+          <div class="title">Jogos:</div>
+          {% for game in gamesList %}
+          <span class="listDiv game-data" onclick="changeDisplay('game-data-{{game.id}}')">
+            <span class="align-center"><p>{{ game.currentTime.strftime('%d/%m/%y %H:%M') }}</p></span>
+            <div class="game-data-inner" id="game-data-{{game.id}}">
+              <hr>
+              <p>Score: {{ game.score }}</p>
+              <p>Jogo: {{ availableGames[game.gameTypeIndex - 1] }}</p>
+              <br>
+              <p>Recorde: {{ recordAvailableGames[game.gameTypeIndex - 1] }}</p>
+            </div>
           </span>
-        </span>
-        {% endfor %}
+          {% endfor %}
+        {% else %}
+          <div class="title">Sem dados.</div>
+        {% endif %}
       </div>
       <div class="listDiv" id="back">< Voltar</div>
     </div>
