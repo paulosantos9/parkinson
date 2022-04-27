@@ -30,13 +30,17 @@ function checkIfPair() {
 }
 
 function checkIfOver() {
-    let numberOfCells = 16;
-    for (let i = 0; i < numberOfCells; i++) {
-        if (document.getElementsByClassName('cell-content')[i].style.color === 'aqua' || document.getElementsByClassName('cell-content')[i].style.color === '') {
-            return false;
+    if (tries >= maxTries) {
+        return true;
+    } else {
+        let numberOfCells = 16;
+        for (let i = 0; i < numberOfCells; i++) {
+            if (document.getElementsByClassName('cell-content')[i].style.color === '#5995fd' || document.getElementsByClassName('cell-content')[i].style.color === '') {
+                return false;
+            }
         }
+        return true;
     }
-    return true;
 }
 
 function sendPostWithScore() {
@@ -50,17 +54,13 @@ function sendPostWithScore() {
     });
 }
 
-function checkIfCardTurned() {
-
-}
-
 function cardClicked() {   
     tapCounter++;
     if (tapCounter !== 3) {
         let card = this.children[0];
         let cellContent = card.children[0];
-        if ( cellContent.style.color !== 'black') {
-            cellContent.style.color = 'black';
+        if ( cellContent.style.color !== 'white') {
+            cellContent.style.color = 'white';
             cardTapped.push(card.children[0])
             if (tapCounter === 2) {
                 if ( checkIfPair() === true) { // If cards are the same reset counters
@@ -88,8 +88,8 @@ function cardClicked() {
         
         // reset turned cards if needed
         if ( checkIfPair() === false) {
-            cardTapped[0].style.color = 'aqua';
-            cardTapped[1].style.color = 'aqua';      
+            cardTapped[0].style.color = '#5995fd';
+            cardTapped[1].style.color = '#5995fd';      
         }
 
         // reset variables
@@ -98,7 +98,8 @@ function cardClicked() {
             document.getElementsByTagName('h2')[0].innerText = 'Guardando resultado:\n' + tries + ' tentativas';
         } else {
             document.getElementsByTagName('h2')[0].innerText = 'Tentativas: ' + tries;
-        }        cardTapped.pop();
+        }
+        cardTapped.pop();
         cardTapped.pop();
         tapCounter = 0;
     }
@@ -116,6 +117,7 @@ setListeners();
 let cardTapped = [];
 let tapCounter = 0;
 let tries = 0;
+let maxTries = 100;
 
 document.getElementById('exit-game').onclick = function() {
     window.location.replace('/backToMain')

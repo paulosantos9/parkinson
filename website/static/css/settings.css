@@ -28,20 +28,32 @@ input {
   overflow:auto;
 }
 
+.button-div {
+  width: 40%;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
 .btn {
-  width: 150px;
   background-color: #5995fd;
   border: none;
   outline: none;
-  height: 49px;
+  height: 75px;
+  font-size: 1.5rem;
   border-radius: 49px;
   color: #fff;
   text-transform: uppercase;
   font-weight: 600;
-  margin: 10px auto;
   cursor: pointer;
   transition: 0.5s;
-  display: block;
+  display: inline;
+  width: 49%;
+}
+
+.btn:hover {
+  background-color: #4d84e2;
 }
 
 .btn:hover {
@@ -49,21 +61,21 @@ input {
 }
 
 .input-field {
-  max-width: 380px;
-  width: 100%;
+  width: 40%;
   background-color: #f0f0f0;
   margin: 10px auto;
-  height: 55px;
+  height: 75px;
   border-radius: 55px;
   display: grid;
   grid-template-columns: 15% 85%;
   padding: 0 0.4rem;
   position: relative;
+  font-size: 1.2rem;
 }
   
 .input-field i {
   text-align: center;
-  line-height: 55px;
+  line-height: 75px;
   color: #acacac;
   transition: 0.5s;
   font-size: 1.1rem;
@@ -94,6 +106,15 @@ input {
   .title {
     font-size: 2rem;
   }
+
+  .button-div, .input-field {
+    width: 75%;
+  }
+
+  .btn {
+    height: 50px;
+    font-size: 1.2rem;
+  }
 }
   
 @media (max-width: 570px) {
@@ -105,6 +126,13 @@ input {
     font-size: 1.3rem;
   }
   
+  .button-div, .input-field {
+    width: 100%;
+  }
+
+  .btn {
+    font-size: 1rem;
+  }
 }
   
   

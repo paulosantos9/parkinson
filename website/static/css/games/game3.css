@@ -5,14 +5,11 @@
   padding: 0;
   box-sizing: border-box;
   user-select: none;
+  font-family: "Poppins", sans-serif;
 }
 
 html, body {
     height: 100%;
-}
-
-body {
-  font-family: "Poppins", sans-serif;
 }
 
 .box {
@@ -50,7 +47,7 @@ body {
 }
 
 .second-row, .third-row, .forth-row {
-    margin-top: 2.5%;
+    margin-top: 2%;
 }
 
 .cell {
@@ -64,17 +61,18 @@ body {
     border: 2px solid black;
     border-radius: 10px;
     height: 100%;
-    background-color: aqua;
+    background-color: #5995fd;
     display:flex;
     justify-content: center;
     align-items: center;
+    font-weight: 600;
 }
 
 span {
     display: table;
     margin: 0 auto;
     font-size: 2em;
-    color: aqua;
+    color: #5995fd;
 }
 
 h2, .content {
@@ -86,21 +84,22 @@ p {
 }
 
 .button-div {
-    width: 90%;
+    width: 60%;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
   
     position: absolute;
     top: 50%;
-    left: 5%;
+    left: 20%;
 }
   
 .btn {
     background-color: #5995fd;
     border: none;
     outline: none;
-    height: 49px;
+    height: 75px;
+    font-size: 1.5rem;
     border-radius: 49px;
     color: #fff;
     text-transform: uppercase;
@@ -109,4 +108,22 @@ p {
     transition: 0.5s;
     display: inline;
     width: 49%;
+}
+
+@media (max-width: 870px) {
+    .button-div {
+      width: 80%;
+      left: 10%;
+    }
+  
+    .btn {
+      height: 50px;
+      font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 570px) {
+    .btn {
+        font-size: 1rem;
+    }
 }

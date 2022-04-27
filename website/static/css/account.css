@@ -41,19 +41,20 @@ input {
 }
 
 .btn {
-  width: 100%;
-  border: 2px #5995fd solid;
-  color: #5995fd;
-  background-color: #fff;
+  background-color: #5995fd;
+  border: none;
   outline: none;
   height: 75px;
-  font-size: 1.5em;
+  font-size: 1.5rem;
   border-radius: 49px;
+  color: #fff;
   text-transform: uppercase;
   font-weight: 600;
-  margin: 10px 0;
   cursor: pointer;
   transition: 0.5s;
+  display: inline;
+  width: 100%;
+  margin: 10px 0;
 }
 
 .panels-container {
@@ -156,8 +157,8 @@ input {
   }
 
   .btn {
-    height: 49px;
-    font-size: 1.2em;
+    height: 50px;
+    font-size: 1.2rem;
   }
 }
 
@@ -176,6 +177,6 @@ input {
   }
   
   .btn {
-    font-size: 1em;
+    font-size: 1rem;
   }
 }

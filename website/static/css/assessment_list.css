@@ -24,16 +24,34 @@ input {
   flex-direction: column;
   text-align: center;
   
-  color: black;
+  background-color: #5995fd;
+  color: #fff;
   width: 100%;
-  border: 2px #5995fd solid;
   outline: none;
   font-size: 1.5em;
-  border-radius: 15px;
+  border-radius: 49px;
   margin: 10px 0;
   cursor: pointer;
   transition: 0.5s;
   user-select: none;
+  min-height: 75px;
+}
+
+.btn {
+  background-color: #5995fd;
+  border: none;
+  outline: none;
+  height: 75px;
+  font-size: 1.5rem;
+  border-radius: 49px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.5s;
+  display: block;
+  width: 100%;
+  margin: 10px auto;
 }
 
 .title {
@@ -43,21 +61,42 @@ input {
   text-align: center;
 }
 
-@media (max-width: 870px) {
-
-  .listDiv {
-    font-size: 1.2em;
-  }
-}
-
 .align-center {
   margin: 0 auto;
 }
 
 .question-data {
   display: none;
+  color: black;
+  background-color: #fff;
+  margin: 2px;
+  border-radius: 49px;
 }
 
 .show-data {
   display: block;
+}
+
+p {
+  margin: auto 20px;
+}
+
+@media (max-width: 870px) {
+
+  .btn {
+    height: 50px;
+    font-size: 1.2rem;
+  }
+
+  .listDiv {
+    min-height: 50px;
+    font-size: 1.2rem;
+  }
+}
+
+
+@media (max-width: 570px) {
+  .btn, .listDiv {
+    font-size: 1rem;
+  }
 }

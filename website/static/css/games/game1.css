@@ -4,15 +4,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
 html, body {
     height: 100%;
-}
-
-body,
-input {
-  font-family: "Poppins", sans-serif;
 }
 
 body {
@@ -59,21 +55,22 @@ p {
 }
 
 .button-div {
-  width: 90%;
+  width: 60%;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
 
   position: absolute;
   top: 50%;
-  left: 5%;
+  left: 20%;
 }
 
 .btn {
   background-color: #5995fd;
   border: none;
   outline: none;
-  height: 49px;
+  height: 75px;
+  font-size: 1.5rem;
   border-radius: 49px;
   color: #fff;
   text-transform: uppercase;
@@ -82,4 +79,22 @@ p {
   transition: 0.5s;
   display: inline;
   width: 49%;
+}
+
+@media (max-width: 870px) {
+  .button-div {
+    width: 80%;
+    left: 10%;
+  }
+
+  .btn {
+    height: 50px;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 570px) {
+  .btn {
+      font-size: 1rem;
+  }
 }

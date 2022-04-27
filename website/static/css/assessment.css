@@ -38,12 +38,12 @@ input {
   background-color: #5995fd;
   border: none;
   outline: none;
-  height: 49px;
+  height: 75px;
+  font-size: 1.5rem;
   border-radius: 49px;
   color: #fff;
   text-transform: uppercase;
   font-weight: 600;
-  margin-top: 10px;
   cursor: pointer;
   transition: 0.5s;
   display: inline;
@@ -93,7 +93,11 @@ input {
   .button-div {
     width: 75%;
   }
-  
+
+  .btn {
+    height: 50px;
+    font-size: 1.2rem;
+  }
 }
   
 @media (max-width: 570px) {
@@ -111,6 +115,10 @@ input {
 
   .button-div {
     width: 100%;
+  }
+
+  .btn {
+    font-size: 1rem;
   }
   
 }

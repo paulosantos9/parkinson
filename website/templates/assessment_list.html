@@ -23,9 +23,8 @@
           <span class="listDiv assessment-data" onclick="changeDisplay('assessment-data-{{assessment.id}}')">
             <span class="align-center"><p>{{ assessment.currentTime.strftime('%d/%m/%y %H:%M') }}</p></span>
             <div class="question-data" id="assessment-data-{{assessment.id}}">
-              <br>
               {% for i in range(assessment.questions|length) %}
-              <hr>
+              <br>
               <span class="align-center"><p>{{ assessment.questions[i].question }}</p></span>
               <p><b>{{ assessment.questions[i].answer }}</b></p>
               {% endfor %}
@@ -36,7 +35,7 @@
           <div class="title">Sem dados.</div>
         {% endif %}
       </div>
-      <div class="listDiv" id="back">< Voltar</div>
+      <button id="back" class="btn">< Voltar</button>
     </div>
     <script src="{{ url_for('static', filename='js/assessment_list.js') }}"></script>
   </body>
