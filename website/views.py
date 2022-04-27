@@ -22,7 +22,7 @@ def home():
                 patient_bornDate=current_user.bornDate, patient_gender=current_user.gender, patient_patientNumber=current_user.patientNumber,
                 patient_alzheimer=current_user.alzheimer, patient_parkinson=current_user.parkinson, patient_observations=current_user.observations,
                 patient_doctor_id=current_user.doctor_id, patient_assessments=current_user.assessments, patient_games=current_user.games)
-        
+
             elif (current_page == 'login_signup'):
                 return render_template('login_signup.html')
 
@@ -30,14 +30,14 @@ def home():
                 numberOfGames = 3
                 current_game = chooseGame(numberOfGames)
                 return render_template(current_game)
-        
+
             elif (current_page == 'account'):
                 return render_template('account.html')
 
             elif (current_page == 'games_list'):
                 gamesList = Game.query.filter_by(patient_id=current_user.id, ).all()
                 availableGames = ['Reação', 'Rapidez', 'Memória']
-                typeOfActions = ['segundos', 'cliques', 'tentativas']
+                typeOfActions = ['milissegundos', 'cliques', 'tentativas']
                 recordAvailableGames = []
                 for i in range(len(availableGames)):
                     tempGameList = Game.query.filter_by(patient_id=current_user.id, gameTypeIndex=i+1).all()
@@ -79,7 +79,7 @@ def home():
             patient_bornDate=current_user.bornDate, patient_gender=current_user.gender, patient_patientNumber=current_user.patientNumber,
             patient_alzheimer=current_user.alzheimer, patient_parkinson=current_user.parkinson, patient_observations=current_user.observations,
             patient_doctor_id=current_user.doctor_id, patient_assessments=current_user.assessments, patient_games=current_user.games)
-        
+
     else:
         error, typeOfContainer = manageSession()
         return render_template('login_signup.html', error=error, typeOfContainer=typeOfContainer)
@@ -160,3 +160,4 @@ def settings():
 def backToMain():
     session['page'] = 'main_menu'
     return redirect(url_for('views.home'))
+    

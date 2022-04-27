@@ -28,6 +28,7 @@ html, body {
     font-size: 1rem;
     color: #444;
     margin: 5vh 10vw;
+    margin-bottom: 10px;
     text-align: center;
     flex: 0 1 auto;
 }

@@ -1,8 +1,3 @@
-let cardsAvailable = [
-    true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true
-];
-let indexCounter = 0;
-
 function randomizeCards() {
     let randomizedArray = Array.from({length:16},(v,k)=>k+1);
     randomizedArray.sort(() => 0.5 - Math.random());
@@ -31,11 +26,12 @@ function checkIfPair() {
 
 function checkIfOver() {
     if (tries >= maxTries) {
+        console.log('hello')
         return true;
     } else {
         let numberOfCells = 16;
         for (let i = 0; i < numberOfCells; i++) {
-            if (document.getElementsByClassName('cell-content')[i].style.color === '#5995fd' || document.getElementsByClassName('cell-content')[i].style.color === '') {
+            if (document.getElementsByClassName('cell-content')[i].style.color === colorCell || document.getElementsByClassName('cell-content')[i].style.color === '') {
                 return false;
             }
         }
@@ -88,8 +84,8 @@ function cardClicked() {
         
         // reset turned cards if needed
         if ( checkIfPair() === false) {
-            cardTapped[0].style.color = '#5995fd';
-            cardTapped[1].style.color = '#5995fd';      
+            cardTapped[0].style.color = colorCell;
+            cardTapped[1].style.color = colorCell;      
         }
 
         // reset variables
@@ -118,6 +114,7 @@ let cardTapped = [];
 let tapCounter = 0;
 let tries = 0;
 let maxTries = 100;
+let colorCell = 'rgb(89, 149, 253)';
 
 document.getElementById('exit-game').onclick = function() {
     window.location.replace('/backToMain')

@@ -17,7 +17,7 @@
       <div class="forms-container">
         <div class="signin-signup">
           <form action="/login" class="sign-in-form" method="POST">
-            <h2 class="title">Login</h2>
+            <h2 class="title">Iniciar Sessão</h2>
 
             {% if error %}
               <div role="alert" class="error-message">
@@ -33,7 +33,7 @@
               <i class="fas fa-lock"></i>
               <input type="password" name="password" placeholder="Palavra-passe" />
             </div>
-            <input type="submit" value="Login" class="btn solid" />
+            <input type="submit" value="Iniciar Sessão" class="btn solid" />
           </form>
           <form action="/signup" class="sign-up-form" method="POST">
             <h2 class="title">Registo</h2>
@@ -43,7 +43,7 @@
                 {{ error }}
               </div>
             {% endif %}
-            
+
             <div class="input-field">
               <i class="fas fa-user"></i>
               <input type="text" name="username" placeholder="Nome de Utilizador" />
@@ -60,7 +60,7 @@
               <i class="fas fa-lock"></i>
               <input type="password" name="password_confirm" placeholder="Confirmar palavra-passe" />
             </div>
-            <input type="submit" class="btn" value="Sign up" />
+            <input type="submit" class="btn" value="Registar" />
           </form>
         </div>
       </div>
@@ -85,7 +85,7 @@
               Já tem conta? Inicie sessão para continuar
             </p>
             <button class="btn transparent" id="sign-in-btn">
-              Login
+              Iniciar sessão
             </button>
           </div>
           <img src="{{ url_for('static', filename='images/elder2.svg') }}" class="image image2" alt="" />

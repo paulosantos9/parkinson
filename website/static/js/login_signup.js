@@ -10,6 +10,7 @@ sign_in_btn.addEventListener("click", () => {
   container.classList.remove("sign-up-mode");
 });
 
+/*
 function handleNotifications() {
   // Let's check if the browser supports notifications
   var options = {
@@ -20,7 +21,7 @@ function handleNotifications() {
   if (!("Notification" in window)) {
     alert("Cuidado, este navegador não suporta notificações !");
   }
-  
+
   // Let's check whether notification permissions have already been granted
   else if (Notification.permission === "granted") {
     // If it's okay let's create a notification
@@ -76,3 +77,4 @@ function availableInstantNotification() {
 }
 
 availableInstantNotification();
+*/
