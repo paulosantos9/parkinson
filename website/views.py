@@ -115,33 +115,31 @@ def assessment():
         session['page'] = 'assessment'
         return redirect(url_for('views.home'))
     else:
-        firstQuestion = 'Durante a última semana teve dificuldades em lembrar-se de coisas, seguir conversas, prestar atenção, pensar claramente ou encontrar os caminhos em casa ou na cidade?'
-        firstAnswer = request.json['first-answer']
-        secondQuestion = 'Durante a última semana viu, cheirou, ouviu ou sentiu coisas que não estavam mesmo no local?'
-        secondAnswer = request.json['second-answer']
-        thirdQuestion = 'Durante a última semana sentiu-se me baixo, triste, sem esperança ou incapaz de desfrutar das coisas? Se sim, este sentimento demorou mais de um dia seguido? Tornou dificil continuar com as atividades habituais ou estar com pessoas?'
-        thirdAnswer = request.json['third-answer']
-        forthQuestion = 'Durante a última semana sentiu-se nervoso, preocupado ou tenso? Se sim, este sentimento demorou mais do que um dia seguido? Tornou dificil continuar com as atividades habituais ou estar com pessoas?'
-        forthAnswer = request.json['forth-answer']
-        fifthQuestion = 'Durante a última semana sentiu-se indiferente ao fazer atividades ou estar com outras pessoas?'
-        fifthAnswer = request.json['fifth-answer']
-        sixthQuestion = 'Durante a última semana sentiu impulsos difíceis de controlar, como por exemplo apostar, usar o computador ou tomar mais comprimidos? Sente-se levado a fazer ou a pensar em algo, e a ser dificil de parar?'
-        sixthAnswer = request.json['sixth-answer']
+        questions = []
+        answers = []
+        questions.append('1. Durante a última semana, você teve algum problema para adormecer à noite ou em permanecer dormindo durante a noite? Considere o quanto descansado se sentiu ao acordar de manhã..')
+        answers.append(request.json['first-answer'])
+        questions.append('2. Durante a última semana, teve dificuldade em manter-se acordado durante o dia?')
+        answers.append(request.json['second-answer'])
+        questions.append('3. Durante a última semana, teve sensações desconfortáveis no seu corpo tais como dor, sensação de ardor, formigamento ou cãimbras?')
+        answers.append(request.json['third-answer'])
+        questions.append('4. Durante a última semana, teve problemas em reter a urina? Por exemplo, necessidade urgente em urinar, necessidade de urinar vezes de mais, ou perder controlo da urina?')
+        answers.append(request.json['forth-answer'])
+        questions.append('5. Durante a última semana, teve problemas de obstipação intestinal (prisão de ventre) que lhe tenham causado dificuldade em evacuar?')
+        answers.append(request.json['fifth-answer'])
+        questions.append('6. Durante a última semana, sentiu que iria desmaiar, ficou tonto ou com sensação de cabeça vazia quando se levantou, após ter estado sentado ou deitado?')
+        answers.append(request.json['sixth-answer'])
+        questions.append('7. Durante a última semana, sentiu-se habitualmente fatigado? Esta sensação não é por estar com sono ou triste.')
+        answers.append(request.json['seventh-answer'])
+
         new_assessment = Assessment(testType='UPDRS', patient_id=current_user.id, currentTime=datetime.now())
         db.session.add(new_assessment)
         db.session.commit() # to be able to get the assessment id
-        first_answer = Question(indexInAssessment=0, question=firstQuestion, answer=firstAnswer, assessment_id=new_assessment.id)
-        db.session.add(first_answer)
-        second_answer = Question(indexInAssessment=1, question=secondQuestion, answer=secondAnswer, assessment_id=new_assessment.id)
-        db.session.add(second_answer)
-        third_answer = Question(indexInAssessment=2, question=thirdQuestion, answer=thirdAnswer, assessment_id=new_assessment.id)
-        db.session.add(third_answer)
-        forth_answer = Question(indexInAssessment=0, question=forthQuestion, answer=forthAnswer, assessment_id=new_assessment.id)
-        db.session.add(forth_answer)
-        fifth_answer = Question(indexInAssessment=0, question=fifthQuestion, answer=fifthAnswer, assessment_id=new_assessment.id)
-        db.session.add(fifth_answer)
-        sixth_answer = Question(indexInAssessment=0, question=sixthQuestion, answer=sixthAnswer, assessment_id=new_assessment.id)
-        db.session.add(sixth_answer)
+        
+        for i in range(len(answers)):
+            temp_answer = Question(indexInAssessment=0, question=questions[i], answer=answers[i], assessment_id=new_assessment.id)
+            db.session.add(temp_answer)
+            
         db.session.commit()
         session['page'] = 'main_menu'
         return redirect(url_for('views.home'))

@@ -61,7 +61,8 @@ input {
 .question {
   width: 60%;
   background-color: #f0f0f0;
-  margin: 50px auto;
+  margin: 0 auto;
+  margin-bottom: 25px;
   font-size: 1.2rem;
   min-height: 55px;
   border-radius: 15px;
@@ -86,8 +87,7 @@ p {
 }
 
 .answer {
-    margin-top: 5px;
-    margin-left: 35%;
+  margin: 10px;
 }
 
 @media (max-width: 800px) {
@@ -130,5 +130,4 @@ p {
   .btn {
     font-size: 1rem;
   }
-
 }

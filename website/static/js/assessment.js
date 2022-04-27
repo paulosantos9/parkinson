@@ -1,5 +1,5 @@
 let counterQuestion = 0;
-let maxQuestions = 6;
+let maxQuestions = 7;
 
 function updateQuestion() {
     let questions = document.getElementsByClassName('question');
@@ -41,13 +41,15 @@ function submitAssessment() {
     let forthAnswer = document.querySelector('input[name="forth-answer"]:checked').value;
     let fifthAnswer = document.querySelector('input[name="fifth-answer"]:checked').value;
     let sixthAnswer = document.querySelector('input[name="sixth-answer"]:checked').value;
+    let seventhAnswer = document.querySelector('input[name="seventh-answer"]:checked').value;
     let data = {
         'first-answer': firstAnswer,
         'second-answer': secondAnswer,
         'third-answer': thirdAnswer,
         'forth-answer': forthAnswer,
         'fifth-answer': fifthAnswer,
-        'sixth-answer': sixthAnswer
+        'sixth-answer': sixthAnswer,
+        'seventh-answer': seventhAnswer,
     };
     fetch("/assessment", {
         method: "POST",
