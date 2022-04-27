@@ -62,6 +62,7 @@ input {
   width: 60%;
   background-color: #f0f0f0;
   margin: 50px auto;
+  font-size: 1.2rem;
   min-height: 55px;
   border-radius: 15px;
   display: grid;
@@ -69,7 +70,7 @@ input {
   position: relative;
   display: none;
 }
-  
+
 .question input {
   background: none;
   outline: none;
@@ -78,6 +79,15 @@ input {
   font-weight: 600;
   font-size: 1.1rem;
   color: #333;
+}
+
+p {
+  margin: 10px;
+}
+
+.answer {
+    margin-top: 5px;
+    margin-left: 35%;
 }
 
 @media (max-width: 800px) {
@@ -99,7 +109,7 @@ input {
     font-size: 1.2rem;
   }
 }
-  
+
 @media (max-width: 570px) {
   .container {
     padding: 1.5rem;
@@ -120,14 +130,4 @@ input {
   .btn {
     font-size: 1rem;
   }
-  
-}
-
-p {
-  margin: 10px;
-}
-
-.answer {
-    margin-top: 5px;
-    margin-left: 35%;
 }
