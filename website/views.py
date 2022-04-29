@@ -1,6 +1,6 @@
 from datetime import datetime
-from flask import Blueprint, render_template, request, redirect, url_for, session, helpers
-from flask_login import login_required, current_user
+from flask import Blueprint, render_template, request, redirect, url_for, session
+from flask_login import current_user
 from .functionHelpers import checkIfUserComplete, manageSession, chooseGame
 from .models import Game, Question, Assessment
 from . import db # import from website folder
@@ -27,17 +27,17 @@ def home():
                 return render_template('login_signup.html')
 
             elif (current_page == 'game'):
-                numberOfGames = 3
+                numberOfGames = 4
                 current_game = chooseGame(numberOfGames)
                 return render_template(current_game)
 
             elif (current_page == 'account'):
                 return render_template('account.html')
 
-            elif (current_page == 'games_list'):
-                gamesList = Game.query.filter_by(patient_id=current_user.id, ).all()
-                availableGames = ['Reação', 'Rapidez', 'Memória']
-                typeOfActions = ['milissegundos', 'cliques', 'tentativas']
+            elif (current_page == 'gamesList'):
+                gamesList = Game.query.filter_by(patient_id=current_user.id).all()
+                availableGames = ['Reação', 'Rapidez', 'Memória', 'Desenho']
+                typeOfActions = ['milissegundos', 'cliques', 'tentativas', '']
                 recordAvailableGames = []
                 for i in range(len(availableGames)):
                     tempGameList = Game.query.filter_by(patient_id=current_user.id, gameTypeIndex=i+1).all()
@@ -60,11 +60,17 @@ def home():
                         for game in tempGameList:
                             if (int(game.score) < tempRecord):
                                 tempRecord = int(game.score)
+                    elif (i == 3):
+                        # Desenho
+                        pass
+                    else:
+                        # Inválido
+                        pass
                     recordAvailableGames.append(tempRecord)
                 return render_template('games_list.html', gamesList=gamesList, availableGames=availableGames, recordAvailableGames=recordAvailableGames, typeOfActions=typeOfActions)
 
             elif (current_page == 'assessment'):
-                return render_template('assessment.html') # TO DO
+                return render_template('assessment.html')
 
             elif (current_page == 'assessmentList'):
                 assessmentList = Assessment.query.filter_by(patient_id=current_user.id).all()
@@ -87,12 +93,19 @@ def home():
 
 @views.route('/game', methods=['GET', 'POST'])
 def play():
-    if request.method == 'GET':
+    if request.method == 'GET': # Jogar
         session['page'] = 'game'
-    else:
-        score = request.json['score'] # because its type application/json
+    else: # Guardar resultado jogo
+        try: # Porque o desenho não tem score
+            score = request.json['score'] # because its type application/json
+        except:
+            score = ''
         gameTypeIndex = request.json['gameType']
-        new_game = Game(patient_id=current_user.id, gameTypeIndex=gameTypeIndex, currentTime=datetime.now(), score=score)
+        try: # Porque os jogos não tem imagem
+            image = request.json['image']
+        except:
+            image = ''
+        new_game = Game(patient_id=current_user.id, gameTypeIndex=gameTypeIndex, currentTime=datetime.now(), score=score, image=image)
         db.session.add(new_game)
         db.session.commit()
         session['page'] = 'main_menu'
@@ -106,15 +119,15 @@ def account():
 
 @views.route('/listGames', methods=['GET'])
 def listGames():
-    session['page'] = 'games_list'
+    session['page'] = 'gamesList'
     return redirect(url_for('views.home'))
 
 @views.route('/assessment', methods=['GET', 'POST'])
 def assessment():
-    if request.method == 'GET':
+    if request.method == 'GET': # Fazer teste
         session['page'] = 'assessment'
         return redirect(url_for('views.home'))
-    else:
+    else: # Adicionar teste
         questions = []
         answers = []
         questions.append('1. Durante a última semana, você teve algum problema para adormecer à noite ou em permanecer dormindo durante a noite? Considere o quanto descansado se sentiu ao acordar de manhã..')
@@ -144,17 +157,17 @@ def assessment():
         session['page'] = 'main_menu'
         return redirect(url_for('views.home'))
 
-@views.route('/assessments', methods=['GET'])
+@views.route('/assessments', methods=['GET']) # Ver lista de testes
 def assessments():
     session['page'] = 'assessmentList'
     return redirect(url_for('views.home'))
 
-@views.route('/settings', methods=['GET'])
+@views.route('/settings', methods=['GET']) # Preencher dados da conta
 def settings():
     session['page'] = 'settings'
     return redirect(url_for('views.home'))
 
-@views.route('/backToMain', methods=['GET'])
+@views.route('/backToMain', methods=['GET']) # Voltar ao menu inicial
 def backToMain():
     session['page'] = 'main_menu'
     return redirect(url_for('views.home'))

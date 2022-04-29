@@ -5,25 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Parkinson</title>
     <link rel="icon" href="{{ url_for('static', filename='images/brain.ico') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/games/game1.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/games/game4.css') }}"/>
 
   </head>
   <body>
     <div class="pre-game" id="pre-game">
-        <h1>Reação</h1>
-        <p>Clique o mais rápido que conseguir assim que a cor mudar.</p>
+        <h1>Desenho</h1>
+        <p>Tente desenhar por cima do sublinhado.</p>
         <div class="button-div">
           <button id="exit-game" class="btn">Sair</button>
           <button id="start-game" class="btn">Começar</button>
         </div>
-        
     </div>
     <div class="container" id="container">
-        <div class="jogo" id="jogo_div">
-            <div class="timer"></div>
+        <div class="button-div-game">
+            <button class="btn" id="apagar">Apagar</button>
+            <button class="btn" id="guardar">Guardar</button>
         </div>
+        <canvas id="canvas"></canvas>
     </div>
 
-    <script src="{{ url_for('static', filename='js/games/game1.js') }}"></script>
-  </body>
+    <script src="{{ url_for('static', filename='js/games/game4.js') }}"></script>
+    </body>
 </html>

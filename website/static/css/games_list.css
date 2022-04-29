@@ -77,6 +77,13 @@ input {
   display: block;
 }
 
+.draw{
+  margin-top: 10px;
+  max-width: 300px;
+  width: 80%;
+  border: 1px solid black
+}
+
 @media (max-width: 870px) {
 
   .btn {
@@ -87,6 +94,11 @@ input {
   .listDiv {
     min-height: 50px;
     font-size: 1.2rem;
+  }
+
+  .gamesContainer {
+    width: 90%;
+    margin-left: 5%;
   }
 }
 

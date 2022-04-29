@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="{{ url_for('static', filename='js/font-awesome.js') }}"></script>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/games_list.css') }}"
@@ -23,10 +22,16 @@
           <span class="listDiv game-data" onclick="changeDisplay('game-data-{{game.id}}')">
             <span class="align-center"><p>{{ game.currentTime.strftime('%d/%m/%y %H:%M') }}</p></span>
             <div class="game-data-inner" id="game-data-{{game.id}}">
-              <p>Resultado: {{ game.score }} {{ typeOfActions[game.gameTypeIndex - 1] }}</p>
+              {% if game.gameTypeIndex != 4 %}
+                <p>Resultado: {{ game.score }} {{ typeOfActions[game.gameTypeIndex - 1] }}</p>
+              {% else %}
+                <image class="draw" id ="draw" src="{{game.image}}"></image>
+              {% endif %}
               <p>Jogo: {{ availableGames[game.gameTypeIndex - 1] }}</p>
               <br>
+              {% if game.gameTypeIndex != 4 %}
               <p>Recorde: {{ recordAvailableGames[game.gameTypeIndex - 1] }} {{ typeOfActions[game.gameTypeIndex - 1] }}</p>
+              {% endif %}
             </div>
           </span>
           {% endfor %}

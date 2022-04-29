@@ -25,7 +25,7 @@ def manageSession():
     return error, typeOfContainer
 
 def chooseGame(numberOfGames):
-    number= randint(1,numberOfGames)
+    number = randint(1,numberOfGames)
     game = '/games/game' + str(number) + '.html'
     return game
 
@@ -50,10 +50,7 @@ def isPasswordValid(password, password_confirm):
 
 def isEmailValid(email):
     regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
-    if(re.search(regex,email)):   
-        return True
-    else:
-        return False
+    return re.search(regex,email)
 
 def isUsernameValid(username):
     minLength = 4

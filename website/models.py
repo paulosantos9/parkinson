@@ -7,6 +7,7 @@ class Game(db.Model):
     gameTypeIndex = db.Column(db.Integer)
     currentTime = db.Column(db.DateTime)
     score = db.Column(db.String(50)) # miliseconds
+    image = db.Column(db.Text)
 
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)

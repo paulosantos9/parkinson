@@ -1,0 +1,106 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    user-select: none;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  background-color: white;
+  overflow: hidden;
+  flex-grow: 1;
+  display: none;
+  flex: 1 1 auto;
+}
+
+.pre-game {
+  text-align: center;
+  font-size: 1rem;
+  color: #444;
+  margin: 5vh auto;
+  margin-bottom: 0;
+  text-align: center;
+  flex: 0 1 auto;
+}
+
+p {
+  margin: 20px 5vw;
+}
+
+.button-div {
+  width: 60%;
+  display: flex;
+  justify-content: space-between;
+
+  position: absolute;
+  top: 50%;
+  left: 20%;
+}
+
+.button-div-game {
+    width: 60%;
+    margin: 0 auto;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn {
+  background-color: #5995fd;
+  border: none;
+  outline: none;
+  height: 75px;
+  font-size: 1.5rem;
+  border-radius: 49px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.5s;
+  display: inline;
+  width: 49%;
+}
+
+canvas {
+    border: 1px solid black;
+    margin: 0 auto;
+    background-image: linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.1)), url("../../images/spiral.png");
+    background-size: cover;
+}
+
+@media (max-width: 870px) {
+  .button-div {
+    width: 80%;
+    left: 10%;
+  }
+
+  .button-div-game {
+    width: 80%;
+}
+
+  .btn {
+    height: 50px;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 570px) {
+  .btn {
+      font-size: 1rem;
+  }
+}
