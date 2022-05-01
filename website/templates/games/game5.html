@@ -1,0 +1,34 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parkinson</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/brain.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/games/game5.css') }}"/>
+
+</head>
+<body>
+  </div>
+    </div>
+    <div class="pre-game" id="pre-game">
+        <h1 id="title">Equilíbrio</h1>
+        <p>Tente manter o telemóvel o mais estável possível durante 10 segundos.</p>
+        <div class="button-div">
+          <button id="exit-game" class="btn">Sair</button>
+          <button id="start-game" class="btn">Começar</button>
+        </div>
+        
+    </div>
+    <div class="container" id="container">
+        <div class="content" id="content">
+            <div id="counter"></div>
+            <div id="timer"></div>
+        </div>
+    </div>
+
+  <script src="{{ url_for('static', filename='js/games/game5.js') }}"></script>
+  </body>
+</html>

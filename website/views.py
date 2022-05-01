@@ -27,6 +27,11 @@ def home():
                 return render_template('login_signup.html')
 
             elif (current_page == 'game'):
+                numberOfGames = 5
+                current_game = chooseGame(numberOfGames)
+                return render_template(current_game)
+
+            elif (current_page == 'game_pc'):
                 numberOfGames = 4
                 current_game = chooseGame(numberOfGames)
                 return render_template(current_game)
@@ -36,8 +41,8 @@ def home():
 
             elif (current_page == 'gamesList'):
                 gamesList = Game.query.filter_by(patient_id=current_user.id).all()
-                availableGames = ['Reação', 'Rapidez', 'Memória', 'Desenho']
-                typeOfActions = ['milissegundos', 'cliques', 'tentativas', '']
+                availableGames = ['Reação', 'Rapidez', 'Memória', 'Desenho', 'Equilíbrio']
+                typeOfActions = ['milissegundos', 'cliques', 'tentativas', '', 'pontos']
                 recordAvailableGames = []
                 for i in range(len(availableGames)):
                     tempGameList = Game.query.filter_by(patient_id=current_user.id, gameTypeIndex=i+1).all()
@@ -62,7 +67,15 @@ def home():
                                 tempRecord = int(game.score)
                     elif (i == 3):
                         # Desenho
+                        tempRecord = 0
                         pass
+                    if (i == 4):
+                        # Equilíbrio
+                        tempRecord = 0
+                        for game in tempGameList:
+                            print(game.score)
+                            if (int(game.score) > tempRecord):
+                                tempRecord = int(game.score)
                     else:
                         # Inválido
                         pass
@@ -111,6 +124,12 @@ def play():
         session['page'] = 'main_menu'
 
     return redirect(url_for('views.home'))
+
+@views.route('/game/pc', methods=['GET'])
+def play_pc():
+    session['page'] = 'game_pc'
+    return redirect(url_for('views.home'))
+
 
 @views.route('/account', methods=['GET'])
 def account():

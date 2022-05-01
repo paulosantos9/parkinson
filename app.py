@@ -4,4 +4,4 @@ app = create_app()
 
 if __name__ == '__main__':
     # current IPV4
-    app.run('0.0.0.0',port=5000, debug=True, ssl_context='adhoc')
+    app.run('0.0.0.0', port=5000, debug=True, ssl_context='adhoc')

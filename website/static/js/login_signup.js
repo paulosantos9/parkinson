@@ -11,6 +11,10 @@ sign_in_btn.addEventListener("click", () => {
 });
 
 /*
+window.addEventListener('load', (event) => {
+  Notification.requestPermission();
+});
+
 function handleNotifications() {
   // Let's check if the browser supports notifications
   var options = {

@@ -1,5 +1,11 @@
 document.getElementById('games').onclick = function() {
-    window.location.replace('/game');
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        // if is mobile
+        window.location.replace('/game');
+    } else {
+        // não pode jogar equilibrio
+        window.location.replace('/game/pc');
+    }
 };
 
 document.getElementById('assessment').onclick = function() {
