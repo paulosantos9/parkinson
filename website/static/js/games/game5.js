@@ -10,7 +10,7 @@ function sendPostWithScore(score) {
 }
 
 function updateFieldIfNotNull(fieldName, value){
-    if (value != null) document.getElementById(fieldName).innerHTML = 'Score: ' + rotationSum;
+    if (value != null) document.getElementById(fieldName).innerHTML = 'Pontos: ' + rotationSum;
 }
 
 function handleOrientation(event) { // Orientação X, Y e Z em graus
@@ -85,12 +85,17 @@ function updateTimer() {
         if (difference > 10000) {
             inGame = false;
             difference = 10000;
+            document.getElementById('container').style.display = 'none';
+            document.getElementById('title').textContent = 'Guardando teste...';
+            document.getElementsByTagName('p')[0].style.display = 'none';
             sendPostWithScore(rotationSum);
         } else {
             document.querySelector('#timer').textContent = numberInString + ' s';
         }
     } else {
-        document.querySelector('#timer').textContent = '10.0 s';
+        document.getElementById('container').style.display = 'none';
+        document.getElementById('title').textContent = 'Guardando teste...';
+        document.getElementsByTagName('p')[0].style.display = 'none';
     }
 }
 

@@ -24,6 +24,7 @@ def home():
                 patient_doctor_id=current_user.doctor_id, patient_assessments=current_user.assessments, patient_games=current_user.games)
 
             elif (current_page == 'login_signup'):
+                session['page'] = 'main_menu'
                 return render_template('login_signup.html')
 
             elif (current_page == 'game'):
@@ -43,42 +44,23 @@ def home():
                 gamesList = Game.query.filter_by(patient_id=current_user.id).all()
                 availableGames = ['Reação', 'Rapidez', 'Memória', 'Desenho', 'Equilíbrio']
                 typeOfActions = ['milissegundos', 'cliques', 'tentativas', '', 'pontos']
+                bestRecord = ['min', 'max', 'min', '', 'max']
                 recordAvailableGames = []
                 for i in range(len(availableGames)):
                     tempGameList = Game.query.filter_by(patient_id=current_user.id, gameTypeIndex=i+1).all()
                     tempRecord = 0
-                    if (i == 0):
-                        # Tempo reação
-                        tempRecord = 10000
-                        for game in tempGameList:
-                            if (int(game.score) < tempRecord):
-                                tempRecord = int(game.score)
-                    elif (i == 1):
-                        # Nº cliques
+                    if (bestRecord[i] == 'max'): # Quando o recorde é o máximo
                         tempRecord = 0
                         for game in tempGameList:
                             if (int(game.score) > tempRecord):
                                 tempRecord = int(game.score)
-                    elif (i == 2):
-                        # Memória
+                    elif (bestRecord[i] == 'min'):  # Quando o recorde é o mínimo
                         tempRecord = 10000
                         for game in tempGameList:
                             if (int(game.score) < tempRecord):
-                                tempRecord = int(game.score)
-                    elif (i == 3):
-                        # Desenho
-                        tempRecord = 0
-                        pass
-                    if (i == 4):
-                        # Equilíbrio
-                        tempRecord = 0
-                        for game in tempGameList:
-                            print(game.score)
-                            if (int(game.score) > tempRecord):
                                 tempRecord = int(game.score)
                     else:
-                        # Inválido
-                        pass
+                        tempRecord = 0
                     recordAvailableGames.append(tempRecord)
                 return render_template('games_list.html', gamesList=gamesList, availableGames=availableGames, recordAvailableGames=recordAvailableGames, typeOfActions=typeOfActions)
 

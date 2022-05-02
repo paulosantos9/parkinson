@@ -69,7 +69,10 @@ function cardClicked() {
                     tapCounter = 0;
                     tries++;
                     if (checkIfOver()) {
-                        document.getElementsByTagName('h2')[0].innerText = 'Guardando resultado:\n' + tries + ' tentativas';
+                        document.getElementById('content').style.display = 'none';
+                        document.getElementById('title').textContent = 'Guardando teste...';
+                        document.getElementsByTagName('p')[0].style.display = 'none';
+                        document.getElementsByTagName('h2')[0].style.display = 'none';
                     } else {
                         document.getElementsByTagName('h2')[0].innerText = 'Tentativas: ' + tries;
                     }

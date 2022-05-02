@@ -12,10 +12,10 @@ input {
 }
 
 .container {
+  padding: 0 1.5rem;
   position: relative;
   width: 100%;
   background-color: #fff;
-  min-height: 100vh;
   overflow: hidden;
 }
 
@@ -62,7 +62,7 @@ input {
   width: 60%;
   background-color: #f0f0f0;
   margin: 0 auto;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
   font-size: 1.2rem;
   min-height: 55px;
   border-radius: 15px;
@@ -98,6 +98,7 @@ p {
 
   .question {
     width: 75%;
+    font-size: 1rem;
   }
 
   .button-div {
@@ -111,16 +112,13 @@ p {
 }
 
 @media (max-width: 570px) {
-  .container {
-    padding: 1.5rem;
-  }
-
   .title {
     font-size: 1rem;
   }
 
   .question {
     width: 100%;
+    font-size: 0.8rem;
   }
 
   .button-div {

@@ -64,9 +64,9 @@ function endGame() {
         } else {
             numberInString += '.000'
         }
-        document.querySelector('.timer').style.fontSize = "1.2em";
-        document.querySelector('.timer').style.fontFamily = "Poppins, sans-serif";
-        document.querySelector('.timer').innerText = 'Guardando resultado:\n' + numberInString + ' s';
+        document.getElementById('container').style.display = 'none';
+        document.getElementById('title').textContent = 'Guardando teste...';
+        document.getElementsByTagName('p')[0].style.display = 'none';
         setTimeout(sendPostWithScore, 2000); // voltar ao menu principal
     }
 }

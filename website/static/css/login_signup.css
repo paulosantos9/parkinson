@@ -11,6 +11,10 @@ input {
   font-family: "Poppins", sans-serif;
 }
 
+.timer {
+  font-family: "Poppins", sans-serif;
+}
+
 .container {
   position: relative;
   width: 100%;
@@ -77,6 +81,13 @@ form.sign-in-form {
   grid-template-columns: 15% 85%;
   padding: 0 0.4rem;
   position: relative;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
 }
 
 .input-field i {

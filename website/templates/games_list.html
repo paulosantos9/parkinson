@@ -20,14 +20,13 @@
           <div class="title">Jogos:</div>
           {% for game in gamesList %}
           <span class="listDiv game-data" onclick="changeDisplay('game-data-{{game.id}}')">
-            <span class="align-center"><p>{{ game.currentTime.strftime('%d/%m/%y %H:%M') }}</p></span>
+            <span class="align-center"><p>{{ game.currentTime.strftime('%d/%m/%y %H:%M') }} - Jogo: {{ availableGames[game.gameTypeIndex - 1] }}</p></span>
             <div class="game-data-inner" id="game-data-{{game.id}}">
               {% if game.gameTypeIndex != 4 %}
                 <p>Resultado: {{ game.score }} {{ typeOfActions[game.gameTypeIndex - 1] }}</p>
               {% else %}
                 <image class="draw" id ="draw" src="{{game.image}}"></image>
               {% endif %}
-              <p>Jogo: {{ availableGames[game.gameTypeIndex - 1] }}</p>
               <br>
               {% if game.gameTypeIndex != 4 %}
               <p>Recorde: {{ recordAvailableGames[game.gameTypeIndex - 1] }} {{ typeOfActions[game.gameTypeIndex - 1] }}</p>

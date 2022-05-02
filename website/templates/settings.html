@@ -27,20 +27,20 @@
             </div>
             <div class="input-field">
               <i class="fas fa-phone"></i>
-              <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Número telemóvel" value='{{patient_phoneNumber}}' maxlength="9"/>
+              <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Número telemóvel" value='{{patient_phoneNumber}}' pattern="[0-9]{9}" required/>
             </div>
             <div class="input-field">
                 <i class="fas fa-calendar"></i>
-                <input type="date" class="bornDate" id="bornDate" value='{{patient_bornDate}}' name="bornDate"/>
+                <input type="date" class="bornDate" id="bornDate" value='{{patient_bornDate}}' min='1900-01-01' name="bornDate"/>
             </div>
             <div class="input-field">
               <i class="fas fa-venus-mars"></i>
               <div class="options" id="options">
                 <span class="option">
                   {% if patient_gender=='M' %}
-                    <input type="radio" id="male" class="genderOption" name="genderOption" value="M" checked>
+                    <input type="radio" id="male" class="genderOption" name="genderOption" value="M" checked required>
                   {% else %}
-                    <input type="radio" id="male" class="genderOption" name="genderOption" value="M">
+                    <input type="radio" id="male" class="genderOption" name="genderOption" value="M" required>
                   {% endif %}
                     <label for="male">M</label>
                 </span>
@@ -64,7 +64,7 @@
             </div>
             <div class="input-field">
               <i class="fas fa-address-card"></i>
-              <input type="tel" id="patientNumber" name="patientNumber" placeholder="Nº Utente" value='{{patient_patientNumber}}' maxlength="9"/>
+              <input type="tel" id="patientNumber" name="patientNumber" placeholder="Nº Utente" value='{{patient_patientNumber}}' pattern="[0-9]{9}"/>
             </div>
             <div class="input-field">
               <i class="fas fa-brain"></i>

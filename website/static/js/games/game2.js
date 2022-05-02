@@ -1,6 +1,6 @@
 // Defining variables
 var delay = 5;
-var maxTime = 5;
+var maxTime = 10;
 let difference = 0;
 let numberInString = '';
 let isCountingDown = true;
@@ -43,23 +43,23 @@ function updateTimer(starterTimer) {
         if (arrayNumbers.length === numberInString.length) {
             numberInString += '.0'
         }
-        if (isCountingDown) {
-            document.querySelector('.timer').textContent = numberInString + ' s';
-        } else {
+        if (isCountingDown === false) {
             document.querySelector('.timer').textContent = 'Cliques ' + counterClicks + ' - ' + numberInString + ' s';
             document.querySelector('.timer').style.fontSize = "1.5em";
             document.querySelector('.jogo').style.background = '#BD780A';
         }
+        
         if (sentPostWithScore == true) {
-            document.querySelector('.timer').style.fontFamily = "Poppins, sans-serif";
-            document.querySelector('.timer').innerText = 'Guardando resultado:\n' + counterClicks + ' clicks';
+            document.getElementById('container').style.display = 'none';
+            document.getElementById('title').textContent = 'Guardando teste...';
+            document.getElementsByTagName('p')[0].style.display = 'none';
         }
     }
 }
 
 function startGame() {
     let now = new Date();
-    let countdownTime = new Date(now.getTime() + delay*1000); // 10 segundos depois
+    let countdownTime = new Date(now.getTime() + delay*1000); // segundos para milissegundos
     setInterval(function() { updateTimer(countdownTime); }, 10);
 }
 
