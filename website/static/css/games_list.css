@@ -23,7 +23,7 @@ input {
   align-content: center;
   flex-direction: column;
   text-align: center;
-  
+
   background-color: #5995fd;
   color: #fff;
   width: 100%;
@@ -63,6 +63,8 @@ input {
 
 .align-center {
   margin: 0 auto;
+  min-height: 50px;
+  display: flex;
 }
 
 .game-data-inner {
@@ -77,11 +79,19 @@ input {
   display: block;
 }
 
+.hide-data {
+  display: none;
+}
+
 .draw{
   margin-top: 10px;
   max-width: 300px;
   width: 80%;
   border: 1px solid black
+}
+
+p {
+    margin: auto;
 }
 
 @media (max-width: 870px) {
