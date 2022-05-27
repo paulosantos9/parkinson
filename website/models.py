@@ -12,8 +12,8 @@ class Game(db.Model):
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     indexInAssessment = db.Column(db.Integer)
-    question = db.Column(db.String(500))
-    answer = db.Column(db.String(500))
+    question = db.Column(db.Integer)
+    answer = db.Column(db.Integer)
     assessment_id = db.Column(db.Integer, db.ForeignKey('assessment.id'))
 
 class Assessment(db.Model):

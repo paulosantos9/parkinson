@@ -35,22 +35,21 @@ function backToMain() {
 }
 
 function submitAssessment() {
-    let firstAnswer = document.querySelector('input[name="first-answer"]:checked').value;
-    let secondAnswer = document.querySelector('input[name="second-answer"]:checked').value;
-    let thirdAnswer = document.querySelector('input[name="third-answer"]:checked').value;
-    let forthAnswer = document.querySelector('input[name="forth-answer"]:checked').value;
-    let fifthAnswer = document.querySelector('input[name="fifth-answer"]:checked').value;
-    let sixthAnswer = document.querySelector('input[name="sixth-answer"]:checked').value;
-    let seventhAnswer = document.querySelector('input[name="seventh-answer"]:checked').value;
-    let data = {
-        'first-answer': firstAnswer,
-        'second-answer': secondAnswer,
-        'third-answer': thirdAnswer,
-        'forth-answer': forthAnswer,
-        'fifth-answer': fifthAnswer,
-        'sixth-answer': sixthAnswer,
-        'seventh-answer': seventhAnswer,
-    };
+
+    const assessmentType = document.getElementById('title').textContent;
+    console.log(assessmentType);
+
+    const questions = document.getElementsByClassName('question');
+    const numberOfQuestions = questions.length;
+    let answers = [];
+    for (let i = 0; i < numberOfQuestions; i++) { //
+        answers.push(document.querySelector('input[name="question' + i + '"]:checked').value);
+    }
+
+    const data = {
+        'type': assessmentType,
+        'answers': answers,
+    }
     fetch("/assessment", {
         method: "POST",
         headers: {'Content-Type': 'application/json'}, 

@@ -19,13 +19,13 @@
         {% if assessmentList %}
           <div class="title">Testes:</div>
           {% for assessment in assessmentList %}
-          <span class="listDiv assessment-data" onclick="changeDisplay('assessment-data-{{assessment.id}}')">
-            <span class="align-center"><p>{{ assessment.currentTime.strftime('%d/%m/%y %H:%M') }}</p></span>
-            <div class="question-data" id="assessment-data-{{assessment.id}}">
-              {% for i in range(assessment.questions|length) %}
+          <span class="listDiv assessment-data" onclick="changeDisplay('assessment-data-{{loop.index}}')">
+            <span class="align-center"><p>{{ assessment.name }} - {{ assessment.time.strftime('%d/%m/%y %H:%M') }}</p></span>
+            <div class="question-data" id="assessment-data-{{loop.index}}">
+              {% for question in assessment.questions %}
               <br>
-              <span class="align-center"><p>{{ assessment.questions[i].question }}</p></span>
-              <p><b>{{ assessment.questions[i].answer }}</b></p>
+              <span class="align-center"><p>{{ question['question'] }}</p></span>
+              <p><b>{{ question['answer'] }}</b></p>
               {% endfor %}
             </div>
           </span>

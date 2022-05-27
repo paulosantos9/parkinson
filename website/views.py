@@ -1,9 +1,10 @@
 from datetime import datetime
 from flask import Blueprint, render_template, request, redirect, url_for, session
 from flask_login import current_user
-from .functionHelpers import checkIfUserComplete, manageSession, chooseGame
+from .functionHelpers import checkIfUserComplete, manageSession, chooseGame, database_assessments
 from .models import Game, Question, Assessment
 from . import db # import from website folder
+from random import randint
 
 views = Blueprint('views', __name__)
 
@@ -65,11 +66,37 @@ def home():
                 return render_template('games_list.html', gamesList=gamesList, availableGames=availableGames, recordAvailableGames=recordAvailableGames, typeOfActions=typeOfActions)
 
             elif (current_page == 'assessment'):
-                return render_template('assessment.html')
+                numberOfAssessments = len(database_assessments)
+                currentAssessmentIndex = randint(0,numberOfAssessments-1)
+                print(currentAssessmentIndex)
+                currentAssessment = database_assessments[currentAssessmentIndex]
+                return render_template('assessment.html', assessment=currentAssessment)
 
             elif (current_page == 'assessmentList'):
-                assessmentList = Assessment.query.filter_by(patient_id=current_user.id).all()
-                return render_template('assessment_list.html', assessmentList=assessmentList)
+                assessmentListBefore = Assessment.query.filter_by(patient_id=current_user.id).all()
+                assessmentListAfter = []
+
+                for assessment in assessmentListBefore:
+                    questionComplete = [element for element in database_assessments if element['name'] == assessment.testType][0]
+                    questions = []
+                    for index, question in enumerate(questionComplete['questions']):
+                        questions.append(
+                            {
+                                'question': question['question'],
+                                'answer': question['answers'][assessment.questions[index].answer - 1]
+                            }
+                        )
+
+                    assessmentListAfter.append(
+                        {
+                            'name': assessment.testType,
+                            'time': assessment.currentTime,
+                            'questions': questions
+                        }
+                    )
+                print(assessmentListAfter)
+
+                return render_template('assessment_list.html', assessmentList=assessmentListAfter)
 
             else:
                 error, typeOfContainer = manageSession()
@@ -129,32 +156,19 @@ def assessment():
         session['page'] = 'assessment'
         return redirect(url_for('views.home'))
     else: # Adicionar teste
-        questions = []
-        answers = []
-        questions.append('1. Durante a última semana, você teve algum problema para adormecer à noite ou em permanecer dormindo durante a noite? Considere o quanto descansado se sentiu ao acordar de manhã..')
-        answers.append(request.json['first-answer'])
-        questions.append('2. Durante a última semana, teve dificuldade em manter-se acordado durante o dia?')
-        answers.append(request.json['second-answer'])
-        questions.append('3. Durante a última semana, teve sensações desconfortáveis no seu corpo tais como dor, sensação de ardor, formigamento ou cãimbras?')
-        answers.append(request.json['third-answer'])
-        questions.append('4. Durante a última semana, teve problemas em reter a urina? Por exemplo, necessidade urgente em urinar, necessidade de urinar vezes de mais, ou perder controlo da urina?')
-        answers.append(request.json['forth-answer'])
-        questions.append('5. Durante a última semana, teve problemas de obstipação intestinal (prisão de ventre) que lhe tenham causado dificuldade em evacuar?')
-        answers.append(request.json['fifth-answer'])
-        questions.append('6. Durante a última semana, sentiu que iria desmaiar, ficou tonto ou com sensação de cabeça vazia quando se levantou, após ter estado sentado ou deitado?')
-        answers.append(request.json['sixth-answer'])
-        questions.append('7. Durante a última semana, sentiu-se habitualmente fatigado? Esta sensação não é por estar com sono ou triste.')
-        answers.append(request.json['seventh-answer'])
+        assessmentType = request.json['type']
+        answers = request.json['answers']
+        questionComplete = [element for element in database_assessments if element['name'] == assessmentType][0]
 
-        new_assessment = Assessment(testType='UPDRS', patient_id=current_user.id, currentTime=datetime.now())
+        new_assessment = Assessment(testType=assessmentType, patient_id=current_user.id, currentTime=datetime.now())
         db.session.add(new_assessment)
-        db.session.commit() # to be able to get the assessment id
+        db.session.commit() # to be able to get the assessment id for the questions
         
-        for i in range(len(answers)):
-            temp_answer = Question(indexInAssessment=0, question=questions[i], answer=answers[i], assessment_id=new_assessment.id)
-            db.session.add(temp_answer)
-            
+        for index, answer in enumerate(answers):
+            new_answer = Question(indexInAssessment=index, question=index, answer=answer, assessment_id=new_assessment.id)
+            db.session.add(new_answer)   
         db.session.commit()
+
         session['page'] = 'main_menu'
         return redirect(url_for('views.home'))
 
