@@ -9,7 +9,7 @@ document.getElementById('games').onclick = function() {
 };
 
 document.getElementById('assessment').onclick = function() {
-    window.location.replace('/assessment');
+    window.location.replace('/choose_assessment');
 };
 
 document.getElementById('account').onclick = function() {

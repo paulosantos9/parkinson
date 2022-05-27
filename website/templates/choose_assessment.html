@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main_menu.css') }}"/>
+    <title>Parkinson</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/brain.ico') }}">
+  </head>
+  <body>
+    <div class="container">
+        <div class="button-list">
+            {% for option in options %}
+            <input type="button" id="option-{{loop.index}}" value="{{option['name']}}" class="btn" onclick="chooseButton({{loop.index}})"/>
+            {% endfor %}
+            <input type="button" id="back" value="< Voltar" class="btn"/>
+      </div>
+
+      <div class="panels-container">
+        <div class="panel left-panel">
+          <img src="{{ url_for('static', filename='images/elder2.svg') }}" class="image image1" alt="" />
+        </div>
+      </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/choose_assessment.js') }}"></script>
+  </body>
+</html>

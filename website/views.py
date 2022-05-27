@@ -66,9 +66,9 @@ def home():
                 return render_template('games_list.html', gamesList=gamesList, availableGames=availableGames, recordAvailableGames=recordAvailableGames, typeOfActions=typeOfActions)
 
             elif (current_page == 'assessment'):
-                numberOfAssessments = len(database_assessments)
-                currentAssessmentIndex = randint(0,numberOfAssessments-1)
-                currentAssessment = database_assessments[currentAssessmentIndex]
+                assessment_index = session.get('assessment')
+                print(assessment_index)
+                currentAssessment = database_assessments[int(assessment_index)]
                 return render_template('assessment.html', assessment=currentAssessment)
 
             elif (current_page == 'assessmentList'):
@@ -95,6 +95,9 @@ def home():
                     )
 
                 return render_template('assessment_list.html', assessmentList=assessmentListAfter)
+            
+            elif (current_page == 'choose_assessment'):
+                return render_template('choose_assessment.html', options=database_assessments)
 
             else:
                 error, typeOfContainer = manageSession()
@@ -151,12 +154,14 @@ def listGames():
 @views.route('/assessment', methods=['GET', 'POST'])
 def assessment():
     if request.method == 'GET': # Fazer teste
+        assessment_index = request.args.get('index')
+        session['assessment'] = assessment_index
         session['page'] = 'assessment'
         return redirect(url_for('views.home'))
+
     else: # Adicionar teste
         assessmentType = request.json['type']
         answers = request.json['answers']
-        questionComplete = [element for element in database_assessments if element['name'] == assessmentType][0]
 
         new_assessment = Assessment(testType=assessmentType, patient_id=current_user.id, currentTime=datetime.now())
         db.session.add(new_assessment)
@@ -169,6 +174,11 @@ def assessment():
 
         session['page'] = 'main_menu'
         return redirect(url_for('views.home'))
+
+@views.route('/choose_assessment', methods=['GET'])
+def choose_assessment():
+    session['page'] = 'choose_assessment'
+    return redirect(url_for('views.home'))
 
 @views.route('/assessments', methods=['GET']) # Ver lista de testes
 def assessments():

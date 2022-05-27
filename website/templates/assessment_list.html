@@ -20,7 +20,8 @@
           <div class="title">Testes:</div>
           {% for assessment in assessmentList %}
           <span class="listDiv assessment-data" onclick="changeDisplay('assessment-data-{{loop.index}}')">
-            <span class="align-center"><p>{{ assessment.name }} - {{ assessment.time.strftime('%d/%m/%y %H:%M') }}</p></span>
+            <span class="align-center"><p>{{ assessment.name }}</p></span>
+            <span class="align-center"><p>{{ assessment.time.strftime('%d/%m/%y %H:%M') }}</p></span>
             <div class="question-data" id="assessment-data-{{loop.index}}">
               {% for question in assessment.questions %}
               <br>

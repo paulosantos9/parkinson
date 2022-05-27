@@ -29,7 +29,7 @@ input {
   width: 100%;
   outline: none;
   font-size: 1.5em;
-  border-radius: 49px;
+  border-radius: 25px;
   margin: 10px 0;
   cursor: pointer;
   transition: 0.5s;
@@ -70,7 +70,7 @@ input {
   color: black;
   background-color: #fff;
   margin: 2px;
-  border-radius: 49px;
+  border-radius: 25px;
 }
 
 .show-data {
