@@ -68,7 +68,6 @@ def home():
             elif (current_page == 'assessment'):
                 numberOfAssessments = len(database_assessments)
                 currentAssessmentIndex = randint(0,numberOfAssessments-1)
-                print(currentAssessmentIndex)
                 currentAssessment = database_assessments[currentAssessmentIndex]
                 return render_template('assessment.html', assessment=currentAssessment)
 
@@ -94,7 +93,6 @@ def home():
                             'questions': questions
                         }
                     )
-                print(assessmentListAfter)
 
                 return render_template('assessment_list.html', assessmentList=assessmentListAfter)
 

@@ -6,7 +6,7 @@ import re
 
 database_assessments = [
     {
-        'name': 'UPDRS',
+        'name': 'Diagnóstico Parkinson',
         'questions': [
             {
                 'question': 'Durante a última semana, você teve algum problema para adormecer à noite ou em permanecer dormindo durante a noite? Considere o quanto descansado se sentiu ao acordar de manhã.',
@@ -81,77 +81,79 @@ database_assessments = [
         ]
     },
     {
-        'name': 'IADL',
+        'name': 'Tarefas do dia a dia',
         'questions': [
             {
-                'question': 'Ability to Use Telephone.',
+                'question': 'Usar o telemóvel.',
                 'answers': [
-                    'Operates telephone on own initiative-looks up and dials numbers, etc.',
-                    'Dials a few well-known numbers.',
-                    'Answers telephone but does not dial.',
-                    'Does not use telephone at all.'
+                    'Capaz de operar o telefone por iniciativa própria. Procura e marca números de telefone.',
+                    'Capaz de marcar alguns números bem conhecidos.',
+                    'Capaz de atender mas não sabe ligar.',
+                    'Não usa o telemóvel.'
                 ]
             },
             {
-                'question': 'Durante a última semana, teve dificuldade em manter-se acordado durante o dia?',
+                'question': 'Fazer compras.',
                 'answers': [
-                    'Sem sonolência durante o dia.',
-                    'Tenho sonolência durante o dia, mas consigo resistir e permaneço acordado.',
-                    'Por vezes adormeço quando estou sozinho e relaxado. Por exemplo, enquanto leio ou vejo televisão.',
-                    'Por vezes adormeço quando não deveria. Por exemplo, enquanto como ou falo com outras pessoas.',
-                    'Adormeço frequentemente quando não deveria. Por exemplo, enquanto como ou falo com outras pessoas.'
+                    'Capaz de tratar de todas as necessidades de compras sozinho.',
+                    'Capaz de tratar de pequenas compras sozinho.',
+                    'Precisa de acompanhamento em qualquer viagem de compras.',
+                    'Completamente incapaz de fazer compras.'
                 ]
             },
             {
-                'question': 'Durante a última semana, teve sensações desconfortáveis no seu corpo tais como dor, sensação de ardor, formigamento ou cãimbras?',
+                'question': 'Preparar comida.',
                 'answers': [
-                    'Não tenho estas sensações desconfortáveis.',
-                    'Tenho estas sensações desconfortáveis. No entanto, consigo fazer coisas e estar com outras pessoas sem dificuldade.',
-                    'Estas sensações causam alguns problemas quando faço coisas ou estou com outras pessoas.',
-                    'Estas sensações causam muitos problemas, mas não me impedem de fazer coisas ou de estar com outras pessoas.',
-                    'Estas sensações impedem-me de fazer coisas ou de estar com outras pessoas.'
+                    'Capaz de planear, preparar e servir refeições adequadas independentemente.',
+                    'Capaz de preparar refeições adequadas se tiver os ingredientes.',
+                    'Capaz de aquecer, servir e preparar refeições, mas não mantém uma dieta adequada.',
+                    'Necessita de ter as refeições preparadas e servidas.'
                 ]
             },
             {
-                'question': 'Durante a última semana, teve problemas em reter a urina? Por exemplo, necessidade urgente em urinar, necessidade de urinar vezes de mais, ou perder controlo da urina?',
+                'question': 'Doméstica.',
                 'answers': [
-                    'Sem problemas em reter a urina.',
-                    'Preciso de urinar frequentemente ou tenho urgência em urinar. No entanto, estes problemas não me causam dificuldades nas atividades diárias.',
-                    'Os problemas com a urina causam-me algumas dificuldades nas atividades diárias. No entanto, não tenho perdas acidentais de urina.',
-                    'Os problemas com a urina causam-me muitas dificuldades nas atividades diárias, incluindo perdas acidentais de urina.',
-                    'Não consigo reter a minha urina e uso uma fralda ou tenho sonda urinária.'
+                    'Capaz de manter a casa sozinha ou com ajuda ocasional, no caso de trabalhos pesados.',
+                    'Capaz de realizar tarefas diárias leves, como lavar pratos e fazer as camas.',
+                    'Capaz de realizar tarefas diárias leves mas não conseque manter um nível aceitável de limpeza.',
+                    'Precisa de ajuda com todas as tarefas domésticas.',
+                    'Não participa nas tarefas domésticas.'
                 ]
             },
             {
-                'question': 'Durante a última semana, teve problemas de obstipação intestinal (prisão de ventre) que lhe tenham causado dificuldade em evacuar?',
+                'question': 'Lavandaria.',
                 'answers': [
-                    'Sem obstipação (prisão de ventre).',
-                    'Tive obstipação (prisão de ventre). Faço um esforço extra para evacuar. No entanto, este problema não perturba as minhas atividades ou o meu conforto.',
-                    'A obstipação (prisão de ventre) causa-me alguma dificuldade em fazer coisas ou em estar confortável.',
-                    'A obstipação (prisão de ventre) causa-me muita dificuldade em fazer coisas ou em estar confortável. No entanto, não me impede de fazer o que quer que seja.',
-                    'Habitualmente preciso da ajuda física de outra pessoa para evacuar.'
+                    'Capaz de lavar a roupa pessoal de forma completa.',
+                    'Capaz de lavar apenas pequenos artigos, como por exemplo meias.',
+                    'Toda a lavandaria tem de ser feita por outras pessoas.'
                 ]
             },
             {
-                'question': 'Durante a última semana, sentiu que iria desmaiar, ficou tonto ou com sensação de cabeça vazia quando se levantou, após ter estado sentado ou deitado?',
+                'question': 'Meio de transporte.',
                 'answers': [
-                    'Não tenho a sensação de cabeça vazia ou tonturas.',
-                    'Tenho a sensação de cabeça vazia ou de tonturas, mas não me causam dificuldade em fazer coisas.',
-                    'A sensação de cabeça vazia ou de tonturas fazem com que tenha de me segurar a alguma coisa, mas não preciso de me sentar ou deitar.',
-                    'A sensação de cabeça vazia ou de tonturas fazem com que tenha de me sentar ou deitar para evitar desmaiar ou cair.',
-                    'A sensação de cabeça vazia ou de tonturas fazem com que caia ou desmaie.'
+                    'Capaz de viajar de forma independente em transportes públicos ou no próprio carro.',
+                    'Capaz de organizar a sua viagem de forma autónoma de taxi, mas não consegue utilizar outros transportes públicos.',
+                    'Capaz de viajar em transportes públicos quando acompanhado.',
+                    'Capaz de viajar de taxi ou carro apenas com assistência.',
+                    'Não viaja a lado nenhum.'
                 ]
             },
             {
-                'question': 'Durante a última semana, sentiu-se habitualmente fatigado? Esta sensação não é por estar com sono ou triste.',
+                'question': 'Responsabilidade na medicação.',
                 'answers': [
-                    'Sem fadiga.',
-                    'Sinto fadiga. No entanto, não me causa dificuldade em fazer coisas ou em estar com pessoas.',
-                    'A fadiga causa-me alguma dificuldade em fazer coisas ou em estar com pessoas.',
-                    'A fadiga causa-me muita dificuldade em fazer coisas ou em estar com pessoas. No entanto, não me impede de fazer nada.',
-                    'A fadiga impede-me de fazer coisas ou de estar com pessoas.'
+                    'Capaz de tomar a medicação correta, nas dosagens corretas e à hora correta.',
+                    'Capaz de tomar a medicação se preparada previamente, com dosagens separadas.',
+                    'Não consegue tomar medicação sozinho.'
                 ]
-            }
+            },
+            {
+                'question': 'Finanças.',
+                'answers': [
+                    'Capaz de gerir as questões financeiras de forma independente, como pagar a renda, faturas e ir ao banco.',
+                    'Capaz de gerir as compras do dia a dia, mas precisa de ajuda com bancos e compras importantes.',
+                    'Incapaz de lidar com dinheiro.'
+                ]
+            },
         ]
     }
 ]

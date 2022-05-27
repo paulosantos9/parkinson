@@ -1,9 +1,11 @@
 let counterQuestion = 0;
-let maxQuestions = 7;
+let maxQuestions = document.getElementsByClassName('question').length;
 
 function updateQuestion() {
     let questions = document.getElementsByClassName('question');
     for (let i = 0; i < maxQuestions; i++) {
+        
+        console.log(i)
         if (i === counterQuestion) {
             questions[counterQuestion].style.display = 'block';
         } else {
