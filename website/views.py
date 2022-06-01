@@ -124,11 +124,12 @@ def play():
         except:
             score = ''
         gameTypeIndex = request.json['gameType']
+        timeSpent = request.json['timeSpent']
         try: # Porque os jogos não tem imagem
             image = request.json['image']
         except:
             image = ''
-        new_game = Game(patient_id=current_user.id, gameTypeIndex=gameTypeIndex, currentTime=datetime.now(), score=score, image=image)
+        new_game = Game(patient_id=current_user.id, gameTypeIndex=gameTypeIndex, currentTime=datetime.now(), score=score, timeSpent=timeSpent, image=image)
         db.session.add(new_game)
         db.session.commit()
         session['page'] = 'main_menu'

@@ -40,7 +40,9 @@ function checkIfOver() {
 }
 
 function sendPostWithScore() {
-    let data = {'score': tries, 'gameType': 3};
+    let now = new Date();
+    timeSpent = (now.getTime() - starterTimer)/1000;
+    let data = {'score': tries, 'gameType': 3, 'timeSpent': timeSpent};
     fetch("/game", {
         method: "POST",
         headers: {'Content-Type': 'application/json'}, 
@@ -118,6 +120,8 @@ let tapCounter = 0;
 let tries = 0;
 let maxTries = 100;
 let colorCell = 'rgb(89, 149, 253)';
+let timeSpent = 0;
+let starterTimer;
 
 document.getElementById('exit-game').onclick = function() {
     window.location.replace('/backToMain')
@@ -128,4 +132,6 @@ document.getElementById('start-game').onclick = function() {
     document.getElementById('exit-game').style.display = 'none';
     document.getElementById('content').style.display = 'block';
     document.getElementsByTagName('h2')[0].style.display = 'block';
+    let now = new Date();
+    starterTimer = now.getTime();
 }

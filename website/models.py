@@ -6,7 +6,8 @@ class Game(db.Model):
     patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'))
     gameTypeIndex = db.Column(db.Integer)
     currentTime = db.Column(db.DateTime)
-    score = db.Column(db.String(50)) # miliseconds
+    score = db.Column(db.String(50))
+    timeSpent = db.Column(db.String(50))
     image = db.Column(db.Text)
 
 class Question(db.Model):

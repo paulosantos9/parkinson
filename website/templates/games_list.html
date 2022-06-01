@@ -25,6 +25,8 @@
                 <br>
                 <p>Data: {{ game.currentTime.strftime('%d/%m/%y') }}</p>
                 <p>Hora: {{ game.currentTime.strftime('%H:%M') }}</p>
+                <br>
+                <p>Tempo de jogo: {{ game.timeSpent }} s</p>
                 <p>Jogo: {{ availableGames[game.gameTypeIndex - 1] }}</p>
               {% if game.gameTypeIndex != 4 %}
                 <p>Resultado: {{ game.score }} {{ typeOfActions[game.gameTypeIndex - 1] }}</p>

@@ -77,14 +77,16 @@ window.onresize = startDraw;
 
 // Botoes apagar e guardar
 function sendPostWithScore(image) {
-    let data = {'image': image,'gameType': 4};
-    fetch("/game", {
-        method: "POST",
-        headers: {'Content-Type': 'application/json'}, 
-        body: JSON.stringify(data)
-    }).then(res => {
-        window.location.replace('/');
-    });
+  let now = new Date();
+  timeSpent = (now.getTime() - starterTimer)/1000;
+  let data = {'image': image,'gameType': 4, 'timeSpent': timeSpent};
+  fetch("/game", {
+      method: "POST",
+      headers: {'Content-Type': 'application/json'}, 
+      body: JSON.stringify(data)
+  }).then(res => {
+      window.location.replace('/');
+  });
 }
 
 function guardar() {
@@ -105,5 +107,7 @@ document.getElementById('start-game').onclick = function() {
     document.getElementById('start-game').style.display = 'none';
     document.getElementById('exit-game').style.display = 'none';
     document.getElementById('container').style.display = 'block';
+    let now = new Date();
+    starterTimer = now.getTime();
     startDraw();
 }

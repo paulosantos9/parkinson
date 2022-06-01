@@ -8,6 +8,7 @@ let difference = 0;
 let numberInString = '';
 let starterTimer;
 var inGame = false;
+let timeSpent = 0;
 
 document.getElementById('jogo_div').onclick = endGame; // add function to the game div on click
 
@@ -29,7 +30,7 @@ function convertToSecondsString() {
 }
 
 function sendPostWithScore() {
-    let data = {'score': difference, 'gameType': 1};
+    let data = {'score': difference, 'gameType': 1, 'timeSpent': timeSpent};
     fetch("/game", {
         method: "POST",
         headers: {'Content-Type': 'application/json'}, 
@@ -42,6 +43,8 @@ function sendPostWithScore() {
 function endGame() {
     if (inGame) {
         inGame = false;
+        let now = new Date();
+        timeSpent = (now.getTime() - starterTimer)/1000;
         calculateDifference();
         if( difference > 10000) {
             difference = 10000;

@@ -1,11 +1,14 @@
 function sendPostWithScore(score) {
-    let data = {'score': score, 'gameType': 5};
+    let now = new Date();
+    timeSpent = (now.getTime() - startTime)/1000;
+    if (timeSpent > 10) timeSpent = 10;
+    let data = {'score': score, 'gameType': 5, 'timeSpent': timeSpent};
     fetch("/game", {
         method: "POST",
         headers: {'Content-Type': 'application/json'}, 
         body: JSON.stringify(data)
     }).then(res => {
-        window.location.replace('/');
+        window.location.replace('/backToMain');
     });
 }
 
@@ -108,6 +111,7 @@ function startGame() {
     window.addEventListener("devicemotion", handleMotion);
     //window.addEventListener("deviceorientation", handleOrientation);
     startTime = new Date();
+    startTime = startTime.getTime()
     setInterval(updateTimer, 100);
 }
 

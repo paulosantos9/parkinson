@@ -4,8 +4,6 @@ let maxQuestions = document.getElementsByClassName('question').length;
 function updateQuestion() {
     let questions = document.getElementsByClassName('question');
     for (let i = 0; i < maxQuestions; i++) {
-        
-        console.log(i)
         if (i === counterQuestion) {
             questions[counterQuestion].style.display = 'block';
         } else {
@@ -39,7 +37,6 @@ function backToMain() {
 function submitAssessment() {
 
     const assessmentType = document.getElementById('title').textContent;
-    console.log(assessmentType);
 
     const questions = document.getElementsByClassName('question');
     const numberOfQuestions = questions.length;

@@ -11,7 +11,7 @@ let sentPostWithScore = false;
 
 function sendPostWithScore() {
     sentPostWithScore = true;
-    let data = {'score': counterClicks, 'gameType': 2};
+    let data = {'score': counterClicks, 'gameType': 2, 'timeSpent': 10};
     fetch("/game", {
         method: "POST",
         headers: {'Content-Type': 'application/json'}, 
