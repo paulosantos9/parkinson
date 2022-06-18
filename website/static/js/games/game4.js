@@ -1,6 +1,9 @@
 // Draw
-const color = "black";
+let color = "black";
 const strokeSize = 3;
+
+var currTouch = null;
+var currTouchInterval = null;
 
 function getOffset(el) {
     const rect = el.getBoundingClientRect();
@@ -20,7 +23,8 @@ function startDraw() {
   canvas.width = side;
   let marginLeft = Math.floor( (document.getElementById('container').clientWidth - side) / 2) // (100% - 90%) / 2 = 5% margin
   canvas.style.marginLeft = marginLeft.toString() + 'px'; // 5% 90% 5%
-
+  canvas.fillStyle = '#FFF';
+  
   //variables
   let painting = false;
 
@@ -28,6 +32,8 @@ function startDraw() {
   function startPosition(e) {
     painting = true;
     draw(e);
+
+    console.log(e.touches);
   }
 
   function endPosition() {
@@ -74,8 +80,6 @@ function startDraw() {
 
 window.onresize = startDraw;
 
-
-// Botoes apagar e guardar
 function sendPostWithScore(image) {
   let now = new Date();
   timeSpent = (now.getTime() - starterTimer)/1000;

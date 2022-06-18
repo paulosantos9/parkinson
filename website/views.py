@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Blueprint, render_template, request, redirect, url_for, session
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from flask_login import current_user
 from .functionHelpers import checkIfUserComplete, manageSession, chooseGame, database_assessments
 from .models import Game, Question, Assessment
@@ -29,13 +29,38 @@ def home():
                 return render_template('login_signup.html')
 
             elif (current_page == 'game'):
-                numberOfGames = 5
-                current_game = chooseGame(numberOfGames)
-                return render_template(current_game)
+                numberOfGames = [1, 2, 3, 4, 5, 6]
+                current_game, gameType = chooseGame(numberOfGames)
+                gamesList = Game.query.filter_by(patient_id=current_user.id, gameTypeIndex=gameType).all()
+                typeOfRecord = {1: 'min', 2: 'max', 3: 'min', 4: '', 5: 'max', 6: ''}
+                if (len(gamesList)):
+                    if (typeOfRecord[gameType] == 'max'): # Quando o recorde é o máximo
+                        tempRecord = 0
+                        for game in gamesList:
+                            if (int(game.score) > tempRecord):
+                                tempRecord = int(game.score)
+                    elif (typeOfRecord[gameType] == 'min'):  # Quando o recorde é o mínimo
+                        tempRecord = 10000
+                        for game in gamesList:
+                            if (int(game.score) < tempRecord):
+                                tempRecord = int(game.score)
+                    else:
+                        tempRecord = -1
+                    typeOfActions = {1: 'milissegundos', 2: 'cliques', 3: 'tentativas', 4: '', 5: 'pontos', 6: ''}
+                    record = 'Recorde: ' + str(tempRecord) + ' ' + typeOfActions[gameType]
+                else:
+                    record = ''
+
+                if gameType == 4: # Imagem aleatoria para desenhar
+                    randomNum = randint(0,1)
+                    image = ['spiral', 'wave'][randomNum]
+                    text = ['Vamos desenhar uma espiral. Tente desenhar por cima do tracejado.', 'Vamos desenhar uma onda. Tente desenhar por cima do tracejado até ao avião.'][randomNum]
+                    return render_template(current_game, record=record, image=image, text=text)
+                return render_template(current_game, record=record)
 
             elif (current_page == 'game_pc'):
-                numberOfGames = 4
-                current_game = chooseGame(numberOfGames)
+                numberOfGames = [1, 2, 3, 4, 6]
+                current_game, index = chooseGame(numberOfGames)
                 return render_template(current_game)
 
             elif (current_page == 'account'):
@@ -43,9 +68,9 @@ def home():
 
             elif (current_page == 'gamesList'):
                 gamesList = Game.query.filter_by(patient_id=current_user.id).all()
-                availableGames = ['Reação', 'Rapidez', 'Memória', 'Desenho', 'Equilíbrio']
-                typeOfActions = ['milissegundos', 'cliques', 'tentativas', '', 'pontos']
-                bestRecord = ['min', 'max', 'min', '', 'max']
+                availableGames = ['Reação', 'Rapidez', 'Memória', 'Desenho', 'Equilíbrio', 'Audio']
+                typeOfActions = ['milissegundos', 'cliques', 'tentativas', '', 'pontos', '']
+                bestRecord = ['min', 'max', 'min', '', 'max', '']
                 recordAvailableGames = []
                 for i in range(len(availableGames)):
                     tempGameList = Game.query.filter_by(patient_id=current_user.id, gameTypeIndex=i+1).all()
@@ -61,7 +86,7 @@ def home():
                             if (int(game.score) < tempRecord):
                                 tempRecord = int(game.score)
                     else:
-                        tempRecord = 0
+                        tempRecord = -1
                     recordAvailableGames.append(tempRecord)
                 return render_template('games_list.html', gamesList=gamesList, availableGames=availableGames, recordAvailableGames=recordAvailableGames, typeOfActions=typeOfActions)
 
@@ -113,27 +138,44 @@ def home():
         error, typeOfContainer = manageSession()
         return render_template('login_signup.html', error=error, typeOfContainer=typeOfContainer)
 
-
 @views.route('/game', methods=['GET', 'POST'])
 def play():
     if request.method == 'GET': # Jogar
         session['page'] = 'game'
+
     else: # Guardar resultado jogo
-        try: # Porque o desenho não tem score
-            score = request.json['score'] # because its type application/json
-        except:
-            score = ''
-        gameTypeIndex = request.json['gameType']
-        timeSpent = request.json['timeSpent']
-        try: # Porque os jogos não tem imagem
-            image = request.json['image']
-        except:
-            image = ''
-        new_game = Game(patient_id=current_user.id, gameTypeIndex=gameTypeIndex, currentTime=datetime.now(), score=score, timeSpent=timeSpent, image=image)
+
+        data_retrieved = False
+        if data_retrieved == False:
+            if 'audio' in request.json: # Audio
+                audio = request.json['audio']
+                score = 0
+                gameTypeIndex = 6
+                timeSpent = 0
+                image = ''
+                data_retrieved = True
+            else:
+                audio = ''
+
+        if data_retrieved == False:
+            if 'image' in request.json: # Image
+                image = request.json['image']
+                score = 0
+                gameTypeIndex = 4
+                timeSpent = request.json['timeSpent']
+                data_retrieved = True
+            else:
+                image = ''
+
+        if data_retrieved == False: # Rest of games
+            score = request.json['score']
+            gameTypeIndex = request.json['gameType']
+            timeSpent = request.json['timeSpent']
+
+        new_game = Game(patient_id=current_user.id, gameTypeIndex=gameTypeIndex, currentTime=datetime.now(), score=score, timeSpent=timeSpent, image=image, sound=audio)
         db.session.add(new_game)
         db.session.commit()
         session['page'] = 'main_menu'
-
     return redirect(url_for('views.home'))
 
 @views.route('/game/pc', methods=['GET'])

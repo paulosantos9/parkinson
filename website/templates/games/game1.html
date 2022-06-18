@@ -11,7 +11,11 @@
   <body>
     <div class="pre-game" id="pre-game">
         <h1 id="title" class="title">Reação</h1>
-        <p>Clique o mais rápido que conseguir assim que a cor mudar.</p>
+        <p>Vamos testar a sua reação.</p>
+        <p>Clique o mais rápido que conseguir assim que a cor mudar de azul para laranja.</p>
+        {% if record %}
+        <p>{{record}}</p>
+        {% endif %}
         <div class="button-div">
           <button id="exit-game" class="btn">Sair</button>
           <button id="start-game" class="btn">Começar</button>

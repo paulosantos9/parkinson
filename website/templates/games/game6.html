@@ -7,16 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Parkinson</title>
     <link rel="icon" href="{{ url_for('static', filename='images/brain.ico') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/games/game5.css') }}"/>
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/games/game6.css') }}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
   </div>
     </div>
     <div class="pre-game" id="pre-game">
-        <h1 id="title" class="title">Equilíbrio</h1>
-        <p>Verificando as suas funções motoras.</p>
-        <p>Pegue no telemóvel e tente mexê-lo o menos possível durante 10 segundos.</p>
+        <h1 id="title" class="title">Falar</h1>
+        <p>Como está a sua voz?</p>
+        <p>Grave a sua voz para cada uma das letras pedidas durante os 5 segundos.</p>
         <div class="button-div">
           <button id="exit-game" class="btn">Sair</button>
           <button id="start-game" class="btn">Começar</button>
@@ -25,11 +25,11 @@
     </div>
     <div class="container" id="container">
         <div class="content" id="content">
-            <div id="counter"></div>
             <div id="timer"></div>
+            <button id="record" class="btn">Gravar</button>
         </div>
     </div>
 
-  <script src="{{ url_for('static', filename='js/games/game5.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/games/game6.js') }}"></script>
   </body>
 </html>

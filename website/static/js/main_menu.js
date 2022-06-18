@@ -1,5 +1,5 @@
 document.getElementById('games').onclick = function() {
-    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    if( ('ontouchstart' in document.documentElement && /mobi/i.test(navigator.userAgent)) ) {
         // if is mobile
         window.location.replace('/game');
     } else {

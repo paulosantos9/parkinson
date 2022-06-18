@@ -69,7 +69,8 @@ function endGame() {
         }
         document.getElementById('container').style.display = 'none';
         document.getElementById('title').textContent = 'Guardando teste...';
-        document.getElementsByTagName('p')[0].style.display = 'none';
+        for (let i = 0; i < document.getElementsByTagName('p').length; i++) document.getElementsByTagName('p')[i].style.display = 'none';
+        
         setTimeout(sendPostWithScore, 2000); // voltar ao menu principal
     }
 }

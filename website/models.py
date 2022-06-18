@@ -6,9 +6,10 @@ class Game(db.Model):
     patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'))
     gameTypeIndex = db.Column(db.Integer)
     currentTime = db.Column(db.DateTime)
-    score = db.Column(db.String(50))
     timeSpent = db.Column(db.String(50))
+    score = db.Column(db.String(50))
     image = db.Column(db.Text)
+    sound = db.Column(db.Text)
 
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -25,26 +26,22 @@ class Assessment(db.Model):
     doctorNotes = db.Column(db.String(10000))
     questions = db.relationship('Question')
 
-class Doctor(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(50), unique=True) # max length is 150
+class Person(db.Model, UserMixin):
+    __abstract__ = True
+    username = db.Column(db.String(50), unique=True)
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(270))
     name = db.Column(db.String(150))
     phoneNumber = db.Column(db.String(9))
     bornDate = db.Column(db.Date)
     gender = db.Column(db.String(1))
+
+class Doctor(Person):
+    id = db.Column(db.Integer, primary_key=True)
     patientsList = db.relationship('Patient')
 
-class Patient(db.Model, UserMixin):
+class Patient(Person):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(50), unique=True)
-    email = db.Column(db.String(150), unique=True)
-    password = db.Column(db.String(150))
-    name = db.Column(db.String(150))
-    phoneNumber = db.Column(db.String(9))
-    bornDate = db.Column(db.Date)
-    gender = db.Column(db.String(1))
     patientNumber = db.Column(db.String(9))
     alzheimer = db.Column(db.Boolean)
     parkinson = db.Column(db.Boolean)

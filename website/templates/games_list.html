@@ -25,16 +25,35 @@
                 <br>
                 <p>Data: {{ game.currentTime.strftime('%d/%m/%y') }}</p>
                 <p>Hora: {{ game.currentTime.strftime('%H:%M') }}</p>
-                <br>
-                <p>Tempo de jogo: {{ game.timeSpent }} s</p>
                 <p>Jogo: {{ availableGames[game.gameTypeIndex - 1] }}</p>
-              {% if game.gameTypeIndex != 4 %}
-                <p>Resultado: {{ game.score }} {{ typeOfActions[game.gameTypeIndex - 1] }}</p>
                 <br>
-                <p>Recorde: {{ recordAvailableGames[game.gameTypeIndex - 1] }} {{ typeOfActions[game.gameTypeIndex - 1] }}</p>
-              {% else %}
-                <image class="draw" id ="draw" src="{{game.image}}"></image>
-              {% endif %}
+                {% if availableGames[game.gameTypeIndex - 1] == 'Reação' %}
+                  <p>Tempo de jogo: {{ game.timeSpent }} s</p>
+                  <p>Resultado: {{ game.score }} {{ typeOfActions[game.gameTypeIndex - 1] }}</p>
+                  <p>Recorde: {{ recordAvailableGames[game.gameTypeIndex - 1] }} {{ typeOfActions[game.gameTypeIndex - 1] }}</p>
+
+                {% elif availableGames[game.gameTypeIndex - 1] == 'Rapidez' %}
+                  <p>Resultado: {{ game.score }} {{ typeOfActions[game.gameTypeIndex - 1] }}</p>
+                  <p>Recorde: {{ recordAvailableGames[game.gameTypeIndex - 1] }} {{ typeOfActions[game.gameTypeIndex - 1] }}</p>
+
+                {% elif availableGames[game.gameTypeIndex - 1] == 'Memória' %}
+                  <p>Tempo de jogo: {{ game.timeSpent }} s</p>
+                  <p>Resultado: {{ game.score }} {{ typeOfActions[game.gameTypeIndex - 1] }}</p>
+                  <p>Recorde: {{ recordAvailableGames[game.gameTypeIndex - 1] }} {{ typeOfActions[game.gameTypeIndex - 1] }}</p>
+
+                {% elif availableGames[game.gameTypeIndex - 1] == 'Desenho' %}
+                  <p>Tempo de jogo: {{ game.timeSpent }} s</p>
+                  <image class="draw" id ="draw" src="{{game.image}}"></image>
+
+                {% elif availableGames[game.gameTypeIndex - 1] == 'Equilíbrio' %}
+                  <p>Tempo de jogo: {{ game.timeSpent }} s</p>
+                  <p>Resultado: {{ game.score }} {{ typeOfActions[game.gameTypeIndex - 1] }}</p>
+                  <p>Recorde: {{ recordAvailableGames[game.gameTypeIndex - 1] }} {{ typeOfActions[game.gameTypeIndex - 1] }}</p>
+
+                {% elif availableGames[game.gameTypeIndex - 1] == 'Audio' %}
+                  <audio src="{{game.sound}}" controls>O seu browser não suporta os nossos testes.</audio>
+
+                {% endif %}
                 <br>
             </div>
           </span>

@@ -11,7 +11,8 @@
   <body>
     <div class="pre-game" id="pre-game">
         <h1 id="title" class="title">Desenho</h1>
-        <p>Tente desenhar por cima do sublinhado.</p>
+        <p>É bom a desenhar?</p>
+        <p>{{text}}</p>
         <div class="button-div">
           <button id="exit-game" class="btn">Sair</button>
           <button id="start-game" class="btn">Começar</button>
@@ -22,7 +23,7 @@
             <button class="btn" id="apagar">Apagar</button>
             <button class="btn" id="guardar">Guardar</button>
         </div>
-        <canvas id="canvas"></canvas>
+        <canvas id="canvas" style="background-image: url('../static/images/{{image}}.png')"></canvas>
     </div>
 
     <script src="{{ url_for('static', filename='js/games/game4.js') }}"></script>

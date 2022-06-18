@@ -115,12 +115,12 @@ function startGame() {
     setInterval(updateTimer, 100);
 }
 
-let startGameButton = document.getElementById("start-game");
 let accelerationSum = 10000;
 let rotationSum = 10000;
 let inGame = false;
 let startTime;
 
+let startGameButton = document.getElementById("start-game");
 startGameButton.onclick = function(e) {
     e.preventDefault();
     
@@ -137,7 +137,9 @@ startGameButton.onclick = function(e) {
             window.location.replace('/backToMain');
         }
         })
-      .catch(console.error)
+        .catch(_ => {
+            window.location.replace('/backToMain');
+        });
     }
 
     startGame();

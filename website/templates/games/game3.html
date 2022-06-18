@@ -12,7 +12,11 @@
     <div class="box">
         <div class="row header pre-game" id="pre-game">
             <h1 id="title" class="title">Memória</h1>
-            <p>Procure as cartas que contêm as mesmas letras.</p>
+            <p>Como está a sua memória?</p>
+            <p>Vamos jogar ao jogo da memória. Vire as cartas e encontre os pares.</p>
+            {% if record %}
+            <p>{{record}}</p>
+            {% endif %}
             <h2>Tentativas: 0</h2>
             <div class="button-div">
                 <button id="exit-game" class="btn">Sair</button>
