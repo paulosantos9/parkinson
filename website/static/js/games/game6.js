@@ -60,9 +60,13 @@ function sendData(data) {
     }
 }
 
+let recording = false;
 document.getElementById('record').onclick = e => {
     audioChunks = [];
-    rec.start();
+    if (!recording) {
+        rec.start();
+        recording = true;
+    }
     document.getElementById('record').textContent = 'Gravando';
     document.getElementById('record').style.backgroundColor = 'rgb(207, 72, 62)';
     setTimeout(function () { // Parar ao fim de 5 segundos

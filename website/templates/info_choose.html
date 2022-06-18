@@ -10,11 +10,10 @@
   <body>
     <div class="container">
         <div class="button-list">
-            <input type="button" id="games" value="Jogar" class="btn" />
-            <input type="button" id="assessment" value="Teste" class="btn" />
-            <input type="button" id="info" value="Informações" class="btn" />
-            <input type="button" id="account" value="Conta" class="btn" />
-            <input type="button" id="logout" value="Terminar Sessão" class="btn" />
+            {% for option in options %}
+            <input type="button" id="option-{{loop.index}}" value="{{option['name']}}" class="btn" onclick="chooseButton({{loop.index}})"/>
+            {% endfor %}
+            <input type="button" id="back" value="< Voltar" class="btn"/>
       </div>
 
       <div class="panels-container">
@@ -23,6 +22,6 @@
         </div>
       </div>
     </div>
-    <script src="{{ url_for('static', filename='js/main_menu.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/info_choose.js') }}"></script>
   </body>
 </html>

@@ -12,6 +12,10 @@ document.getElementById('assessment').onclick = function() {
     window.location.replace('/choose_assessment');
 };
 
+document.getElementById('info').onclick = function() {
+    window.location.replace('/info_choose');
+};
+
 document.getElementById('account').onclick = function() {
     window.location.replace('/account');
 };

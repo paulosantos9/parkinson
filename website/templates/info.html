@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parkinson</title>
+    <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/assessment_list.css') }}"
+  />
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='images/brain.ico') }}"
+    />
+  </head>
+<body>
+    <div class="gamesContainer">
+        <div>
+            <h1 id="title" class="title">{{current_info.name}}</h1>
+            {% for entry in current_info.entries %}
+            <span class="listDiv assessment-data" onclick="changeDisplay('info-data-{{loop.index}}')">
+                <span class="align-center"><h3>{{ entry.name }}</h3></span>
+                <div class="question-data" id="info-data-{{loop.index}}">
+                    <span class="align-center"><p>{{entry.info}}</p></span>
+                </div>
+            </span>
+            {% endfor %}
+            <button id="back" class="btn">< Voltar</button>
+        </div>
+    </div>
+    
+    
+    <script src="{{ url_for('static', filename='js/info.js') }}"></script>
+</body>
+</html>

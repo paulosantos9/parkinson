@@ -4,6 +4,61 @@ from flask_login import current_user
 from random import randint
 import re
 
+info_diseases = [
+    {
+        'name': "Doença de Alzheimer",
+        'entries': [
+            {
+                'name': 'História',
+                'info': 'A doença de Alzheimer é a doença neurodegenerativa mais comum e representa também a causa mais frequente de demência, cerca de 70% do total de casos.'
+            },
+            {
+                'name': 'Sintomas',
+                'info': 'A manifestação clínica mais presente é a demência, o que significa uma maior perda cognitiva que o esperado para a idade do paciente. Outros sintomas incluem alterações de humor, personalidade e comportamentos, perda de memória, dificuldades linguísticas e motores e alucinações.'
+            },
+            {
+                'name': 'Diagnóstico',
+                'info': 'Ainda não existem atualmente um único teste capaz de detetar a presença de Alzheimer. O que acontece é que é feita uma análise a dierentes componentes que permite aos doutores fazerem um diagnóstico. Estes componentes incluem a análise do histórico médico do paciente e da sua família, testemunhos familiares em termos de abilidades mentais e comportamentos, testes cognitivos, testes sanguíneos e imagens médicas do cérebro e presença de biomarcadores desta doença.',
+            },
+            {
+                'name': 'Prevalência',
+                'info': 'Estudos apontam para mais de 50 milhões de pessoas com esta doença em todo o mundo, sendo que esperado que atinja os 150 milhões em 2050. Ocorre especialmente em pessoas mais idosas, principalmente após os 65 anos. Portugal é o quarto país da União Europeia com maior percentagem de casos de Alzheimer, cerca de 2%.'
+            },
+            {
+                'name': 'Tratamentos',
+                'info': 'O número de tratamentos disponíveis para Alzheimer são limitados. Fatores que ajudam na melhoria dos sintomas nestes pacientes incluem a estimulação cognitiva e a prática de exercício físico. Os jogos que apresentamos nesta aplicação ajudam a melhorar a capacidade cognitiva dos pacientes.'
+            }
+        ]
+        
+    },
+    {
+        'name': "Doença de Parkinson",
+        'entries': [
+            {
+                'name': 'História',
+                'info': 'A doença de Parkinson é a segunda doença neurodegenerativa mais comum atualmente e a sua prevalência tem aumentado mais rapidamente do que as restantes, sendo principalmente caraterizada por deficiências nas capacidades motoras.'
+            },
+            {
+                'name': 'Sintomas',
+                'info': 'O sintoma mais frequente na doença de Parkinson são as deficiências motoras, que incluem a lentidão dos movimentos, tremores em repouso, rigidez muscular, problemas posturais e dificuldades em falar ou engolir. Outros problemas incluem perturbações do sono e do humor, caligrafia pequena, problemas de visão, depressão e dores.',
+            },
+            {
+                'name': 'Diagnóstico',
+                'info': 'O diagnóstico da doença de Parkinson baseia-se na avaliação dos sintomas clínicos, tais como a lentidão de movimentos, tremores em repouso e rigidez, histórico médico e exames físicos, como reflexos, sensibilidade e agilidade. Os médicos utilizam ainda testes padrão com perguntas e respostas para verificar a presença da doença e a sua gravidade.',
+            },
+            {
+                'name': 'Prevalência',
+                'info': 'Estudos apontam para mais de 8 milhões de pessoas com doença de Parkinson no mundo, com o aparecimento anual de 1 milhão de novos casos e 340 mil mortes. Estudos apontam para uma maior percentagem de homens com doença, sendo que o aparecimento nas mulheres ocorre mais tarde.'
+            },
+            {
+                'name': 'Tratamentos',
+                'info': 'A doença de Parkinson não tem cura atualmente e o tratamento foca-se no alívio dos sintomas. O tratamento inclui medicação, terapia física e estimulação cerebral profunda. Com o passar do tempo a medicação torna-se menos efetiva, pelo que os médicos vão ajustando o tipo e a dosagem da medicação.'
+            }
+        ]
+        
+    },
+]
+
 database_assessments = [
     {
         'name': 'Diagnóstico Parkinson',

@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from flask_login import current_user
-from .functionHelpers import checkIfUserComplete, manageSession, chooseGame, database_assessments
+from .functionHelpers import checkIfUserComplete, manageSession, chooseGame, database_assessments, info_diseases
 from .models import Game, Question, Assessment
 from . import db # import from website folder
 from random import randint
@@ -50,7 +50,7 @@ def home():
                     record = 'Recorde: ' + str(tempRecord) + ' ' + typeOfActions[gameType]
                 else:
                     record = ''
-
+                
                 if gameType == 4: # Imagem aleatoria para desenhar
                     randomNum = randint(0,1)
                     image = ['spiral', 'wave'][randomNum]
@@ -60,8 +60,42 @@ def home():
 
             elif (current_page == 'game_pc'):
                 numberOfGames = [1, 2, 3, 4, 6]
-                current_game, index = chooseGame(numberOfGames)
-                return render_template(current_game)
+                current_game, gameType = chooseGame(numberOfGames)
+                gamesList = Game.query.filter_by(patient_id=current_user.id, gameTypeIndex=gameType).all()
+                typeOfRecord = {1: 'min', 2: 'max', 3: 'min', 4: '', 5: 'max', 6: ''}
+                if (len(gamesList)):
+                    if (typeOfRecord[gameType] == 'max'): # Quando o recorde é o máximo
+                        tempRecord = 0
+                        for game in gamesList:
+                            if (int(game.score) > tempRecord):
+                                tempRecord = int(game.score)
+                    elif (typeOfRecord[gameType] == 'min'):  # Quando o recorde é o mínimo
+                        tempRecord = 10000
+                        for game in gamesList:
+                            if (int(game.score) < tempRecord):
+                                tempRecord = int(game.score)
+                    else:
+                        tempRecord = -1
+                    typeOfActions = {1: 'milissegundos', 2: 'cliques', 3: 'tentativas', 4: '', 5: 'pontos', 6: ''}
+                    record = 'Recorde: ' + str(tempRecord) + ' ' + typeOfActions[gameType]
+                else:
+                    record = ''
+                
+                if gameType == 4: # Imagem aleatoria para desenhar
+                    randomNum = randint(0,2)
+                    image = ['spiral', 'wave', 'clock'][randomNum]
+                    text = ['Vamos desenhar uma espiral. Tente desenhar por cima do tracejado.', 'Vamos desenhar uma onda. Tente desenhar por cima do tracejado até ao avião.', 'Ainda se lembra como se desenha um relógio? Desenhe um relógio analógico às 11 horas e 10 minutos.'][randomNum]
+                    return render_template(current_game, record=record, image=image, text=text)
+
+                return render_template(current_game, record=record)
+
+            elif (current_page == 'info_choose'):
+                return render_template('info_choose.html', options=info_diseases)
+
+            elif (current_page == 'info'):
+                info_index = session.get('info')
+                current_info = info_diseases[int(info_index)]
+                return render_template('info.html', current_info=current_info)
 
             elif (current_page == 'account'):
                 return render_template('account.html')
@@ -92,7 +126,6 @@ def home():
 
             elif (current_page == 'assessment'):
                 assessment_index = session.get('assessment')
-                print(assessment_index)
                 currentAssessment = database_assessments[int(assessment_index)]
                 return render_template('assessment.html', assessment=currentAssessment)
 
@@ -144,7 +177,6 @@ def play():
         session['page'] = 'game'
 
     else: # Guardar resultado jogo
-
         data_retrieved = False
         if data_retrieved == False:
             if 'audio' in request.json: # Audio
@@ -183,6 +215,18 @@ def play_pc():
     session['page'] = 'game_pc'
     return redirect(url_for('views.home'))
 
+@views.route('/info', methods=['GET'])
+def info():
+    if request.method == 'GET': # Fazer teste
+        info_index = request.args.get('index')
+        session['info'] = info_index
+        session['page'] = 'info'
+        return redirect(url_for('views.home'))
+
+@views.route('/info_choose', methods=['GET'])
+def info_choose():
+    session['page'] = 'info_choose'
+    return redirect(url_for('views.home'))
 
 @views.route('/account', methods=['GET'])
 def account():
@@ -238,3 +282,6 @@ def backToMain():
     session['page'] = 'main_menu'
     return redirect(url_for('views.home'))
     
+@views.route('/test')
+def test():
+    return {'ola':'adeus'}
