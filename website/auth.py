@@ -1,6 +1,7 @@
 import datetime
 from flask import Blueprint, request, redirect, url_for, session
-from .models import Game, Assessment, Doctor, Patient
+from .models import Patient, Achievement
+from .functionHelpers import database_achievements
 from . import db # import from website folder
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
@@ -97,8 +98,8 @@ def signup():
     
     if current_user.is_authenticated:
         session['page'] = 'main_menu'
-
         return redirect(url_for('views.home'))
+
     else:
         error, typeOfContainer = manageSession()
    
@@ -106,6 +107,7 @@ def signup():
             session['error'] = error
             session['typeOfContainer'] = typeOfContainer
             return redirect(url_for('views.home'))
+
         elif request.method == 'POST':
             username = request.form.get('username')
             email = request.form.get('email')
@@ -131,11 +133,16 @@ def signup():
                 error = isPasswordValid(password, password_confirm)[1]
             else:
                 # add user to database
-                new_user = Patient(email=email, username=username, password=generate_password_hash(password, method='sha256'), name='', phoneNumber='', bornDate=datetime.datetime(1900, 1, 1), gender='', patientNumber='', alzheimer=False, parkinson=False, observations='', doctor_id=-1)
+                new_user = Patient(email=email, username=username, password=generate_password_hash(password, method='sha256'), name='', phoneNumber='', bornDate=datetime.datetime(2000, 1, 1), gender='', patientNumber='', alzheimer=False, parkinson=False, observations='', doctor_id=-1)
                 db.session.add(new_user)
                 db.session.commit()
                 login_user(new_user, remember=True)
 
+                # create achievements
+                for achivement_item in database_achievements:
+                    achievement = Achievement(name=achivement_item['name'], locked=True, patient_id=current_user.id)
+                    db.session.add(achievement)
+                db.session.commit()
                 session['page'] = 'settings'
                 
             session['error'] = error

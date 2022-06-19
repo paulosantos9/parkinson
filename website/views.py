@@ -1,8 +1,8 @@
 from datetime import datetime
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from flask_login import current_user
-from .functionHelpers import checkIfUserComplete, manageSession, chooseGame, database_assessments, info_diseases
-from .models import Game, Question, Assessment
+from .functionHelpers import checkIfUserComplete, manageSession, chooseGame, database_assessments, database_diseases, database_achievements
+from .models import Game, Question, Assessment, Achievement
 from . import db # import from website folder
 from random import randint
 
@@ -52,9 +52,9 @@ def home():
                     record = ''
                 
                 if gameType == 4: # Imagem aleatoria para desenhar
-                    randomNum = randint(0,1)
-                    image = ['spiral', 'wave'][randomNum]
-                    text = ['Vamos desenhar uma espiral. Tente desenhar por cima do tracejado.', 'Vamos desenhar uma onda. Tente desenhar por cima do tracejado até ao avião.'][randomNum]
+                    randomNum = randint(0,2)
+                    image = ['spiral', 'wave', 'clock'][randomNum]
+                    text = ['Vamos desenhar uma espiral. Tente desenhar por cima do tracejado.', 'Vamos desenhar uma onda. Tente desenhar por cima do tracejado até ao avião.', 'Ainda se lembra como se desenha um relógio? Desenhe um relógio analógico às 11 horas e 10 minutos.'][randomNum]
                     return render_template(current_game, record=record, image=image, text=text)
                 return render_template(current_game, record=record)
 
@@ -90,11 +90,11 @@ def home():
                 return render_template(current_game, record=record)
 
             elif (current_page == 'info_choose'):
-                return render_template('info_choose.html', options=info_diseases)
+                return render_template('info_choose.html', options=database_diseases)
 
             elif (current_page == 'info'):
                 info_index = session.get('info')
-                current_info = info_diseases[int(info_index)]
+                current_info = database_diseases[int(info_index)]
                 return render_template('info.html', current_info=current_info)
 
             elif (current_page == 'account'):
@@ -154,6 +154,13 @@ def home():
 
                 return render_template('assessment_list.html', assessmentList=assessmentListAfter)
             
+            elif (current_page == 'achievements'):
+                database_achievements_temp = database_achievements
+                for item in database_achievements_temp:
+                    achivements_found = Achievement. query.filter_by(patient_id=current_user.id, name=item['name']).all()
+                    item['locked'] = achivements_found[0].locked
+                return render_template('achievements.html', database_achievements=database_achievements_temp)
+
             elif (current_page == 'choose_assessment'):
                 return render_template('choose_assessment.html', options=database_assessments)
 
@@ -203,9 +210,14 @@ def play():
             score = request.json['score']
             gameTypeIndex = request.json['gameType']
             timeSpent = request.json['timeSpent']
-
+        
+        # Add game
         new_game = Game(patient_id=current_user.id, gameTypeIndex=gameTypeIndex, currentTime=datetime.now(), score=score, timeSpent=timeSpent, image=image, sound=audio)
         db.session.add(new_game)
+
+        # Add achievement
+        check_game_achievements(gameTypeIndex)
+
         db.session.commit()
         session['page'] = 'main_menu'
     return redirect(url_for('views.home'))
@@ -256,7 +268,10 @@ def assessment():
         
         for index, answer in enumerate(answers):
             new_answer = Question(indexInAssessment=index, question=index, answer=answer, assessment_id=new_assessment.id)
-            db.session.add(new_answer)   
+            db.session.add(new_answer)
+
+        check_test_achievements()
+         
         db.session.commit()
 
         session['page'] = 'main_menu'
@@ -272,6 +287,11 @@ def assessments():
     session['page'] = 'assessmentList'
     return redirect(url_for('views.home'))
 
+@views.route('/achievements', methods=['GET']) # Ver lista de testes
+def achievements():
+    session['page'] = 'achievements'
+    return redirect(url_for('views.home'))
+
 @views.route('/settings', methods=['GET']) # Preencher dados da conta
 def settings():
     session['page'] = 'settings'
@@ -281,7 +301,35 @@ def settings():
 def backToMain():
     session['page'] = 'main_menu'
     return redirect(url_for('views.home'))
-    
-@views.route('/test')
-def test():
-    return {'ola':'adeus'}
+
+def check_game_achievements(gameTypeIndex):
+    # Jogador
+    achievement = Achievement.query.filter_by(patient_id=current_user.id, name='Jogador').all()
+    if achievement[0].locked == True:
+        achievement[0].locked = False
+
+    # First try games achievements
+    games_names = ['Reação', 'Rapidez', 'Memória', 'Desenho', 'Equilíbrio', 'Fala']
+    achievement = Achievement.query.filter_by(patient_id=current_user.id, name=games_names[gameTypeIndex-1]).all()
+    if achievement[0].locked == True:
+        achievement[0].locked = False
+
+    # Mestre
+    played_all_games = True
+    for game in games_names:
+        achievement = Achievement.query.filter_by(patient_id=current_user.id, name=game).all()
+        if achievement[0].locked == True:
+            played_all_games = False
+            break
+    achievement = Achievement.query.filter_by(patient_id=current_user.id, name='Mestre').all()
+    achievement[0].locked = not played_all_games
+
+def check_test_achievements():
+    # Test
+    achievement = Achievement.query.filter_by(patient_id=current_user.id, name='Teste').all()
+    if achievement[0].locked == True:
+        achievement[0].locked = False
+            
+#@views.route('/test')
+#def test():
+#    return {'ola':'adeus'}

@@ -1,4 +1,5 @@
 function setPermission() {
+    try {
     navigator.permissions.query({name: 'microphone'}).then(function (result) {
         document.getElementsByTagName('p')[1].textContent = 'Grave a sua voz para cada uma das letras pedidas.';
         if (result.state == 'granted') {
@@ -7,7 +8,6 @@ function setPermission() {
         } else if (result.state == 'prompt') {
             navigator.mediaDevices.getUserMedia({ audio: true })
             .then(_ => {
-                document.getElementsByTagName('p')[1].textContent = 'Grave a sua voz para cada uma das letras pedidas.';
                 navigator.mediaDevices.getUserMedia({audio: true}).then(stream => { handlerFunction(stream) });
             })
             .catch(_ => {
@@ -30,6 +30,15 @@ function setPermission() {
             }, 5000)
         };
     });
+    } catch(_) {
+        document.getElementsByTagName('p')[0].textContent = 'Jogo não disponível para este dispositivo.';
+        document.getElementsByTagName('p')[1].textContent = 'Voltando ao menu inicial...';
+        document.getElementById('start-game').style.display = 'none';
+        document.getElementById('exit-game').style.display = 'none';
+        setTimeout(_ => {
+            window.location.replace('/backToMain');
+        }, 5000)
+    }
 }
 setPermission();
 

@@ -4,7 +4,55 @@ from flask_login import current_user
 from random import randint
 import re
 
-info_diseases = [
+database_achievements = [
+    {
+        'icon': 'mobile',
+        'name': 'Jogador',
+        'description': 'Jogue pelo menos um jogo.',
+    },
+    {
+        'icon': 'flash',
+        'name': 'Reação',
+        'description': 'Jogue pelo menos uma vez o jogo da reação.',
+    },
+    {
+        'icon': 'tap',
+        'name': 'Rapidez',
+        'description': 'Jogue pelo menos uma vez o jogo da rapidez.',
+    },
+    {
+        'icon': 'brain',
+        'name': 'Memória',
+        'description': 'Jogue pelo menos uma vez o jogo da memória.',
+    },
+    {
+        'icon': 'draw',
+        'name': 'Desenho',
+        'description': 'Faça pelo menos um desenho.',
+    },
+    {
+        'icon': 'balance',
+        'name': 'Equilíbrio',
+        'description': 'Jogue pelo menos uma vez o jogo do equilíbrio.',
+    }, 
+    {
+        'icon': 'talk',
+        'name': 'Fala',
+        'description': 'Faça pelo menos um teste da fala.',
+    },
+    {
+        'icon': 'master',
+        'name': 'Mestre',
+        'description': 'Jogar todos os jogos.'
+    },
+    {
+        'icon': 'test',
+        'name': 'Teste',
+        'description': 'Faça pelo menos um teste.'
+    },
+]
+
+database_diseases = [
     {
         'name': "Doença de Alzheimer",
         'entries': [
@@ -215,7 +263,7 @@ database_assessments = [
 
 
 def checkIfUserComplete():
-    if (current_user.name == '' or current_user.phoneNumber == '' or current_user.bornDate == datetime.datetime(1900, 1, 1) or  current_user.gender == '' or current_user.patientNumber == ''):
+    if (current_user.name == '' or current_user.phoneNumber == '' or current_user.bornDate == datetime.datetime(2000, 1, 1) or  current_user.gender == '' or current_user.patientNumber == ''):
         session['page'] = 'settings'
         return False
     else:

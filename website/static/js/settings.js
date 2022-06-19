@@ -6,8 +6,7 @@ function styleForm() {
     let currentDate = new Date();
     let currentYear = currentDate.getFullYear(); let currentMonth = (currentDate.getMonth()+1) < 10 ? '0' + (currentDate.getMonth() + 1) : (currentDate.getMonth() + 1); let currentDay = currentDate.getDate() < 10 ? '0' + currentDate.getDate() : currentDate.getDate();
     document.getElementById('bornDate').max = (currentYear - 18) + '-' + currentMonth + '-' + currentDay;
-    if (document.getElementById('bornDate').value == '1900-01-01') {
-        document.getElementById('bornDate').value == '1970-01-01'
+    if (document.getElementById('bornDate').value == '2000-01-01') {
         document.getElementById('bornDate').style.color = '#808080';
         document.getElementById('bornDate').onchange = function(){
             document.getElementById('bornDate').style.color = '#000';

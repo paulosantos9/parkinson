@@ -1,0 +1,112 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.gamesContainer {
+    position: absolute;
+    width: 80%;
+    margin-left: 10%;
+}
+
+.title {
+    font-size: 2.5rem;
+    color: #444;
+    margin: 10px auto;
+    text-align: center;
+}
+
+.btn {
+    background-color: #5995fd;
+    border: none;
+    outline: none;
+    height: 75px;
+    font-size: 1.5rem;
+    border-radius: 49px;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.5s;
+    display: block;
+    width: 100%;
+    margin: 10px auto;
+  }
+
+/* Achievement */
+.achievement {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 150px;
+    border-radius: 15px;
+    border: 2px solid rgb(124, 124, 124);
+    background-color: #c4daff;
+    margin-bottom: 10px;
+}
+
+.locked {
+    opacity: 0.5;
+}
+
+/* ICON */
+.icon { /* Div containing the image */
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    width: 35%;
+}
+
+img { /* Achievement image */
+    max-width: 75%;
+    max-height: 75%;
+    margin: auto 0;
+}
+
+/* Info */
+.info {
+    width: 65%;
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+.name-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 0 1 auto;
+}
+
+.name {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 10px;
+}
+
+.info-div {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.info-text {
+    font-size: 1rem;
+    margin: 10px;
+}
+
+@media (max-width: 870px) {
+
+    .btn {
+      height: 50px;
+      font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 570px) {
+    .btn {
+      font-size: 1rem;
+    }
+}

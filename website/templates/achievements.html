@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/achievements.css') }}"/>
+    <title>Mentalist</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/brain.ico') }}"/>
+</head>
+<body>
+    <div class="gamesContainer">
+        <div class="title">Conquistas:</div>
+        {% for item in database_achievements %}
+            {% if item.locked %}
+            <div class="achievement locked">
+            {% else %}
+            <div class="achievement">
+            {% endif %}
+                <div class="icon">
+                    <img src="/static/images/{{item.icon}}.png" class="image"/>
+                </div>
+                <div class="info">
+                    <div class="name-div">
+                        <p class="name">{{item.name}}</p>
+                    </div>
+                    <div class="info-div">
+                        <p class="info-text">{{item.description}}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <button id="back" class="btn">< Voltar</button>
+    </div>
+    <script src="{{ url_for('static', filename='js/achievements.js') }}"></script>
+</body>
+</html>

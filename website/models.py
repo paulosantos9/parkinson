@@ -26,6 +26,12 @@ class Assessment(db.Model):
     doctorNotes = db.Column(db.String(10000))
     questions = db.relationship('Question')
 
+class Achievement(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))
+    locked = db.Column(db.Boolean)
+    patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'))
+
 class Person(db.Model, UserMixin):
     __abstract__ = True
     username = db.Column(db.String(50), unique=True)
@@ -49,3 +55,4 @@ class Patient(Person):
     doctor_id = db.Column(db.Integer, db.ForeignKey('doctor.id'))
     assessments = db.relationship('Assessment')
     games = db.relationship('Game')
+    achievements = db.relationship('Achievement')

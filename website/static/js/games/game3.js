@@ -45,14 +45,14 @@ function sendPostWithScore() {
     let data = {'score': tries, 'gameType': 3, 'timeSpent': timeSpent};
     fetch("/game", {
         method: "POST",
-        headers: {'Content-Type': 'application/json'}, 
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
     }).then(res => {
         window.location.replace('/');
     });
 }
 
-function cardClicked() {   
+function cardClicked() {
     tapCounter++;
     if (tapCounter !== 3) {
         let card = this.children[0];
@@ -66,7 +66,7 @@ function cardClicked() {
                     if ( checkIfOver() ) {
                         setTimeout(sendPostWithScore, 2000); // voltar ao menu principal
                     }
-    
+
                     // reset variables
                     tapCounter = 0;
                     tries++;
@@ -74,29 +74,33 @@ function cardClicked() {
                         document.getElementById('content').style.display = 'none';
                         document.getElementById('title').textContent = 'Guardando teste...';
                         document.getElementsByTagName('p')[0].style.display = 'none';
+                        document.getElementsByTagName('p')[1].style.display = 'none';
+                        document.getElementsByTagName('p')[2].style.display = 'none';
                         document.getElementsByTagName('h2')[0].style.display = 'none';
                     } else {
                         document.getElementsByTagName('h2')[0].innerText = 'Tentativas: ' + tries;
                     }
                     cardTapped.pop();
-                    cardTapped.pop();    
+                    cardTapped.pop();
                 }
             }
         } else {
             tapCounter--;
         }
     } else {
-        
+
         // reset turned cards if needed
         if ( checkIfPair() === false) {
             cardTapped[0].style.color = colorCell;
-            cardTapped[1].style.color = colorCell;      
+            cardTapped[1].style.color = colorCell;
         }
 
         // reset variables
         tries++;
         if (checkIfOver()) {
             document.getElementsByTagName('h2')[0].innerText = 'Guardando resultado:\n' + tries + ' tentativas';
+            document.getElementsByTagName('p')[0].innerText = '';
+            document.getElementsByTagName('p')[1].innerText = '';
         } else {
             document.getElementsByTagName('h2')[0].innerText = 'Tentativas: ' + tries;
         }
