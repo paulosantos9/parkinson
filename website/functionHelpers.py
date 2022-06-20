@@ -21,7 +21,7 @@ database_achievements = [
         'description': 'Jogue pelo menos uma vez o jogo da rapidez.',
     },
     {
-        'icon': 'brain',
+        'icon': 'memory',
         'name': 'Memória',
         'description': 'Jogue pelo menos uma vez o jogo da memória.',
     },
@@ -50,6 +50,16 @@ database_achievements = [
         'name': 'Teste',
         'description': 'Faça pelo menos um teste.'
     },
+    {
+        'icon': 'brain',
+        'name': 'UPDRS',
+        'description': 'Faça pelo menos um questionário relativo ao UPDRS.'
+    },
+    {
+        'icon': 'daly',
+        'name': 'Tarefas',
+        'description': 'Faça pelo menos um questionário relativo às tarefas do dia a dia.'
+    }
 ]
 
 database_diseases = [

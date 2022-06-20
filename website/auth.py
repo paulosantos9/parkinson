@@ -140,7 +140,7 @@ def signup():
 
                 # create achievements
                 for achivement_item in database_achievements:
-                    achievement = Achievement(name=achivement_item['name'], locked=True, patient_id=current_user.id)
+                    achievement = Achievement(name=achivement_item['name'], locked=True, patient_id=current_user.id, icon=achivement_item['icon'], description=achivement_item['description'])
                     db.session.add(achievement)
                 db.session.commit()
                 session['page'] = 'settings'

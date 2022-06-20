@@ -31,6 +31,8 @@ class Achievement(db.Model):
     name = db.Column(db.String(50))
     locked = db.Column(db.Boolean)
     patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'))
+    icon = db.Column(db.String(50))
+    description = db.Column(db.String(150))
 
 class Person(db.Model, UserMixin):
     __abstract__ = True

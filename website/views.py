@@ -155,11 +155,8 @@ def home():
                 return render_template('assessment_list.html', assessmentList=assessmentListAfter)
             
             elif (current_page == 'achievements'):
-                database_achievements_temp = database_achievements
-                for item in database_achievements_temp:
-                    achivements_found = Achievement. query.filter_by(patient_id=current_user.id, name=item['name']).all()
-                    item['locked'] = achivements_found[0].locked
-                return render_template('achievements.html', database_achievements=database_achievements_temp)
+                achivements = Achievement.query.filter_by(patient_id=current_user.id).all()
+                return render_template('achievements.html', database_achievements=achivements)
 
             elif (current_page == 'choose_assessment'):
                 return render_template('choose_assessment.html', options=database_assessments)
@@ -270,7 +267,7 @@ def assessment():
             new_answer = Question(indexInAssessment=index, question=index, answer=answer, assessment_id=new_assessment.id)
             db.session.add(new_answer)
 
-        check_test_achievements()
+        check_test_achievements(assessmentType)
          
         db.session.commit()
 
@@ -324,9 +321,18 @@ def check_game_achievements(gameTypeIndex):
     achievement = Achievement.query.filter_by(patient_id=current_user.id, name='Mestre').all()
     achievement[0].locked = not played_all_games
 
-def check_test_achievements():
+def check_test_achievements(assessmentType):
     # Test
     achievement = Achievement.query.filter_by(patient_id=current_user.id, name='Teste').all()
+    if achievement[0].locked == True:
+        achievement[0].locked = False
+
+    # First try test achievements
+    test_names = ['Diagnóstico Parkinson', 'Tarefas do dia a dia']
+    test_index = test_names.index(assessmentType)
+    achievement_options = ['UPDRS', 'Tarefas']
+    achievement_name = achievement_options[test_index]
+    achievement = Achievement.query.filter_by(patient_id=current_user.id, name=achievement_name).all()
     if achievement[0].locked == True:
         achievement[0].locked = False
             
