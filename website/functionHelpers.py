@@ -1,8 +1,13 @@
+from .models import Achievement
 import datetime
 from flask import session
 from flask_login import current_user
 from random import randint
 import re
+from math import sqrt, floor
+import base64
+from PIL import Image
+import os
 
 database_achievements = [
     {
@@ -334,3 +339,119 @@ def isUsernameValid(username):
         return False, 'Nome de utilizador não pode ter espaços.'
     else:
         return True, ''
+
+
+def check_game_achievements(gameTypeIndex):
+    # Jogador
+    achievement = Achievement.query.filter_by(patient_id=current_user.id, name='Jogador').all()
+    if achievement[0].locked == True:
+        achievement[0].locked = False
+
+    # First try games achievements
+    games_names = ['Reação', 'Rapidez', 'Memória', 'Desenho', 'Equilíbrio', 'Fala']
+    achievement = Achievement.query.filter_by(patient_id=current_user.id, name=games_names[gameTypeIndex-1]).all()
+    if achievement[0].locked == True:
+        achievement[0].locked = False
+
+    # Mestre
+    played_all_games = True
+    for game in games_names:
+        achievement = Achievement.query.filter_by(patient_id=current_user.id, name=game).all()
+        if achievement[0].locked == True:
+            played_all_games = False
+            break
+    achievement = Achievement.query.filter_by(patient_id=current_user.id, name='Mestre').all()
+    achievement[0].locked = not played_all_games
+
+def check_test_achievements(assessmentType):
+    # Test
+    achievement = Achievement.query.filter_by(patient_id=current_user.id, name='Teste').all()
+    if achievement[0].locked == True:
+        achievement[0].locked = False
+
+    # First try test achievements
+    test_names = ['Diagnóstico Parkinson', 'Tarefas do dia a dia']
+    test_index = test_names.index(assessmentType)
+    achievement_options = ['UPDRS', 'Tarefas']
+    achievement_name = achievement_options[test_index]
+    achievement = Achievement.query.filter_by(patient_id=current_user.id, name=achievement_name).all()
+    if achievement[0].locked == True:
+        achievement[0].locked = False
+
+def calculate_image_accuracy(image_data):
+    # get reference image
+    reference_image = Image.open('website/static/images/reference.png')
+    reference_pixels = reference_image.getdata()
+    reference_image_side = int(sqrt(len(reference_pixels)))
+
+    # get test image
+    image_saved_bytes = image_data
+    image_saved_bytes = image_saved_bytes.split(',')[1]
+    image_saved_bytes = bytes(image_saved_bytes, 'utf-8')
+
+    file_name = "website/static/images/image_test" + str(randint(0,1000000)) + '.png'
+    with open(file_name, "wb") as fh:
+        fh.write(base64.decodebytes(image_saved_bytes) + b'==')
+
+    image_test = Image.open(file_name)
+    image_test = image_test.resize((reference_image_side, reference_image_side))
+    test_pixels = image_test.getdata()
+    new_pixels = []
+    for i in range(0, len(test_pixels)):
+        if test_pixels[i] == (0, 0, 0, 0):
+            new_pixels.append((255, 255, 255, 255))
+        else:
+            new_pixels.append((0, 0, 0, 255))
+    image_test.putdata(new_pixels)
+    image_test.save(file_name)
+    image_test = Image.open(file_name)
+
+    # compare images
+    total_pixels_non0 = 0
+    correct_pixels = 0
+    for i in range(0, len(reference_pixels)):
+        if reference_pixels[i] != (255, 255, 255, 255) or test_pixels[i] != (255, 255, 255, 255): # if one of them is not white
+            total_pixels_non0 += 1
+            # check pixel in a 15 radius
+            if look_pixels_around(reference_pixels, reference_image_side, test_pixels, i):
+                correct_pixels += 1
+    
+    image_test.close()
+    os.remove(file_name)
+
+    return int(correct_pixels / total_pixels_non0 * 100) # percentage
+
+ # check pixel in a 5 pixel radius
+def look_pixels_around(reference_pixels, reference_image_side, test_pixels, i):
+    row = floor(i % reference_image_side)
+    column = i - reference_image_side * row
+    for x in range(row-5, row+5):
+        for y in range(column-5, column+5):
+            if x*reference_image_side+y < len(reference_pixels) and x*reference_image_side+y >= 0:
+                if reference_pixels[x*reference_image_side+y] != (255, 255, 255, 255) and test_pixels[x*reference_image_side+y] != (255, 255, 255, 255): # if they are both not white
+                    return True
+    return False
+
+    
+    # compare images
+    total_pixels_non0 = 0
+    correct_pixels = 0
+    for i in range(0, len(reference_pixels)):
+        if reference_pixels[i] != (255, 255, 255, 255) or test_pixels[i] != (255, 255, 255, 255): # if one of them is not white
+            total_pixels_non0 += 1
+            # check pixel in a 15 radius
+            if look_pixels_around(reference_pixels, reference_image_side, test_pixels, i):
+                correct_pixels += 1
+
+    return int(correct_pixels / total_pixels_non0 * 100) # percentage
+
+ # check pixel in a 5 pixel radius
+def look_pixels_around(reference_pixels, reference_image_side, test_pixels, i):
+    row = floor(i % reference_image_side)
+    column = i - reference_image_side * row
+    for x in range(row-3, row+3):
+        for y in range(column-3, column+3):
+            if x*reference_image_side+y < len(reference_pixels) and x*reference_image_side+y >= 0:
+                if reference_pixels[x*reference_image_side+y] != (255, 255, 255, 255) and test_pixels[x*reference_image_side+y] != (255, 255, 255, 255): # if they are both not white
+                    return True
+    return False

@@ -1,10 +1,11 @@
 from datetime import datetime
-from flask import Blueprint, render_template, request, redirect, url_for, session, flash
+from flask import Blueprint, render_template, request, redirect, url_for, session
 from flask_login import current_user
-from .functionHelpers import checkIfUserComplete, manageSession, chooseGame, database_assessments, database_diseases, database_achievements
+from .functionHelpers import checkIfUserComplete, manageSession, chooseGame, database_assessments, database_diseases, check_game_achievements, check_test_achievements, calculate_image_accuracy
 from .models import Game, Question, Assessment, Achievement
 from . import db # import from website folder
 from random import randint
+
 
 views = Blueprint('views', __name__)
 
@@ -103,8 +104,8 @@ def home():
             elif (current_page == 'gamesList'):
                 gamesList = Game.query.filter_by(patient_id=current_user.id).all()
                 availableGames = ['Reação', 'Rapidez', 'Memória', 'Desenho', 'Equilíbrio', 'Audio']
-                typeOfActions = ['milissegundos', 'cliques', 'tentativas', '', 'pontos', '']
-                bestRecord = ['min', 'max', 'min', '', 'max', '']
+                typeOfActions = ['milissegundos', 'cliques', 'tentativas', '%', 'pontos', '']
+                bestRecord = ['min', 'max', 'min', 'max', 'max', '']
                 recordAvailableGames = []
                 for i in range(len(availableGames)):
                     tempGameList = Game.query.filter_by(patient_id=current_user.id, gameTypeIndex=i+1).all()
@@ -196,9 +197,11 @@ def play():
         if data_retrieved == False:
             if 'image' in request.json: # Image
                 image = request.json['image']
-                score = 0
                 gameTypeIndex = 4
                 timeSpent = request.json['timeSpent']
+                
+                score = calculate_image_accuracy(image) # calculate
+
                 data_retrieved = True
             else:
                 image = ''
@@ -211,7 +214,7 @@ def play():
         # Add game
         new_game = Game(patient_id=current_user.id, gameTypeIndex=gameTypeIndex, currentTime=datetime.now(), score=score, timeSpent=timeSpent, image=image, sound=audio)
         db.session.add(new_game)
-
+        
         # Add achievement
         check_game_achievements(gameTypeIndex)
 
@@ -299,43 +302,3 @@ def backToMain():
     session['page'] = 'main_menu'
     return redirect(url_for('views.home'))
 
-def check_game_achievements(gameTypeIndex):
-    # Jogador
-    achievement = Achievement.query.filter_by(patient_id=current_user.id, name='Jogador').all()
-    if achievement[0].locked == True:
-        achievement[0].locked = False
-
-    # First try games achievements
-    games_names = ['Reação', 'Rapidez', 'Memória', 'Desenho', 'Equilíbrio', 'Fala']
-    achievement = Achievement.query.filter_by(patient_id=current_user.id, name=games_names[gameTypeIndex-1]).all()
-    if achievement[0].locked == True:
-        achievement[0].locked = False
-
-    # Mestre
-    played_all_games = True
-    for game in games_names:
-        achievement = Achievement.query.filter_by(patient_id=current_user.id, name=game).all()
-        if achievement[0].locked == True:
-            played_all_games = False
-            break
-    achievement = Achievement.query.filter_by(patient_id=current_user.id, name='Mestre').all()
-    achievement[0].locked = not played_all_games
-
-def check_test_achievements(assessmentType):
-    # Test
-    achievement = Achievement.query.filter_by(patient_id=current_user.id, name='Teste').all()
-    if achievement[0].locked == True:
-        achievement[0].locked = False
-
-    # First try test achievements
-    test_names = ['Diagnóstico Parkinson', 'Tarefas do dia a dia']
-    test_index = test_names.index(assessmentType)
-    achievement_options = ['UPDRS', 'Tarefas']
-    achievement_name = achievement_options[test_index]
-    achievement = Achievement.query.filter_by(patient_id=current_user.id, name=achievement_name).all()
-    if achievement[0].locked == True:
-        achievement[0].locked = False
-            
-#@views.route('/test')
-#def test():
-#    return {'ola':'adeus'}

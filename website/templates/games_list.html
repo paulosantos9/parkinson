@@ -51,6 +51,8 @@
                   <br>
                   <p>Tempo de jogo: {{ game.timeSpent }} s</p>
                   <image class="draw" id ="draw" src="{{game.image}}"></image>
+                  <p>Resultado: {{ game.score }} {{ typeOfActions[game.gameTypeIndex - 1] }}</p>
+                  <p>Recorde: {{ recordAvailableGames[game.gameTypeIndex - 1] }} {{ typeOfActions[game.gameTypeIndex - 1] }}</p>
 
                 {% elif availableGames[game.gameTypeIndex - 1] == 'Equilíbrio' %}
                   <p>Jogo: {{ availableGames[game.gameTypeIndex - 1] }}</p>
