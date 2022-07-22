@@ -17,19 +17,16 @@
         <h1 id="title" class="title">Falar</h1>
         <p>Como está a sua voz?</p>
         <p>Grave a sua voz para cada uma das letras pedidas durante os 5 segundos.</p>
-        <div class="button-div">
+        <div class="button-div" id="option-div">
           <button id="exit-game" class="btn">Sair</button>
           <button id="start-game" class="btn">Começar</button>
         </div>
-        
-    </div>
-    <div class="container" id="container">
-        <div class="content" id="content">
-            <div id="timer"></div>
-            <button id="record" class="btn">Gravar</button>
+        <div class="button-div" id="record-div" style="display:none">
+          <button id="record" class="btn">Gravar</button>
         </div>
     </div>
-
-  <script src="{{ url_for('static', filename='js/games/game6.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="{{ url_for('static', filename='js/games/game6.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dependencies/recorder.js') }}"></script>
   </body>
 </html>

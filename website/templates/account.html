@@ -10,18 +10,14 @@
   </head>
   <body>
     <div class="container">
-        <div class="button-list">
-            <input type="button" id="results" value="Resultados de jogos" class="btn" />
-            <input type="button" id="assessments" value="Testes realizados" class="btn" />
-            <input type="button" id="achievements" value="Conquistas" class="btn" />
-            <input type="button" id="settings" value="Definições de conta" class="btn" />
-            <input type="button" id="back" value="< Voltar" class="btn"/>
+      <div class="image_div align-center">
+        <img src="{{ url_for('static', filename='images/doctor.png') }}" class="image" alt="" />
       </div>
-
-      <div class="panels-container">
-        <div class="panel left-panel">
-          <img src="{{ url_for('static', filename='images/elder2.svg') }}" class="image image1" alt="" />
-        </div>
+      <div class="button-list  align-center">
+        <input type="button" id="results" value="Resultados de jogos" class="btn" />
+        <input type="button" id="assessments" value="Testes realizados" class="btn" />
+        <input type="button" id="achievements" value="Conquistas" class="btn" />
+        <input type="button" id="back" value="< Voltar" class="btn"/>
       </div>
     </div>
     <script src="{{ url_for('static', filename='js/account.js') }}"></script>

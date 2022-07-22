@@ -1,5 +1,10 @@
+if (document.referrer !==  window.location.href) {
+    // If coming from other page, user should be redirected to main
+    window.location.replace('/backToMain');
+}
+
 document.getElementById('results').onclick = function() {
-    window.location.replace('/listGames');
+    window.location.replace('/choose_evolution');
 };
 
 document.getElementById('assessments').onclick = function() {
@@ -8,10 +13,6 @@ document.getElementById('assessments').onclick = function() {
 
 document.getElementById('achievements').onclick = function() {
     window.location.replace('/achievements');
-};
-
-document.getElementById('settings').onclick = function() {
-    window.location.replace('/settings');
 };
 
 document.getElementById('back').onclick = function() {

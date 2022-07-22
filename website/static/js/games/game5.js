@@ -49,6 +49,7 @@ function handleGyroscope(event) {
     if (rotationSum < 0) {
         rotationSum = 0;
         inGame = false;
+        document.getElementById('pre-game').style.backgroundColor = 'rgb(255,255,255)';
         sendPostWithScore(rotationSum);
     }
     updateFieldIfNotNull('counter', rotationSum);
@@ -91,6 +92,11 @@ function updateTimer() {
             document.getElementById('container').style.display = 'none';
             document.getElementById('title').textContent = 'Guardando teste...';
             document.getElementsByTagName('p')[0].style.display = 'none';
+            document.getElementsByTagName('p')[1].style.display = 'none';
+            if (document.getElementsByTagName('p')[2]) {
+                document.getElementsByTagName('p')[2].style.display = 'none';
+            }
+            document.getElementById('pre-game').style.backgroundColor = 'rgb(255,255,255)'
             sendPostWithScore(rotationSum);
         } else {
             document.querySelector('#timer').textContent = numberInString + ' s';
@@ -99,6 +105,10 @@ function updateTimer() {
         document.getElementById('container').style.display = 'none';
         document.getElementById('title').textContent = 'Guardando teste...';
         document.getElementsByTagName('p')[0].style.display = 'none';
+        document.getElementsByTagName('p')[1].style.display = 'none';
+        if (document.getElementsByTagName('p')[2]) {
+            document.getElementsByTagName('p')[2].style.display = 'none';
+        }
     }
 }
 

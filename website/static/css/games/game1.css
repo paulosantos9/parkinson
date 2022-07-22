@@ -27,12 +27,14 @@ body {
 }
 
 .pre-game {
-  text-align: center;
   font-size: 1rem;
+  width: 100%;
   color: #444;
-  margin: 5vh auto;
-  margin-bottom: 0;
+  padding: 10px;
   text-align: center;
+  background-color: #bbd4ff;
+  border-bottom-left-radius: 25%;
+  border-bottom-right-radius: 25%;
 }
 
 .jogo {

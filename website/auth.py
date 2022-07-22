@@ -5,15 +5,14 @@ from .functionHelpers import database_achievements
 from . import db # import from website folder
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
-from .functionHelpers import checkIfUserComplete, isUsernameValid, manageSession, isPasswordValid, isEmailValid
+from .functionHelpers import isUsernameValid, manageSession, isPasswordValid, isEmailValid
 
 auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    session['page'] = 'login_signup'
     if current_user.is_authenticated:
-        checkIfUserComplete()
+        session['page'] = 'login_signup'
         return redirect(url_for('views.home'))
     else:
         if request.method == 'GET': # by url, should not be available so redirect
@@ -22,24 +21,36 @@ def login():
             return redirect(url_for('views.home', error=error, typeOfContainer=typeOfContainer))
         
         elif request.method == 'POST': # by url form
-            username = request.form.get('username')
+            username_email = request.form.get('usernameemail')
             password = request.form.get('password')
 
             error = None
             typeOfContainer = 0
 
-            user = Patient.query.filter_by(username=username).first()
+            user_by_username = Patient.query.filter_by(username=username_email).first()
+            user_by_email = Patient.query.filter_by(email=username_email).first()
 
-            if user:
-                if check_password_hash(user.password, password):
-                    login_user(user, remember=True)
-                    checkIfUserComplete()
+            # TRY TO LOGIN WITH USERNAME
+            if user_by_username:
+                if check_password_hash(user_by_username.password, password):
+                    login_user(user_by_username, remember=True)
                     return redirect(url_for('views.home'))
                 else:
                     error = 'Credenciais incorretas, tente novamente.'
+                    
             else:
                 error = 'Credenciais incorretas, tente novamente.'
             
+            # IF NOT LOGIN WITH USERNAME, TRY TO LOGIN WITH EMAIL
+            if user_by_email:
+                if check_password_hash(user_by_email.password, password):
+                    login_user(user_by_email, remember=True)
+                    return redirect(url_for('views.home'))
+                else:
+                    error = 'Credenciais incorretas, tente novamente.'
+                    
+            else:
+                error = 'Credenciais incorretas, tente novamente.'
             session['error'] = error
             session['typeOfContainer'] = typeOfContainer
 
@@ -80,11 +91,8 @@ def update():
             
             db.session.commit()
 
-            checkIfUserComplete()
-
             return redirect(url_for('views.home'))
         else:
-            checkIfUserComplete()
             return redirect(url_for('views.home'))
     else:
         session['page'] = 'login_signup'
@@ -133,7 +141,7 @@ def signup():
                 error = isPasswordValid(password, password_confirm)[1]
             else:
                 # add user to database
-                new_user = Patient(email=email, username=username, password=generate_password_hash(password, method='sha256'), name='', phoneNumber='', bornDate=datetime.datetime(2000, 1, 1), gender='', patientNumber='', alzheimer=False, parkinson=False, observations='', doctor_id=-1)
+                new_user = Patient(email=email, username=username, password=generate_password_hash(password, method='sha256'))
                 db.session.add(new_user)
                 db.session.commit()
                 login_user(new_user, remember=True)
@@ -143,10 +151,12 @@ def signup():
                     achievement = Achievement(name=achivement_item['name'], locked=True, patient_id=current_user.id, icon=achivement_item['icon'], description=achivement_item['description'])
                     db.session.add(achievement)
                 db.session.commit()
-                session['page'] = 'settings'
+                session['page'] = 'main_menu'
                 
             session['error'] = error
             session['typeOfContainer'] = typeOfContainer
+            session['username'] = username
+            session['email'] = email
 
             return redirect(url_for('views.home'))
         else:

@@ -9,17 +9,14 @@
   </head>
   <body>
     <div class="container">
-        <div class="button-list">
-            {% for option in options %}
-            <input type="button" id="option-{{loop.index}}" value="{{option['name']}}" class="btn" onclick="chooseButton({{loop.index}})"/>
-            {% endfor %}
-            <input type="button" id="back" value="< Voltar" class="btn"/>
+      <div class="image_div align-center">
+        <img src="{{ url_for('static', filename='images/doctor.png') }}" class="image" alt="" />
       </div>
-
-      <div class="panels-container">
-        <div class="panel left-panel">
-          <img src="{{ url_for('static', filename='images/elder2.svg') }}" class="image image1" alt="" />
-        </div>
+      <div class="button-list align-center">
+        {% for option in options %}
+        <input type="button" id="option-{{loop.index}}" value="{{option['name']}}" class="btn" onclick="chooseButton({{loop.index}})"/>
+        {% endfor %}
+        <input type="button" id="back" value="< Voltar" class="btn"/>
       </div>
     </div>
     <script src="{{ url_for('static', filename='js/choose_assessment.js') }}"></script>

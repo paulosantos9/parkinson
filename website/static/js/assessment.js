@@ -1,3 +1,8 @@
+if (document.referrer !==  window.location.href) {
+    // If coming from other page, user should be redirected to main
+    window.location.replace('/backToMain');
+}
+
 let counterQuestion = 0;
 let maxQuestions = document.getElementsByClassName('question').length;
 
@@ -14,7 +19,7 @@ function updateQuestion() {
 
 function updateButtons() {
     if (counterQuestion === 0) {
-        document.getElementById('anterior').value = 'Voltar';
+        document.getElementById('anterior').value = '< Voltar';
         document.getElementById('seguinte').value = 'Seguinte >';
     } else if (counterQuestion === maxQuestions) {
         
@@ -31,7 +36,7 @@ updateQuestion();
 updateButtons();
 
 function backToMain() {
-    window.location.replace('/backToMain');
+    window.location.replace('/choose_assessment');
 }
 
 function submitAssessment() {
@@ -82,6 +87,6 @@ document.getElementById('seguinte').onclick = function() {
     if (counterQuestion >= maxQuestions) {
         document.getElementById('anterior').style.display = 'none'
         document.getElementById('seguinte').style.display = 'none'
-        document.getElementById('title').textContent = 'Guardando teste...'
+        document.getElementById('title').textContent = 'Guardando questionário...'
     }
 }

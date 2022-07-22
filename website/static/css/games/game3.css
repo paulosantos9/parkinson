@@ -24,12 +24,14 @@ html, body {
 }
 
 .pre-game {
-    text-align: center;
     font-size: 1rem;
+    width: 100%;
     color: #444;
-    margin: 5vh 10vw;
-    margin-bottom: 10px;
+    padding: 10px;
     text-align: center;
+    background-color: #bbd4ff;
+    border-bottom-left-radius: 25%;
+    border-bottom-right-radius: 25%;
     flex: 0 1 auto;
 }
 
@@ -78,6 +80,10 @@ span {
 
 h2, .content {
     display: none;
+}
+
+.content {
+    margin-top: 10px;
 }
 
 p {

@@ -17,7 +17,7 @@
     <div class="gamesContainer">
       <div>
         {% if assessmentList %}
-          <div class="title">Testes:</div>
+          <div class="title">Questionários:</div>
           {% for assessment in assessmentList %}
           <span class="listDiv assessment-data" onclick="changeDisplay('assessment-data-{{loop.index}}')">
             <span class="align-center"><p>{{ assessment.name }}</p></span>
@@ -35,7 +35,7 @@
           <div class="title">Sem dados.</div>
         {% endif %}
       </div>
-      <button id="back" class="btn">< Voltar</button>
+      <button id="back" class="btn">Voltar</button>
     </div>
     <script src="{{ url_for('static', filename='js/assessment_list.js') }}"></script>
   </body>

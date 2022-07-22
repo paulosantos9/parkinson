@@ -3,10 +3,10 @@ if (document.referrer !==  window.location.href) {
     window.location.replace('/backToMain');
 }
 
+function chooseButton(id) {
+    window.location.replace('/evolution/' + id);
+}
+
 document.getElementById('back').onclick = function() {
     window.location.replace('/account');
 };
-
-function changeDisplay(divId) {
-    document.getElementById(divId).className === 'question-data' ? document.getElementById(divId).classList.add("show-data") : document.getElementById(divId).classList.remove("show-data");
-}

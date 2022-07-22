@@ -9,7 +9,9 @@ class Game(db.Model):
     timeSpent = db.Column(db.String(50))
     score = db.Column(db.String(50))
     image = db.Column(db.Text)
-    sound = db.Column(db.Text)
+    audioPath = db.Column(db.String(50))
+    jitter = db.Column(db.String(50))
+    shimmer = db.Column(db.String(50))
 
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -39,10 +41,6 @@ class Person(db.Model, UserMixin):
     username = db.Column(db.String(50), unique=True)
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(270))
-    name = db.Column(db.String(150))
-    phoneNumber = db.Column(db.String(9))
-    bornDate = db.Column(db.Date)
-    gender = db.Column(db.String(1))
 
 class Doctor(Person):
     id = db.Column(db.Integer, primary_key=True)
@@ -50,9 +48,6 @@ class Doctor(Person):
 
 class Patient(Person):
     id = db.Column(db.Integer, primary_key=True)
-    patientNumber = db.Column(db.String(9))
-    alzheimer = db.Column(db.Boolean)
-    parkinson = db.Column(db.Boolean)
     observations = db.Column(db.String(10000))
     doctor_id = db.Column(db.Integer, db.ForeignKey('doctor.id'))
     assessments = db.relationship('Assessment')

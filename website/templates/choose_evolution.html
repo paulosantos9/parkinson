@@ -12,13 +12,13 @@
       <div class="image_div align-center">
         <img src="{{ url_for('static', filename='images/doctor.png') }}" class="image" alt="" />
       </div>
-      <div class="button-list">
+      <div class="button-list align-center">
         {% for option in options %}
         <input type="button" id="option-{{loop.index}}" value="{{option['name']}}" class="btn" onclick="chooseButton({{loop.index}})"/>
         {% endfor %}
         <input type="button" id="back" value="< Voltar" class="btn"/>
       </div>
     </div>
-    <script src="{{ url_for('static', filename='js/info_choose.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/choose_evolution.js') }}"></script>
   </body>
 </html>

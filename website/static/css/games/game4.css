@@ -29,12 +29,14 @@ body {
 }
 
 .pre-game {
-  text-align: center;
   font-size: 1rem;
+  width: 100%;
   color: #444;
-  margin: 5vh auto;
-  margin-bottom: 0;
+  padding: 10px;
   text-align: center;
+  background-color: #bbd4ff;
+  border-bottom-left-radius: 25%;
+  border-bottom-right-radius: 25%;
   flex: 0 1 auto;
 }
 
@@ -48,16 +50,8 @@ p {
   justify-content: space-between;
 
   position: absolute;
-  top: 75%;
+  top: 75vh;
   left: 20%;
-}
-
-.button-div-game {
-    width: 60%;
-    margin: 0 auto;
-    margin-bottom: 15px;
-    display: flex;
-    justify-content: space-between;
 }
 
 .btn {
@@ -78,8 +72,17 @@ p {
 
 canvas {
     border: 1px solid black;
-    margin: 0 auto;
+    margin: 10px auto;
     background-size: cover;
+}
+
+.title {
+  text-align: center;
+  color: #444;
+}
+
+#imageType {
+  margin-top: 5vh;
 }
 
 @media (max-width: 870px) {

@@ -67,6 +67,7 @@ function endGame() {
         } else {
             numberInString += '.000'
         }
+        document.getElementById('pre-game').style.backgroundColor = 'rgb(255,255,255)';
         document.getElementById('container').style.display = 'none';
         document.getElementById('title').textContent = 'Guardando teste...';
         for (let i = 0; i < document.getElementsByTagName('p').length; i++) document.getElementsByTagName('p')[i].style.display = 'none';

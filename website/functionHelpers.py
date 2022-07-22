@@ -1,13 +1,79 @@
 from .models import Achievement
-import datetime
+from datetime import datetime
 from flask import session
 from flask_login import current_user
 from random import randint
 import re
-from math import sqrt, floor
+from math import sqrt
 import base64
 from PIL import Image
 import os
+from werkzeug.utils import secure_filename
+import parselmouth
+from parselmouth.praat import call
+
+updrs_assessment = {
+    'name': 'Diagnóstico Parkinson',
+    'questions': [
+        {
+            'question': 'Pergunta 1.',
+                'answers': [
+                    'Resposta 1.',
+                    'Resposta 2.',
+                    'Resposta 3.'
+                ]
+        },
+        {
+            'question': 'Pergunta 2.',
+                'answers': [
+                    'Resposta 1.',
+                    'Resposta 2.',
+                    'Resposta 3.'
+                ]
+        },
+        {
+            'question': 'Pergunta 3.',
+                'answers': [
+                    'Resposta 1.',
+                    'Resposta 2.',
+                    'Resposta 3.'
+                ]
+        },
+    ]
+};
+
+database_games = [
+    {
+        'name':'Reação',
+        'action': 'milissegundos',
+        'bestRecord': 'min',
+    },
+    {
+        'name': 'Rapidez',
+        'action': 'cliques',
+        'bestRecord': 'max',
+    },
+    {
+        'name': 'Memória',
+        'action': 'tentativas',
+        'bestRecord': 'min',
+    },
+    {
+        'name': 'Desenho',
+        'action':'%',
+        'bestRecord': 'max',
+    },
+    {
+        'name': 'Equilíbrio',
+        'action':'pontos',
+        'bestRecord': 'max',
+    },
+    {
+        'name': 'Audio',
+        'action': '',
+        'bestRecord': '',
+    }
+]
 
 database_achievements = [
     {
@@ -39,7 +105,7 @@ database_achievements = [
         'icon': 'balance',
         'name': 'Equilíbrio',
         'description': 'Jogue pelo menos uma vez o jogo do equilíbrio.',
-    }, 
+    },
     {
         'icon': 'talk',
         'name': 'Fala',
@@ -53,7 +119,12 @@ database_achievements = [
     {
         'icon': 'test',
         'name': 'Teste',
-        'description': 'Faça pelo menos um teste.'
+        'description': 'Faça pelo menos um questionário.'
+    },
+    {
+        'icon': 'smile',
+        'name': 'Sentimento',
+        'description': 'Indique pelo menos uma vez como se sente.'
     },
     {
         'icon': 'brain',
@@ -92,7 +163,7 @@ database_diseases = [
                 'info': 'O número de tratamentos disponíveis para Alzheimer são limitados. Fatores que ajudam na melhoria dos sintomas nestes pacientes incluem a estimulação cognitiva e a prática de exercício físico. Os jogos que apresentamos nesta aplicação ajudam a melhorar a capacidade cognitiva dos pacientes.'
             }
         ]
-        
+
     },
     {
         'name': "Doença de Parkinson",
@@ -118,11 +189,26 @@ database_diseases = [
                 'info': 'A doença de Parkinson não tem cura atualmente e o tratamento foca-se no alívio dos sintomas. O tratamento inclui medicação, terapia física e estimulação cerebral profunda. Com o passar do tempo a medicação torna-se menos efetiva, pelo que os médicos vão ajustando o tipo e a dosagem da medicação.'
             }
         ]
-        
+
     },
 ]
 
 database_assessments = [
+    {
+        'name': 'Como se sente?',
+        'questions': [
+            {
+                'question': 'Como se sente?',
+                'answers': [
+                    '😭 - Muito Triste',
+                    '🙁 - Triste',
+                    '😐 - Normal',
+                    '🙂 - Feliz',
+                    '😁 - Muito Feliz'
+                ]
+            }
+        ]
+    },
     {
         'name': 'Diagnóstico Parkinson',
         'questions': [
@@ -276,15 +362,6 @@ database_assessments = [
     }
 ]
 
-
-def checkIfUserComplete():
-    if (current_user.name == '' or current_user.phoneNumber == '' or current_user.bornDate == datetime.datetime(2000, 1, 1) or  current_user.gender == '' or current_user.patientNumber == ''):
-        session['page'] = 'settings'
-        return False
-    else:
-        session['page'] = 'main_menu'
-        return True
-
 def manageSession():
     error = session.get('error')
     typeOfContainer = session.get('typeOfContainer')
@@ -295,7 +372,7 @@ def manageSession():
     return error, typeOfContainer
 
 def chooseGame(numberOfGames):
-    index = randint(0,len(numberOfGames)-1)
+    index = randint(0, len(numberOfGames)-1)
     gameType = numberOfGames[index]
     game = '/games/game' + str(gameType) + '.html'
     return game, gameType
@@ -305,13 +382,13 @@ def isPasswordValid(password, password_confirm):
     if len(password) < minLength:
         return False, 'Palavra-passe deve ter ' + str(minLength) + ' ou mais caracteres.'
     elif not re.search("[a-z]", password):
-        return False, 'Palavra-passe deve ter letras minúsculas.'
+        return False, 'Palavra-passe deve ter letras minúsculas, maiúsculas, números e símbolos.'
     elif not re.search("[A-Z]", password):
-        return False, 'Palavra-passe deve ter letras maiúsculas.'
+        return False, 'Palavra-passe deve ter letras minúsculas, maiúsculas e números e símbolos.'
     elif not re.search("[0-9]", password):
-        return False, 'Palavra-passe deve ter pelo menos um número.'
+        return False, 'Palavra-passe deve ter letras minúsculas, maiúsculas e números e símbolos.'
     elif not set(password).intersection("!\"#$%&()*+,-/:;<=>?@[\]^`{|}~'._"):
-        return False, 'Palavra-passe deve ter pelo menos um símbolo.'
+        return False, 'Palavra-passe deve ter letras minúsculas, maiúsculas e números e símbolos.'
     elif re.search("\s", password):
         return False, 'Palavra-passe não pode ter espaços.'
     elif password != password_confirm:
@@ -320,9 +397,10 @@ def isPasswordValid(password, password_confirm):
         return True, ''
 
 def isEmailValid(email):
-    regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
+    """regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
     regexAlernative = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{1,10}+[@]\w+[.]\w{2,3}$'
-    return re.search(regex,email) or re.search(regexAlernative,email)
+    return re.search(regex,email) or re.search(regexAlernative,email)"""
+    return True
 
 def isUsernameValid(username):
     minLength = 4
@@ -333,7 +411,7 @@ def isUsernameValid(username):
         return False, 'Nome de utilizador deve ter ' + str(minLength) + ' ou mais caracteres.'
     elif (len(username)>maxLength):
         return False, 'Nome de utilizador só pode ter até ' + str(maxLength) + ' caracteres.'
-    elif set(username).intersection("!\"#$%&()*+,-/:;<=>?@[\]^`{|}~'"): # keep adding characters to check which one gives errors
+    elif set(username).intersection("!\"#$%&()*+,-/:;<=>?@[\]^`{|}~'"):
         return False, 'Nome de utilizador só pode conter caracteres alfanuméricos e os símbolos . e _.'
     elif re.search("\s", username):
         return False, 'Nome de utilizador não pode ter espaços.'
@@ -370,88 +448,117 @@ def check_test_achievements(assessmentType):
         achievement[0].locked = False
 
     # First try test achievements
-    test_names = ['Diagnóstico Parkinson', 'Tarefas do dia a dia']
+    test_names = ['Como se sente?', 'Diagnóstico Parkinson', 'Tarefas do dia a dia']
     test_index = test_names.index(assessmentType)
-    achievement_options = ['UPDRS', 'Tarefas']
+    achievement_options = ['Sentimento', 'UPDRS', 'Tarefas']
     achievement_name = achievement_options[test_index]
     achievement = Achievement.query.filter_by(patient_id=current_user.id, name=achievement_name).all()
     if achievement[0].locked == True:
         achievement[0].locked = False
 
-def calculate_image_accuracy(image_data):
+def calculate_image_accuracy(image_data, reference_image):
     # get reference image
-    reference_image = Image.open('website/static/images/reference.png')
+    cwd = os.getcwd()
+    if 'home' in cwd:
+        reference_image = Image.open(cwd + '/mysite/website/static/images/reference_' + reference_image + '.png')
+    else:
+        reference_image = Image.open(cwd + '/website/static/images/reference_' + reference_image + '.png')
     reference_pixels = reference_image.getdata()
     reference_image_side = int(sqrt(len(reference_pixels)))
+    # invert reference image
+    inverted_reference_image = []
+    for pixel in reference_pixels: # background white
+        #print(pixel)
+        if pixel == (255,255,255,255) or pixel == (255,255,255):
+            inverted_reference_image.append(0)
+        else:
+            inverted_reference_image.append(1)
+
 
     # get test image
-    image_saved_bytes = image_data
-    image_saved_bytes = image_saved_bytes.split(',')[1]
+    image_saved_bytes = image_data.split(',')[1]
     image_saved_bytes = bytes(image_saved_bytes, 'utf-8')
 
-    file_name = "website/static/images/image_test" + str(randint(0,1000000)) + '.png'
+    while True:
+        if 'home' in cwd:
+            file_name = cwd + "/mysite/website/static/images/temp/image_test_" + secure_filename(str(datetime.now())) + '.png'
+        else:
+            file_name = cwd + "/website/static/images/temp/image_test_" + secure_filename(str(datetime.now())) + '.png'
+        if not os.path.exists(file_name): break
+    print(file_name)
+
     with open(file_name, "wb") as fh:
         fh.write(base64.decodebytes(image_saved_bytes) + b'==')
 
     image_test = Image.open(file_name)
     image_test = image_test.resize((reference_image_side, reference_image_side))
     test_pixels = image_test.getdata()
-    new_pixels = []
-    for i in range(0, len(test_pixels)):
-        if test_pixels[i] == (0, 0, 0, 0):
-            new_pixels.append((255, 255, 255, 255))
+    # invert test image
+    inverted_test_image = []
+    for pixel in test_pixels:
+        if pixel == (0, 0, 0, 0): # empty
+            inverted_test_image.append(0)
         else:
-            new_pixels.append((0, 0, 0, 255))
-    image_test.putdata(new_pixels)
-    image_test.save(file_name)
-    image_test = Image.open(file_name)
+            inverted_test_image.append(1)
 
     # compare images
-    total_pixels_non0 = 0
-    correct_pixels = 0
-    for i in range(0, len(reference_pixels)):
-        if reference_pixels[i] != (255, 255, 255, 255) or test_pixels[i] != (255, 255, 255, 255): # if one of them is not white
-            total_pixels_non0 += 1
-            # check pixel in a 15 radius
-            if look_pixels_around(reference_pixels, reference_image_side, test_pixels, i):
-                correct_pixels += 1
-    
+    total_pixels = inverted_reference_image.count(1)
+    image_sobreposition = [a and b for a, b in zip(inverted_reference_image, inverted_test_image)]
+    correct_pixels = image_sobreposition.count(1)
+
+    reference_image.close()
     image_test.close()
     os.remove(file_name)
 
-    return int(correct_pixels / total_pixels_non0 * 100) # percentage
+    return int(correct_pixels / total_pixels * 100) # percentage
 
- # check pixel in a 5 pixel radius
-def look_pixels_around(reference_pixels, reference_image_side, test_pixels, i):
-    row = floor(i % reference_image_side)
-    column = i - reference_image_side * row
-    for x in range(row-5, row+5):
-        for y in range(column-5, column+5):
-            if x*reference_image_side+y < len(reference_pixels) and x*reference_image_side+y >= 0:
-                if reference_pixels[x*reference_image_side+y] != (255, 255, 255, 255) and test_pixels[x*reference_image_side+y] != (255, 255, 255, 255): # if they are both not white
-                    return True
-    return False
+def saveAudioFile(file):
+    # extension name
+    extname = '.wav'
 
-    
-    # compare images
-    total_pixels_non0 = 0
-    correct_pixels = 0
-    for i in range(0, len(reference_pixels)):
-        if reference_pixels[i] != (255, 255, 255, 255) or test_pixels[i] != (255, 255, 255, 255): # if one of them is not white
-            total_pixels_non0 += 1
-            # check pixel in a 15 radius
-            if look_pixels_around(reference_pixels, reference_image_side, test_pixels, i):
-                correct_pixels += 1
+    # get a viable filename
+    cwd = os.getcwd()
+    while True:
+        timeNow = str(datetime.now()).replace('.', '_')
+        if 'home' in cwd:
+            timeNow = str(datetime.now()).replace('.', '_')
+            dst = cwd + '/mysite/website/static/audio/' + secure_filename(f'{timeNow}{extname}')
+        else:
+            dst = os.path.join(
+                'website\\static\\audio',
+                secure_filename(f'{timeNow}{extname}'))
 
-    return int(correct_pixels / total_pixels_non0 * 100) # percentage
 
- # check pixel in a 5 pixel radius
-def look_pixels_around(reference_pixels, reference_image_side, test_pixels, i):
-    row = floor(i % reference_image_side)
-    column = i - reference_image_side * row
-    for x in range(row-3, row+3):
-        for y in range(column-3, column+3):
-            if x*reference_image_side+y < len(reference_pixels) and x*reference_image_side+y >= 0:
-                if reference_pixels[x*reference_image_side+y] != (255, 255, 255, 255) and test_pixels[x*reference_image_side+y] != (255, 255, 255, 255): # if they are both not white
-                    return True
-    return False
+        if not os.path.exists(dst): break
+
+    # Save the file to disk.
+    file.save(dst)
+
+    return dst
+
+def calculateAudioParameters(filename):
+    f0min = 75
+    f0max = 500
+
+    sound = parselmouth.Sound(filename) # read the sound
+    #pitch = call(sound, "To Pitch", 0.0, f0min, f0max) #create a praat pitch object
+    #meanF0 = call(pitch, "Get mean", 0, 0, unit) # get mean pitch
+    #stdevF0 = call(pitch, "Get standard deviation", 0 ,0, unit) # get standard deviation
+    #harmonicity = call(sound, "To Harmonicity (cc)", 0.01, 75, 0.1, 1.0)
+    #hnr = call(harmonicity, "Get mean", 0, 0)
+    pointProcess = call(sound, "To PointProcess (periodic, cc)", f0min, f0max)
+
+    localJitter = call(pointProcess, "Get jitter (local)", 0, 0, 0.0001, 0.02, 1.3)
+    #localabsoluteJitter = call(pointProcess, "Get jitter (local, absolute)", 0, 0, 0.0001, 0.02, 1.3)
+    #rapJitter = call(pointProcess, "Get jitter (rap)", 0, 0, 0.0001, 0.02, 1.3)
+    #ppq5Jitter = call(pointProcess, "Get jitter (ppq5)", 0, 0, 0.0001, 0.02, 1.3)
+    #ddpJitter = call(pointProcess, "Get jitter (ddp)", 0, 0, 0.0001, 0.02, 1.3)
+
+    localShimmer =  call([sound, pointProcess], "Get shimmer (local)", 0, 0, 0.0001, 0.02, 1.3, 1.6)
+    #localdbShimmer = call([sound, pointProcess], "Get shimmer (local_dB)", 0, 0, 0.0001, 0.02, 1.3, 1.6)
+    #apq3Shimmer = call([sound, pointProcess], "Get shimmer (apq3)", 0, 0, 0.0001, 0.02, 1.3, 1.6)
+    #aqpq5Shimmer = call([sound, pointProcess], "Get shimmer (apq5)", 0, 0, 0.0001, 0.02, 1.3, 1.6)
+    #apq11Shimmer =  call([sound, pointProcess], "Get shimmer (apq11)", 0, 0, 0.0001, 0.02, 1.3, 1.6)
+    #ddaShimmer = call([sound, pointProcess], "Get shimmer (dda)", 0, 0, 0.0001, 0.02, 1.3, 1.6)
+
+    return localJitter, localShimmer

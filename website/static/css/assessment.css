@@ -27,6 +27,10 @@ input {
   overflow:auto;
 }
 
+.align-center {
+  text-align: center;
+}
+
 .button-div {
   width: 60%;
   margin: 0 auto;

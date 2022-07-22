@@ -64,6 +64,12 @@ function cardClicked() {
                 if ( checkIfPair() === true) { // If cards are the same reset counters
                     // If win end game
                     if ( checkIfOver() ) {
+                        document.getElementsByTagName('p')[0].style.display = 'none';
+                        document.getElementsByTagName('p')[1].style.display = 'none';
+                        if (document.getElementsByTagName('p')[2]) {
+                            document.getElementsByTagName('p')[2].style.display = 'none';
+                        }
+                        document.getElementById('pre-game').style.backgroundColor = 'rgb(255,255,255)';
                         setTimeout(sendPostWithScore, 2000); // voltar ao menu principal
                     }
 
@@ -75,7 +81,9 @@ function cardClicked() {
                         document.getElementById('title').textContent = 'Guardando teste...';
                         document.getElementsByTagName('p')[0].style.display = 'none';
                         document.getElementsByTagName('p')[1].style.display = 'none';
-                        document.getElementsByTagName('p')[2].style.display = 'none';
+                        if (document.getElementsByTagName('p')[2]) {
+                            document.getElementsByTagName('p')[2].style.display = 'none';
+                        }
                         document.getElementsByTagName('h2')[0].style.display = 'none';
                     } else {
                         document.getElementsByTagName('h2')[0].innerText = 'Tentativas: ' + tries;
@@ -99,8 +107,11 @@ function cardClicked() {
         tries++;
         if (checkIfOver()) {
             document.getElementsByTagName('h2')[0].innerText = 'Guardando resultado:\n' + tries + ' tentativas';
-            document.getElementsByTagName('p')[0].innerText = '';
-            document.getElementsByTagName('p')[1].innerText = '';
+            document.getElementsByTagName('p')[0].style.display = 'none';
+            document.getElementsByTagName('p')[1].style.display = 'none';
+            if (document.getElementsByTagName('p')[2]) {
+                document.getElementsByTagName('p')[2].style.display = 'none';
+            }
         } else {
             document.getElementsByTagName('h2')[0].innerText = 'Tentativas: ' + tries;
         }

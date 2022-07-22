@@ -1,0 +1,81 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.gamesContainer {
+    min-height: 85vh;
+    width: 100vw;
+    display: flex;
+    flex-flow: column;
+}
+
+.btn {
+    background-color: #5995fd;
+    border: none;
+    outline: none;
+    height: 75px;
+    font-size: 1.5rem;
+    border-radius: 49px;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.5s;
+    display: block;
+    width: 100%;
+    margin: 10px auto;
+}
+
+.title {
+    font-size: 2.5rem;
+    color: #444;
+    margin: 10px auto;
+    margin-top: 5vh;
+    text-align: center;
+}
+
+.title, .button-div {
+    flex: 0 1 auto;
+}
+
+.button-div {
+    margin-top: 10px;
+    width: 60vw;
+    margin-left: 20vw;
+}
+
+#myChart {
+    width: 95%;
+    flex: 1 1 auto;
+    margin: 0 auto;
+}
+
+@media (max-width: 870px) {
+
+    .btn {
+        height: 50px;
+        font-size: 1.2rem;
+    }
+
+    .button-div {
+        width: 80vw;
+        margin-left: 10vw;
+    }
+}
+  
+@media (max-width: 570px) {
+    .btn {
+        font-size: 1rem;
+    }
+}
+  

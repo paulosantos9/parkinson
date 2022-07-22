@@ -35,6 +35,7 @@ function updateTimer(starterTimer) {
         if (difference >= maxTime & isCountingDown == false) { // finish
             difference = maxTime;
             sentPostWithScore = true;
+            document.getElementById('pre-game').style.backgroundColor = 'rgb(255,255,255)';
             setTimeout(sendPostWithScore, 3000);
         }
         let differenceDecimals = Math.floor(difference*10) / 10;
@@ -53,6 +54,9 @@ function updateTimer(starterTimer) {
             document.getElementById('container').style.display = 'none';
             document.getElementById('title').textContent = 'Guardando teste...';
             document.getElementsByTagName('p')[0].style.display = 'none';
+            if (document.getElementsByTagName('p')[1]) {
+                document.getElementsByTagName('p')[1].style.display = 'none';
+            }
         }
     }
 }

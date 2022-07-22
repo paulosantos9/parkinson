@@ -17,6 +17,9 @@
         <h1 id="title" class="title">Equilíbrio</h1>
         <p>Verificando as suas funções motoras.</p>
         <p>Pegue no telemóvel e tente mexê-lo o menos possível durante 10 segundos.</p>
+        {% if record %}
+        <p>{{record}}</p>
+        {% endif %}
         <div class="button-div">
           <button id="exit-game" class="btn">Sair</button>
           <button id="start-game" class="btn">Começar</button>
