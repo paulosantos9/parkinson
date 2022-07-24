@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from .models import Achievement
 from datetime import datetime
 from flask import session
@@ -11,36 +12,6 @@ import os
 from werkzeug.utils import secure_filename
 import parselmouth
 from parselmouth.praat import call
-
-updrs_assessment = {
-    'name': 'Diagnóstico Parkinson',
-    'questions': [
-        {
-            'question': 'Pergunta 1.',
-                'answers': [
-                    'Resposta 1.',
-                    'Resposta 2.',
-                    'Resposta 3.'
-                ]
-        },
-        {
-            'question': 'Pergunta 2.',
-                'answers': [
-                    'Resposta 1.',
-                    'Resposta 2.',
-                    'Resposta 3.'
-                ]
-        },
-        {
-            'question': 'Pergunta 3.',
-                'answers': [
-                    'Resposta 1.',
-                    'Resposta 2.',
-                    'Resposta 3.'
-                ]
-        },
-    ]
-};
 
 database_games = [
     {
@@ -123,7 +94,7 @@ database_achievements = [
     },
     {
         'icon': 'smile',
-        'name': 'Sentimento',
+        'name': 'Sintomas',
         'description': 'Indique pelo menos uma vez como se sente.'
     },
     {
@@ -195,16 +166,14 @@ database_diseases = [
 
 database_assessments = [
     {
-        'name': 'Como se sente?',
+        'name': 'Sintomas',
         'questions': [
             {
-                'question': 'Como se sente?',
+                'question': 'Como estão os sintomas?',
                 'answers': [
-                    '😭 - Muito Triste',
-                    '🙁 - Triste',
-                    '😐 - Normal',
-                    '🙂 - Feliz',
-                    '😁 - Muito Feliz'
+                    'ON - Sem sintomas (Doença controlada)',
+                    'ON - Com movimentos involuntários',
+                    'OFF - Com sintomas motores, rigidez, dureza e menos mobilidade'
                 ]
             }
         ]
@@ -374,8 +343,7 @@ def manageSession():
 def chooseGame(numberOfGames):
     index = randint(0, len(numberOfGames)-1)
     gameType = numberOfGames[index]
-    game = '/games/game' + str(gameType) + '.html'
-    return game, gameType
+    return gameType
 
 def isPasswordValid(password, password_confirm):
     minLength = 8
@@ -448,9 +416,11 @@ def check_test_achievements(assessmentType):
         achievement[0].locked = False
 
     # First try test achievements
-    test_names = ['Como se sente?', 'Diagnóstico Parkinson', 'Tarefas do dia a dia']
+    test_names = []
+    for entry in database_assessments:
+        test_names.append(entry['name'])
     test_index = test_names.index(assessmentType)
-    achievement_options = ['Sentimento', 'UPDRS', 'Tarefas']
+    achievement_options = ['Sintomas', 'UPDRS', 'Tarefas']
     achievement_name = achievement_options[test_index]
     achievement = Achievement.query.filter_by(patient_id=current_user.id, name=achievement_name).all()
     if achievement[0].locked == True:

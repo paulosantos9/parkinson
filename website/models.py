@@ -53,3 +53,9 @@ class Patient(Person):
     assessments = db.relationship('Assessment')
     games = db.relationship('Game')
     achievements = db.relationship('Achievement')
+
+class Medication(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    currentTime = db.Column(db.DateTime)
+    medicationType = db.Column(db.Integer)
+    patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'))

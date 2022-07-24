@@ -1,10 +1,10 @@
 if (document.referrer !==  window.location.href) {
   // If coming from other page, user should be redirected to main
-  window.location.replace('/backToMain');
+  window.location.replace('/');
 }
 
 document.getElementById('back').onclick = function() {
-  window.location.replace('/account');
+  window.location.replace('/account_options');
 };
 
 function changeDisplay(divId) {

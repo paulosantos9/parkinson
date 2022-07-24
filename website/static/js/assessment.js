@@ -1,7 +1,3 @@
-if (document.referrer !==  window.location.href) {
-    // If coming from other page, user should be redirected to main
-    window.location.replace('/backToMain');
-}
 
 let counterQuestion = 0;
 let maxQuestions = document.getElementsByClassName('question').length;
@@ -49,17 +45,40 @@ function submitAssessment() {
     for (let i = 0; i < numberOfQuestions; i++) { //
         answers.push(document.querySelector('input[name="question' + i + '"]:checked').value);
     }
-
-    const data = {
-        'type': assessmentType,
-        'answers': answers,
+    let data;
+    if ( document.getElementById('medication') ) {
+        // then its sintomas
+        if (document.getElementById('medication').value ) {
+            // then its filled
+            console.log(0)
+            data = {
+                'type': assessmentType,
+                'answers': answers,
+                'medication': document.getElementById('medication').value
+            }
+            console.log(data)
+        } else {
+            console.log(1)
+            data = {
+                'type': assessmentType,
+                'answers': answers,
+            }
+        }
+    } else {
+        console.log(2)
+        data = {
+            'type': assessmentType,
+            'answers': answers,
+        }
     }
+    
+    document.getElementById('medication').value
     fetch("/assessment", {
         method: "POST",
         headers: {'Content-Type': 'application/json'}, 
         body: JSON.stringify(data)
     }).then(res => {
-        window.location.replace('/backToMain');
+        window.location.replace('/');
     });
 }
 

@@ -11,7 +11,7 @@ function endGamePermissions() {
     document.getElementsByTagName('p')[0].textContent = 'Voltando ao menu inicial...';
     document.getElementById('option-div').style.display = 'none';
     setTimeout(_ => {
-        window.location.replace('/backToMain');
+        window.location.replace('/');
     }, 5000)
 }
 
@@ -119,7 +119,7 @@ function startGame6() {
     
 // Menu inicial
 document.getElementById('exit-game').onclick = function() {
-    window.location.replace('/backToMain')
+    window.location.replace('/')
 }
 
 document.getElementById('start-game').onclick = function(e) {

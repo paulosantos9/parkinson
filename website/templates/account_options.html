@@ -3,22 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main_menu.css') }}"/>
+    
     <title>Mentalist</title>
     <link rel="icon" href="{{ url_for('static', filename='images/brain.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main_menu.css') }}"/>
   </head>
   <body>
     <div class="container">
       <div class="image_div align-center">
         <img src="{{ url_for('static', filename='images/doctor.png') }}" class="image" alt="" />
       </div>
-      <div class="button-list align-center">
-        {% for option in options %}
-        <input type="button" id="option-{{loop.index}}" value="{{option['name']}}" class="btn" onclick="chooseButton({{loop.index}})"/>
-        {% endfor %}
+      <div class="button-list  align-center">
+        <input type="button" id="results" value="Resultados de jogos" class="btn" />
+        <input type="button" id="assessments" value="Testes realizados" class="btn" />
+        <input type="button" id="achievements" value="Conquistas" class="btn" />
         <input type="button" id="back" value="< Voltar" class="btn"/>
       </div>
     </div>
-    <script src="{{ url_for('static', filename='js/choose_evolution.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/account_options.js') }}"></script>
   </body>
 </html>

@@ -17,7 +17,7 @@ function sendPostWithScore() {
         headers: {'Content-Type': 'application/json'}, 
         body: JSON.stringify(data)
     }).then(res => {
-        window.location.replace('/backToMain');
+        window.location.replace('/');
     });
 }
 
@@ -68,7 +68,7 @@ function startGame() {
 }
 
 document.getElementById('exit-game').onclick = function() {
-    window.location.replace('/backToMain')
+    window.location.replace('/')
 }
 
 document.getElementById('start-game').onclick = function() {

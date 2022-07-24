@@ -17,7 +17,12 @@
     <div class="container">
       <div action="/assessment" class="sign-up-form" method="POST">
         <h2 class="title" id="title">{{ assessment['name'] }}</h2>
-        
+        {% if assessment['name'] == 'Sintomas' %}
+        <div class="medication">
+          <p>Adicionar horário de medicação:</p>
+          <input type="time" id="medication" name="medication" class="input-field">
+        </div>
+        {%  endif %}
         {% for question in assessment['questions'] %}
         <div class="question question-{{ loop.index - 1}}">
           <p> {{ loop.index }}. {{ question['question'] }}</p>

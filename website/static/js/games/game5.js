@@ -8,7 +8,7 @@ function sendPostWithScore(score) {
         headers: {'Content-Type': 'application/json'}, 
         body: JSON.stringify(data)
     }).then(res => {
-        window.location.replace('/backToMain');
+        window.location.replace('/');
     });
 }
 
@@ -144,11 +144,11 @@ startGameButton.onclick = function(e) {
         if (permissionState === 'granted') {
             startGame();
         } else {
-            window.location.replace('/backToMain');
+            window.location.replace('/');
         }
         })
         .catch(_ => {
-            window.location.replace('/backToMain');
+            window.location.replace('/');
         });
     }
 
@@ -157,5 +157,5 @@ startGameButton.onclick = function(e) {
 
 // Menu inicial
 document.getElementById('exit-game').onclick = function() {
-    window.location.replace('/backToMain')
+    window.location.replace('/')
 }

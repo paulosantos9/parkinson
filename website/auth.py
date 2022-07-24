@@ -1,5 +1,5 @@
 import datetime
-from flask import Blueprint, request, redirect, url_for, session
+from flask import Blueprint, request, redirect, url_for, session, render_template
 from .models import Patient, Achievement
 from .functionHelpers import database_achievements
 from . import db # import from website folder
@@ -163,3 +163,20 @@ def signup():
             session['error'] = error
             session['typeOfContainer'] = typeOfContainer
             return redirect(url_for('views.home'))
+
+def checkUserLogin():
+    if not current_user.is_authenticated:
+        error, typeOfContainer = manageSession()
+        try:
+            username = session['username']
+            session['username'] = ''
+        except:
+            username = ''
+        try:
+            email = session['email']
+            session['email'] = ''
+        except:
+            email = ''
+        return False, email, username, error, typeOfContainer
+    else:
+        return True, '', ''

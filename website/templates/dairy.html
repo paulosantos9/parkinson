@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/graph.css') }}"
+  />
+    <title>Mentalist</title>
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='images/brain.ico') }}"
+    />
+  </head>
+<body>
+    <div class="gamesContainer">
+        <div class="title">Evolução:</div>
+        <div class="myChart" id="myChart"></div>
+        <div class="button-div">
+          <button id="back" class="btn">< Voltar</button>
+        </div>
+    </div>
+    <script src="https://cdn.plot.ly/plotly-2.12.1.min.js"></script>
+    <script src="{{ url_for('static', filename='js/dairy.js') }}"></script>
+</body>
+</html>

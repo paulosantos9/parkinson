@@ -1,10 +1,18 @@
+document.getElementById('sente').onclick = function() {
+    window.location.replace('/assessment?index=0');
+};
+
 document.getElementById('games').onclick = function() {
     if( ('ontouchstart' in document.documentElement && /mobi/i.test(navigator.userAgent)) ) {
         // if is mobile
-        window.location.replace('/game');
+        options = [1, 2, 3, 4, 5, 6]
+        game = options[Math.floor(Math.random() * options.length)]
+        window.location.replace('/game/' + game);
     } else {
+        options = [1, 2, 3, 4, 6]
+        game = options[Math.floor(Math.random() * options.length)]
         // não pode jogar equilibrio
-        window.location.replace('/game/pc');
+        window.location.replace('/game/' + game);
     }
 };
 
@@ -17,7 +25,7 @@ document.getElementById('info').onclick = function() {
 };
 
 document.getElementById('account').onclick = function() {
-    window.location.replace('/account');
+    window.location.replace('/account_options');
 };
 
 document.getElementById('logout').onclick = function() {

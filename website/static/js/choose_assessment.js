@@ -1,7 +1,3 @@
-if (document.referrer !==  window.location.href) {
-    // If coming from other page, user should be redirected to main
-    window.location.replace('/backToMain');
-}
 
 function chooseButton(divId) {
     index = divId - 1;
@@ -9,5 +5,5 @@ function chooseButton(divId) {
 }
 
 document.getElementById('back').onclick = function() {
-    window.location.replace('/backToMain');
+    window.location.replace('/');
 };
