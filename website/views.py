@@ -339,7 +339,7 @@ def assessments_data():
             # { time: time, assessment_id: id}
             time = assessment.currentTime
             answer = Question.query.filter_by(assessment_id=assessment.id).all()
-            answer = answer[0].answer - 1
+            answer = answer[0].answer
             if (answer == 1):
                 answer = 1
             elif (answer == 2):

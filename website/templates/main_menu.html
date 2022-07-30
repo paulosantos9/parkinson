@@ -11,10 +11,12 @@
   <body>
     <div class="container">
         <div class="image_div align-center">
-          <img src="{{ url_for('static', filename='images/doctor.png') }}" class="image" alt="" />
+          <a href="/">
+            <img src="{{ url_for('static', filename='images/doctor.png') }}" class="image" alt="" />
+          </a>
         </div>
         <div class="button-list align-center">
-            <input type="button" id="sente" value="Como se sente?" class="btn" />
+            <input type="button" id="sente" value="Como estãos os sintomas?" class="btn" />
             <input type="button" id="games" value="Jogar" class="btn" />
             <input type="button" id="assessment" value="Questionário" class="btn" />
             <input type="button" id="info" value="Informações" class="btn" />

@@ -18,7 +18,7 @@
       <div action="/assessment" class="sign-up-form" method="POST">
         <h2 class="title" id="title">{{ assessment['name'] }}</h2>
         {% if assessment['name'] == 'Sintomas' %}
-        <div class="medication">
+        <div class="medication" id="medication-div">
           <p>Adicionar horário de medicação:</p>
           <input type="time" id="medication" name="medication" class="input-field">
         </div>

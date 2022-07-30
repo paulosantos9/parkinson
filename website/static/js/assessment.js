@@ -32,7 +32,11 @@ updateQuestion();
 updateButtons();
 
 function backToMain() {
-    window.location.replace('/choose_assessment');
+    if (document.getElementById('title').textContent == 'Sintomas') {
+        window.location.replace('/');
+    } else {
+        window.location.replace('/choose_assessment');
+    }
 }
 
 function submitAssessment() {
@@ -92,6 +96,7 @@ document.getElementById('anterior').onclick = function() {
     if (counterQuestion < 0) {
         document.getElementById('anterior').style.display = 'none'
         document.getElementById('seguinte').style.display = 'none'
+        document.getElementById('medication-div').style.display = 'none'
         document.getElementById('title').textContent = 'Voltando...'
     }
 }
@@ -106,6 +111,7 @@ document.getElementById('seguinte').onclick = function() {
     if (counterQuestion >= maxQuestions) {
         document.getElementById('anterior').style.display = 'none'
         document.getElementById('seguinte').style.display = 'none'
+        document.getElementById('medication-div').style.display = 'none'
         document.getElementById('title').textContent = 'Guardando questionário...'
     }
 }

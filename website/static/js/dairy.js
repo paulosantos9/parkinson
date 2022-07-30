@@ -44,9 +44,10 @@ document.getElementById('back').onclick = function() {
             line: {
               color: 'red',
               width: 2,
-            }
+            },
           })          
         }
+        // horizontal line
         medications.push({
           type: 'line',
           x0: new Date(1900, 1, 1, 0, 0, 0, 0),
@@ -72,6 +73,9 @@ document.getElementById('back').onclick = function() {
               }
             }
         ];
+        const currentDay = new Date();
+        const startDay = new Date(currentDay.getFullYear(), currentDay.getMonth(), currentDay.getDate(), 6, 0, 0, 0);
+        const endDay = new Date(new Date(currentDay.getFullYear(), currentDay.getMonth(), currentDay.getDate()+1, 0, 0, 0, 0))
         layout = {
             title: data.type,
             autosize: true,
@@ -83,7 +87,7 @@ document.getElementById('back').onclick = function() {
               pad: 4
             },
             xaxis: {
-                range: [formatDate(new Date(2022, 06, 24, 0, 0, 0, 0)), formatDate(new Date(2022, 06, 25, 0, 0, 0, 0))]
+                range: [formatDate(startDay), formatDate(endDay)]
             },
             yaxis: {
                 title: 'Variação',
