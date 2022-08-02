@@ -171,9 +171,9 @@ database_assessments = [
             {
                 'question': 'Como estão os sintomas?',
                 'answers': [
-                    'ON - Sem sintomas (Doença controlada)',
-                    'ON - Com movimentos involuntários',
-                    'OFF - Com sintomas motores, rigidez, dureza e menos mobilidade'
+                    'Sem sintomas (Doença controlada)',
+                    'Com movimentos involuntários',
+                    'Com sintomas motores, rigidez, dureza e menos mobilidade'
                 ]
             }
         ]

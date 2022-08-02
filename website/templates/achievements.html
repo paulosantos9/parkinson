@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/achievements.css') }}"/>
     <title>Mentalist</title>
     <link rel="icon" href="{{ url_for('static', filename='images/brain.ico') }}"/>
+    
 </head>
 <body>
     <div class="gamesContainer">
@@ -31,6 +32,20 @@
         {% endfor %}
         <button id="back" class="btn">< Voltar</button>
     </div>
+    
     <script src="{{ url_for('static', filename='js/achievements.js') }}"></script>
+    <script>
+        async function registerSW(){
+          if ('serviceWorker' in navigator) {
+            try {
+              await navigator.serviceWorker.register('./sw.js');
+            } catch (e) {
+              console.log('SW registration failed');
+            }
+          }
+        }
+        
+        registerSW();
+      </script>
 </body>
 </html>

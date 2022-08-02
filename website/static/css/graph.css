@@ -20,7 +20,7 @@ body {
 }
 
 .gamesContainer {
-    min-height: 85vh;
+    min-height: 90vh;
     width: 100vw;
     display: flex;
     flex-flow: column;
@@ -65,6 +65,45 @@ body {
     width: 95%;
     flex: 1 1 auto;
     margin: 0 auto;
+    min-height: 200px;
+}
+
+.dayset {
+    width: 60%;
+    background-color: #f0f0f0;
+    margin: 0 auto;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    min-height: 55px;
+    border-radius: 15px;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+input {
+    background: none;
+    outline: none;
+    border: none;
+    line-height: 1;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #333;
+    display: inline;
+}
+
+.input-field {
+    background-color: #f0f0f0;
+    margin: 10px auto;
+    border-radius: 55px;
+    padding: 0 0.4rem;
+    font-size: 1.2rem;
+    position:relative;
+}
+
+.label {
+    display: inline;
+    position:relative;
 }
 
 @media (max-width: 870px) {
@@ -72,6 +111,19 @@ body {
     .btn {
         height: 50px;
         font-size: 1.2rem;
+    }
+
+    .title {
+        margin-top: 10px;
+    }
+
+    .dayset {
+        width: 75%;
+        font-size: 1rem;
+    }
+
+    .label, .input-field {
+        font-size: 1rem;
     }
 
     .button-div {
@@ -84,5 +136,11 @@ body {
     .btn {
         font-size: 1rem;
     }
+    
+    .dayset {
+        width: 80%;
+        font-size: 0.8rem;
+    }
+
 }
   

@@ -50,8 +50,8 @@ document.getElementById('back').onclick = function() {
         // horizontal line
         medications.push({
           type: 'line',
-          x0: new Date(1900, 1, 1, 0, 0, 0, 0),
-          x1: new Date(2200, 1, 1, 0, 0, 0, 0),
+          x0: new Date(2020, 1, 1, 0, 0, 0, 0),
+          x1: new Date(2030, 1, 1, 0, 0, 0, 0),
           y0: 1,
           y1: 1,
           line: {
@@ -73,9 +73,18 @@ document.getElementById('back').onclick = function() {
               }
             }
         ];
-        const currentDay = new Date();
-        const startDay = new Date(currentDay.getFullYear(), currentDay.getMonth(), currentDay.getDate(), 6, 0, 0, 0);
-        const endDay = new Date(new Date(currentDay.getFullYear(), currentDay.getMonth(), currentDay.getDate()+1, 0, 0, 0, 0))
+        const dayStart = document.getElementById('day-start').value;
+        const dayEnd = document.getElementById('day-end').value;
+        let startDay, endDay;
+        if (dayStart && dayEnd) {
+          startDay = new Date(dayStart.split('-')[0], parseInt(dayStart.split('-')[1])-1, dayStart.split('-')[2], 6, 0, 0, 0);
+          endDay = new Date(dayEnd.split('-')[0], parseInt(dayEnd.split('-')[1])-1, dayEnd.split('-')[2], 23, 59, 59, 0);          
+        } else {
+          const currentDay = new Date();
+          startDay = new Date(currentDay.getFullYear(), currentDay.getMonth(), currentDay.getDate(), 6, 0, 0, 0);
+          endDay = new Date(currentDay.getFullYear(), currentDay.getMonth(), currentDay.getDate()+1, 0, 0, 0, 0);    
+        }
+
         layout = {
             title: data.type,
             autosize: true,
@@ -113,3 +122,10 @@ document.getElementById('back').onclick = function() {
   
   get_data();
   
+document.getElementById('day-start').addEventListener('change', (event) => {
+  get_data();
+});
+
+document.getElementById('day-end').addEventListener('change', (event) => {
+  get_data();
+});

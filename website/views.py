@@ -327,8 +327,8 @@ def assessments_data():
     userLogedIn = checkUserLogin()
     if userLogedIn[0]:
         todayDate = dt(dt.now().year, dt.now().month, dt.now().day, 0, 0)
-        assessment_list = Assessment.query.filter_by(patient_id=current_user.id, testType = 'Sintomas').filter(Assessment.currentTime > todayDate).all()
-        medication_list = Medication.query.filter_by(patient_id=current_user.id).filter(Medication.currentTime > todayDate).all()
+        assessment_list = Assessment.query.filter_by(patient_id=current_user.id, testType = 'Sintomas').all()
+        medication_list = Medication.query.filter_by(patient_id=current_user.id).all()
         medicationAfter = []
         for element in medication_list:
             medicationAfter.append(element.currentTime)

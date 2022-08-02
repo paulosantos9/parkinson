@@ -12,6 +12,7 @@
       rel="icon"
       href="{{ url_for('static', filename='images/brain.ico') }}"
     />
+    
   </head>
   <body>
     <div class="container">
@@ -19,7 +20,7 @@
         <h2 class="title" id="title">{{ assessment['name'] }}</h2>
         {% if assessment['name'] == 'Sintomas' %}
         <div class="medication" id="medication-div">
-          <p>Adicionar horário de medicação:</p>
+          <p>Adicionar horário de medicação (Opcional):</p>
           <input type="time" id="medication" name="medication" class="input-field">
         </div>
         {%  endif %}
@@ -55,5 +56,6 @@
     </div>
 
     <script src="{{ url_for('static', filename='js/assessment.js') }}"></script>
+
   </body>
 </html>
