@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main_menu.css') }}"/>
+    <title>Mentalist</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/brain.ico') }}">
+  </head>
+  <body>
+    <div class="container">
+        <div class="image_div align-center">
+          <a href="/">
+            <img src="{{ url_for('static', filename='images/doctor.png') }}" class="image" alt="" />
+          </a>
+        </div>
+        <div class="button-list align-center">
+            <input type="button" id="random" value="Aleatório" class="btn" />
+            <input type="button" id="reacao" value="Reação" class="btn" />
+            <input type="button" id="rapidez" value="Rapidez" class="btn" />
+            <input type="button" id="memoria" value="Memória" class="btn" />
+            <input type="button" id="desenho" value="Desenho" class="btn" />
+            <input type="button" id="equilibrio" value="Equilíbrio" class="btn" />
+            <input type="button" id="falar" value="Falar" class="btn" />
+            <input type="button" id="voltar" value="< Voltar>" class="btn" />
+      </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/choose_game.js') }}"></script>
+  </body>
+</html>

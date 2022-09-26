@@ -157,5 +157,5 @@ startGameButton.onclick = function(e) {
 
 // Menu inicial
 document.getElementById('exit-game').onclick = function() {
-    window.location.replace('/')
+    window.location.replace('/choose_game')
 }

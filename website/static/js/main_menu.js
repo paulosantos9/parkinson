@@ -3,17 +3,7 @@ document.getElementById('sente').onclick = function() {
 };
 
 document.getElementById('games').onclick = function() {
-    if( ('ontouchstart' in document.documentElement && /mobi/i.test(navigator.userAgent)) ) {
-        // if is mobile
-        options = [1, 2, 3, 4, 5, 6]
-        game = options[Math.floor(Math.random() * options.length)]
-        window.location.replace('/game/' + game);
-    } else {
-        options = [1, 2, 3, 4, 6]
-        game = options[Math.floor(Math.random() * options.length)]
-        // não pode jogar equilibrio
-        window.location.replace('/game/' + game);
-    }
+    window.location.replace('/choose_game');
 };
 
 document.getElementById('assessment').onclick = function() {
@@ -21,7 +11,7 @@ document.getElementById('assessment').onclick = function() {
 };
 
 document.getElementById('info').onclick = function() {
-    window.location.replace('/info_choose');
+    window.location.replace('/info');
 };
 
 document.getElementById('account').onclick = function() {

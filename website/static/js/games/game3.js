@@ -139,7 +139,7 @@ let timeSpent = 0;
 let starterTimer;
 
 document.getElementById('exit-game').onclick = function() {
-    window.location.replace('/')
+    window.location.replace('/choose_game')
 }
 
 document.getElementById('start-game').onclick = function() {

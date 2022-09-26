@@ -1,6 +1,6 @@
 
 document.getElementById('back').onclick = function() {
-    window.location.replace('/info_choose');
+    window.location.replace('/');
 };
 
 function changeDisplay(divId) {

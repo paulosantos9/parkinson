@@ -54,29 +54,24 @@ function submitAssessment() {
         // then its sintomas
         if (document.getElementById('medication').value ) {
             // then its filled
-            console.log(0)
             data = {
                 'type': assessmentType,
                 'answers': answers,
                 'medication': document.getElementById('medication').value
             }
-            console.log(data)
         } else {
-            console.log(1)
             data = {
                 'type': assessmentType,
                 'answers': answers,
             }
         }
     } else {
-        console.log(2)
         data = {
             'type': assessmentType,
             'answers': answers,
         }
     }
     
-    document.getElementById('medication').value
     fetch("/assessment", {
         method: "POST",
         headers: {'Content-Type': 'application/json'}, 
@@ -96,7 +91,9 @@ document.getElementById('anterior').onclick = function() {
     if (counterQuestion < 0) {
         document.getElementById('anterior').style.display = 'none'
         document.getElementById('seguinte').style.display = 'none'
-        document.getElementById('medication-div').style.display = 'none'
+        if (document.getElementById('medication-div')) {
+            document.getElementById('medication-div').style.display = 'none'
+        }
         document.getElementById('title').textContent = 'Voltando...'
     }
 }
@@ -111,7 +108,9 @@ document.getElementById('seguinte').onclick = function() {
     if (counterQuestion >= maxQuestions) {
         document.getElementById('anterior').style.display = 'none'
         document.getElementById('seguinte').style.display = 'none'
-        document.getElementById('medication-div').style.display = 'none'
+        if (document.getElementById('medication-div')) {
+            document.getElementById('medication-div').style.display = 'none'
+        }
         document.getElementById('title').textContent = 'Guardando questionário...'
     }
 }

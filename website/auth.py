@@ -77,17 +77,6 @@ def update():
             # need to perform check before updating to check if every field is well filled
             current_user.username = request.form.get('username')
             current_user.email = request.form.get('email')
-            current_user.name = request.form.get('name')
-            current_user.phoneNumber = request.form.get('phoneNumber')
-            bornDate = request.form.get('bornDate')
-            year = int(bornDate[0:4])
-            month = int(bornDate[5:7])
-            day = int(bornDate[8:20])
-            current_user.bornDate = datetime.datetime(year, month, day)
-            current_user.gender = request.form.get('genderOption')
-            current_user.patientNumber = request.form.get('patientNumber')
-            current_user.alzheimer = request.form.get('alzheimerOption') == '1' # passing to True or False
-            current_user.parkinson = request.form.get('parkinsonOption') == '1'
             
             db.session.commit()
 

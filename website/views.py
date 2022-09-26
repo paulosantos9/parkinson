@@ -1,5 +1,4 @@
-from audioop import reverse
-from flask import Blueprint, render_template, request, redirect, url_for, session, jsonify, send_from_directory
+from flask import Blueprint, render_template, request, jsonify, send_from_directory
 from flask_login import current_user
 from .functionHelpers import *
 from .models import Game, Medication, Question, Assessment, Achievement
@@ -33,7 +32,7 @@ def account_options():
 # GAMES
 
 @views.route('/game', methods=['POST'])
-def choose_game():
+def add_game():
     userLogedIn = checkUserLogin()
     if userLogedIn[0]:
         if request.method == 'POST':
@@ -79,7 +78,7 @@ def choose_game():
 
             db.session.commit()
 
-            return redirect(url_for('/'))
+            return render_template('main_menu.html')
     else:
         return render_template('login_signup.html', error=userLogedIn[3], typeOfContainer=userLogedIn[4], username=userLogedIn[2], email=userLogedIn[1])
 
@@ -145,6 +144,15 @@ def listGames():
         recordAvailableGames.append(tempRecord)
     return render_template('graph.html')
     #return render_template('graph.html', gamesList=gamesList, availableGames=availableGames, recordAvailableGames=recordAvailableGames, typeOfActions=typeOfActions)"""
+
+@views.route('/choose_game', methods=['GET']) # show evolution
+def choose_game():
+    userLogedIn = checkUserLogin()
+    if userLogedIn[0]:
+        return render_template('choose_game.html')
+    else:
+        return render_template('login_signup.html', error=userLogedIn[3], typeOfContainer=userLogedIn[4], username=userLogedIn[2], email=userLogedIn[1])
+
 
 
 @views.route('/evolution/<int:index>', methods=['GET']) # show evolution
@@ -214,7 +222,7 @@ def assessment():
         else: # Adicionar questionário
             assessmentType = request.json['type']
             answers = request.json['answers']
-            print('hellooo')
+
             try:
                 current_time = request.json['medication']
                 medicationTime = dt(dt.now().year, dt.now().month, dt.now().day, int(current_time.split(':')[0]), int(current_time.split(':')[1]), 0, 0)
@@ -368,8 +376,7 @@ def info():
     userLogedIn = checkUserLogin()
     if userLogedIn[0]:
         if request.method == 'GET':
-            info_index = request.args.get('index')
-            current_info = database_diseases[int(info_index)]
+            current_info = database_diseases[1]
             return render_template('info.html', current_info=current_info)
     else:
         return render_template('login_signup.html', error=userLogedIn[3], typeOfContainer=userLogedIn[4], username=userLogedIn[2], email=userLogedIn[1])

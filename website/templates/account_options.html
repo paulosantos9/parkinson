@@ -18,25 +18,12 @@
       </div>
       <div class="button-list  align-center">
         <input type="button" id="results" value="Resultados de jogos" class="btn" />
-        <input type="button" id="assessments" value="Testes realizados" class="btn" />
+        <input type="button" id="assessments" value="Questionários realizados" class="btn" />
         <input type="button" id="achievements" value="Conquistas" class="btn" />
         <input type="button" id="back" value="< Voltar" class="btn"/>
       </div>
     </div>
 
     <script src="{{ url_for('static', filename='js/account_options.js') }}"></script>
-    <script>
-      async function registerSW(){
-        if ('serviceWorker' in navigator) {
-          try {
-            await navigator.serviceWorker.register('./sw.js');
-          } catch (e) {
-            //console.log('SW registration failed');
-          }
-        }
-      }
-      
-      registerSW();
-    </script>
   </body>
 </html>

@@ -1,4 +1,3 @@
-from django.shortcuts import redirect
 from .models import Achievement
 from datetime import datetime
 from flask import session
@@ -123,7 +122,7 @@ database_diseases = [
             },
             {
                 'name': 'Diagnóstico',
-                'info': 'Ainda não existem atualmente um único teste capaz de detetar a presença de Alzheimer. O que acontece é que é feita uma análise a dierentes componentes que permite aos doutores fazerem um diagnóstico. Estes componentes incluem a análise do histórico médico do paciente e da sua família, testemunhos familiares em termos de abilidades mentais e comportamentos, testes cognitivos, testes sanguíneos e imagens médicas do cérebro e presença de biomarcadores desta doença.',
+                'info': 'Ainda não existe atualmente um único teste capaz de detetar a presença de Alzheimer. O que acontece é que é feita uma análise a dierentes componentes que permite aos doutores fazerem um diagnóstico. Estes componentes incluem a análise do histórico médico do paciente e da sua família, testemunhos familiares em termos de habilidades mentais e comportamentos, testes cognitivos, testes sanguíneos e imagens médicas do cérebro e presença de biomarcadores desta doença.',
             },
             {
                 'name': 'Prevalência',
